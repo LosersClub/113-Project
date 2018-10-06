@@ -1,0 +1,14 @@
+{
+    "name": "LosersClub.113.Editor.Tests",
+    "references": [
+        "LosersClub.113.Editor"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

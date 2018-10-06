@@ -1,0 +1,12 @@
+{
+    "name": "LosersClub.113.Editor",
+    "references": [
+        "LosersClub.113"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

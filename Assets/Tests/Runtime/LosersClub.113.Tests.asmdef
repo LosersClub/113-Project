@@ -1,7 +1,7 @@
 {
-    "name": "Test",
+    "name": "LosersClub.113.Tests",
     "references": [
-        "Main"
+        "LosersClub.113"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"
