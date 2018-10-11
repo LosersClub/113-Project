@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour {
     } else if (manager != this) {
       Destroy(this.gameObject); // Delete current instance to maintain singleton.
     }
+    Bindings.Initialize();
     DontDestroyOnLoad(manager);
   }
 
