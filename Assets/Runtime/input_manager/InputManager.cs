@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class InputManager : MonoBehaviour {
+public static class InputManager {
   private static Dictionary<string, Action> registeredActions = new Dictionary<string, Action>();
 
   public static void AddAction(string name, Action.ActionToExecute boundAction, 
@@ -23,7 +23,7 @@ public class InputManager : MonoBehaviour {
     return Mouse.MousePosition();
   }
 
-  private void Update() {
+  public static void Update() {
     foreach (Action action in registeredActions.Values) {
       action.Update();
     }

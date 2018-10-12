@@ -35,6 +35,10 @@ public class GameManager : MonoBehaviour {
     DontDestroyOnLoad(manager);
   }
 
+  private void Update() {
+    InputManager.Update();
+  }
+
   protected static void Destroy() {
     Destroy(GameManager.Manager.gameObject);
     GameManager.Manager = null;
