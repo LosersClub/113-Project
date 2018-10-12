@@ -30,7 +30,6 @@ public class Action {
   }
 
   public void Update() {
-    // binding is to a valid and active mouse button
     if (binding.InputActive()) {
       boundAction();
     }
