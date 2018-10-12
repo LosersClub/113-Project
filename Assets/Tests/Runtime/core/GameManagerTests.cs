@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using UnityEngine;
 
-public class GameControllerTest {
+public class GameManagerTests {
   [Test]
   public void AssignInstance() {
     GameObject gameObject = new GameObject();
