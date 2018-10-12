@@ -3,6 +3,32 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
   private static GameManager manager = null;
+  private GameState state = GameState.ACTIVE;
+
+  private void Awake() {
+    if (manager == null) {
+      GameManager.Manager = this;
+      DontDestroyOnLoad(manager);
+      this.Initialize();
+    } else if (manager != this) {
+      Destroy(this.gameObject); // Delete current instance to maintain singleton.
+    }
+  }
+
+  private void Initialize() {
+    Bindings.Initialize();
+  }
+
+  private void Update() {
+    InputManager.Update();
+  }
+
+  public static void Destroy() {
+    Destroy(GameManager.Manager.gameObject);
+    GameManager.Manager = null;
+  }
+
+  #region Poperties
   public static GameManager Manager {
     get {
       if (manager != null) {
@@ -15,7 +41,6 @@ public class GameManager : MonoBehaviour {
     }
   }
 
-  private GameState state = GameState.ACTIVE;
   public GameState State {
     get {
       return this.state;
@@ -24,23 +49,5 @@ public class GameManager : MonoBehaviour {
       this.state = value;
     }
   }
-
-  private void Awake() {
-    if (manager == null) {
-      GameManager.Manager = this;
-    } else if (manager != this) {
-      Destroy(this.gameObject); // Delete current instance to maintain singleton.
-    }
-    Bindings.Initialize();
-    DontDestroyOnLoad(manager);
-  }
-
-  private void Update() {
-    InputManager.Update();
-  }
-
-  protected static void Destroy() {
-    Destroy(GameManager.Manager.gameObject);
-    GameManager.Manager = null;
-  }
+  #endregion
 }
