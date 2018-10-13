@@ -5,9 +5,12 @@ public class GameManager : MonoBehaviour {
   private static GameManager manager = null;
   private GameState state = GameState.ACTIVE;
 
+  [SerializeField]
+  private Player player;
+
   private void Awake() {
     if (manager == null) {
-      GameManager.Manager = this;
+      manager = this;
       DontDestroyOnLoad(manager);
       this.Initialize();
     } else if (manager != this) {
@@ -24,8 +27,8 @@ public class GameManager : MonoBehaviour {
   }
 
   public static void Destroy() {
-    Destroy(GameManager.Manager.gameObject);
-    GameManager.Manager = null;
+    Destroy(manager.gameObject);
+    manager = null;
   }
 
   #region Poperties
@@ -36,17 +39,17 @@ public class GameManager : MonoBehaviour {
       }
       throw new ArgumentException("The singleton GameManager instance does not exist!");
     }
-    private set {
-      manager = value;
+  }
+
+  public static GameState State {
+    get {
+      return manager.state;
     }
   }
 
-  public GameState State {
+  public static Player Player {
     get {
-      return this.state;
-    }
-    private set {
-      this.state = value;
+      return manager.player;
     }
   }
   #endregion
