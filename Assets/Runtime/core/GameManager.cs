@@ -10,11 +10,11 @@ public class GameManager : SingletonMonoBehavior<GameManager> {
 
   protected override void Awake() {
     base.Awake();
-    this.Initialize();
-  }
 
-  private void Initialize() {
-    Bindings.Initialize();
+    // Only do the following once - when Instance is Awake:
+    if(this == GameManager.Instance) {
+      Bindings.Initialize();
+    }
   }
 
   private void Update() {
