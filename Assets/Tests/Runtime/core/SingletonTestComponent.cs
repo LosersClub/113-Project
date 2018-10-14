@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class SingletonTestComponent : SingletonMonoBehavior<SingletonTestComponent> {
 
-  // Use this for initialization
-  void Start () {
-    
-  }
-  
-  // Update is called once per frame
-  void Update () {
-    
-  }
+  // protected constructor prevents external construction of objects,
+  // enforcing use of singleton instance:
+  protected SingletonTestComponent() {}
+
 }
