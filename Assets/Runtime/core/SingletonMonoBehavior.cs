@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 /// <summary>
 /// Base class that implements Singleton pattern for MonoBehavior class.
@@ -93,15 +94,9 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
           string objName = String.Format("(Singleton) {0}", typeof(T));
           GameObject singletonObj = new GameObject(objName);
           DontDestroyOnLoad(singletonObj);
-          var newComponent = singletonObj.AddComponent<T>();
-          // The new component should have called Awake, which should have set
-          // instance. In case it was not set, assign it now and print a log
-          // message in case there is a problem (since Awake *should* have been
-          // called).
-          if(instance == null) {
-            Debug.Log("Awake was not called by new singleton. Setting instance.");
-            instance = newComponent;
-          }
+          singletonObj.AddComponent<T>();
+          Assert.IsNotNull(instance,
+                            "instance null; newComponent.Awake not called?");
 
           Debug.LogFormat("[Singleton] {0} Instance was requested, " +
                           "so GameObject {1} was created with " +
