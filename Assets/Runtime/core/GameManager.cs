@@ -4,7 +4,12 @@ using UnityEngine;
 public class GameManager : SingletonMonoBehavior<GameManager> {
   private GameState state = GameState.ACTIVE;
 
-  private void Awake() {
+  // protected constructor prevents external construction of objects,
+  // enforcing use of singleton instance:
+  protected GameManager() {}
+
+  protected override void Awake() {
+    base.Awake();
     this.Initialize();
   }
 
