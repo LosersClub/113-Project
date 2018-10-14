@@ -4,14 +4,15 @@ using UnityEngine;
 public class GameManager : SingletonMonoBehavior<GameManager> {
   private GameState state = GameState.ACTIVE;
 
-  // protected constructor prevents external construction of objects,
-  // enforcing use of singleton instance:
+  [SerializeField]
+  private Player player;
+
+  // protected constructor to enforce use of singleton instance:
   protected GameManager() {}
 
   protected override void Awake() {
     base.Awake();
 
-    // Only do the following once - when Instance is Awake:
     if(this == GameManager.Instance) {
       Bindings.Initialize();
     }
@@ -22,12 +23,24 @@ public class GameManager : SingletonMonoBehavior<GameManager> {
   }
 
   #region Properties
-  public GameState State {
+  public static GameManager Manager {
     get {
-      return this.state;
+      return GameManager.Instance;
+    }
+  }
+
+  public static GameState State {
+    get {
+      return GameManager.Instance.state;
     }
     private set {
-      this.state = value;
+      GameManager.Instance.state = value;
+    }
+  }
+
+  public static Player Player {
+    get {
+      return GameManager.Instance.player;
     }
   }
   #endregion
