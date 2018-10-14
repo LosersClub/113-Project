@@ -42,10 +42,22 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
 {
   private static T instance;
   private static object _lock = new object();
-  private static bool onDestroyed = false;
+  private static bool instanceWasDestroyed = false;
 
-  public void OnDestroy () {
-    onDestroyed = true;
+  void Awake() {
+    // Prevent another instance of the singleton:
+    if(instance != null && instance != this) {
+      Destroy(this.gameObject);
+    }
+  }
+
+  void OnDestroy () {
+    // Extraneous instances of the singleton will be destroyed on Awake, which
+    // calls OnDestroy. So, have to make sure that Instance is the one being
+    // destroyed before setting instanceWasDestroyed flag:
+    if(instance == this) {
+      instanceWasDestroyed = true;
+    }
   }
 
   public static T Instance {
@@ -56,12 +68,12 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
       // Unity has destroyed the singleton. Instead of creating a new
       // singleton instance that Unity would not clean up later, we  throw an
       // exception:
-      if(onDestroyed) {
+      if(instanceWasDestroyed) {
         string eStr = String.Format("[Singleton] {0} Instance already " +
                                       "destroyed by OnDestroy", typeof(T));
         throw new ArgumentException(eStr);
       }
-      
+
       lock(_lock) {
         if (instance == null) {
           instance = (T)FindObjectOfType(typeof(T));
