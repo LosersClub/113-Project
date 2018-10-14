@@ -1,22 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using XInputWrapper;
 
 public static class InputManager {
-  private static Dictionary<string, Action> registeredActions = new Dictionary<string, Action>();
+  private static Dictionary<string, IAction> registeredActions = new Dictionary<string, IAction>();
 
-  public static void AddAction(string name, Action.ActionToExecute boundAction, 
+  public static void AddButtonAction(string name, ButtonAction.ActionToExecute boundAction, 
     IButton binding) {
-    Action action = new Action(name, boundAction, binding);
+    ButtonAction action = new ButtonAction(name, boundAction, binding);
     registeredActions.Add(name, action);
+  }
 
+  public static void AddAnalog1DAction(string name, AnalogAction1D.ActionToExecute boundAction,
+    IAnalog1D binding) {
+    AnalogAction1D action = new AnalogAction1D(name, boundAction, binding);
+    registeredActions.Add(name, action);
+  }
+
+  public static void AddAnalog2DAction(string name, AnalogAction2D.ActionToExecute boundAction,
+  IAnalog2D binding) {
+    AnalogAction2D action = new AnalogAction2D(name, boundAction, binding);
+    registeredActions.Add(name, action);
   }
 
   public static void RemoveAction(string name) {
     registeredActions.Remove(name);
   }
 
-  public static void RebindAction(string name, IButton binding) {
-    registeredActions[name].InputDevice = binding;
+  public static void RebindAction(string name, IInputDevice binding) {
+    registeredActions[name].Rebind(binding);
   }
 
   public static Vector3 GetMousePosition() {
@@ -24,7 +36,7 @@ public static class InputManager {
   }
 
   public static void Update() {
-    foreach (Action action in registeredActions.Values) {
+    foreach (IAction action in registeredActions.Values) {
       action.Update();
     }
   }
