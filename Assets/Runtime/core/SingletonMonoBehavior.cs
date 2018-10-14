@@ -40,63 +40,52 @@ using UnityEngine;
 /// </remarks>
 public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
 {
-  private static T _instance;
-  
+  private static T instance;
   private static object _lock = new object();
+  private static bool onDestroyed = false;
 
-  public static T Instance
-  {
-    get
-    {
-      if (applicationIsQuitting) {
-        throw new ArgumentException(String.Format(
-          "[Singleton] {0} Instance already destroyed on application quit.",
-          typeof(T)));
+  public void OnDestroy () {
+    onDestroyed = true;
+  }
+
+  public static T Instance {
+    get {
+
+      // When Unity quits, it destroys objects in a random order. So, during
+      // the quit process, a script could request a singleton instance after
+      // Unity has destroyed the singleton. Instead of creating a new
+      // singleton instance that Unity would not clean up later, we  throw an
+      // exception:
+      if(onDestroyed) {
+        string eStr = String.Format("[Singleton] {0} Instance already " +
+                                      "destroyed by OnDestroy", typeof(T));
+        throw new ArgumentException(eStr);
       }
       
-      lock(_lock)
-      {
-        if (_instance == null)
-        {
-          _instance = (T) FindObjectOfType(typeof(T));
+      lock(_lock) {
+        if (instance == null) {
+          instance = (T)FindObjectOfType(typeof(T));
           
-          if ( FindObjectsOfType(typeof(T)).Length > 1 )
-          {
-            throw new ArgumentException(String.Format(
-              "[Singleton] More than one {0} Instance! Reopening the scene " +
-              "might fix it.",
-              typeof(T)));
+          if(FindObjectsOfType(typeof(T)).Length > 1) {
+            string eStr = String.Format("[Singleton] More than one {0} " +
+                                          "Instance", typeof(T));
+            throw new ArgumentException(eStr);
           }
           
-          if (_instance == null)
-          {
+          if(instance == null) {
             GameObject singleton = new GameObject();
-            _instance = singleton.AddComponent<T>();
+            instance = singleton.AddComponent<T>();
             singleton.name = "(singleton) "+ typeof(T).ToString();
             
             DontDestroyOnLoad(singleton);
             
-            Debug.Log("[Singleton] An instance of " + typeof(T) + 
-              " is needed in the scene, so '" + singleton +
-              "' was created with DontDestroyOnLoad.");
+            Debug.LogFormat("[Singleton] An instance of {0} was requested, " +
+                            "so {1} was created", typeof(T), singleton);
           }
         }
         
-        return _instance;
+        return instance;
       }
     }
-  }
-  
-  private static bool applicationIsQuitting = false;
-  /// <summary>
-  /// When Unity quits, it destroys objects in a random order.
-  /// In principle, a Singleton is only destroyed when application quits.
-  /// If any script calls Instance after it have been destroyed, 
-  ///   it will create a buggy ghost object that will stay on the Editor scene
-  ///   even after stopping playing the Application. Really bad!
-  /// So, this was made to be sure we're not creating that buggy ghost object.
-  /// </summary>
-  public void OnDestroy () {
-    applicationIsQuitting = true;
   }
 }
