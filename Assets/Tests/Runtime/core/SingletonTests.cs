@@ -11,6 +11,7 @@ public class SingletonTests {
   public void Singleton_CreatesAndDestroysDupesAndDestroysInstance() {
     // Test that can create a new component on first Instance call:
     SingletonTestComponent firstInstance = SingletonTestComponent.Instance;
+    Assert.That(firstInstance, Is.Not.Null);
 
     GameObject toDestroyObject = new GameObject();
     toDestroyObject.AddComponent<SingletonTestComponent>();
