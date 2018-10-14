@@ -21,28 +21,27 @@ public class SingletonTests {
     // Instance wasn't changed to the new component:
     Assert.That(toDestroyObject.GetComponent<SingletonTestComponent>(),
                   Is.Not.EqualTo(SingletonTestComponent.Instance));
-    // Make sure the Instance is still the first instance:
     Assert.That(firstInstance, Is.EqualTo(SingletonTestComponent.Instance));
-    // Finally, make sure that the component was not already destroyed. If it
-    // was, then the tests above are inaccurate:
+    // Make sure that the component was not already destroyed. If it was, then
+    // the tests above are inaccurate:
     Assert.That(toDestroyObject.GetComponent<SingletonTestComponent>(),
                 Is.Not.Null);
 
     // TODO: wait until toDestroyObject's SingletonTestComponent is destroyed.
-    // Have to wait because SingletonTestComponent calls
-    // UnityEngine.Object.Destroy to destroy the component, but that method
-    // does not immediately destroy the component. For now, instead of waiting,
-    // destroy the object immediately here, and then proceed with testing:
+    // Have to wait because SingletonTestComponent uses
+    // UnityEngine.Object.Destroy, which does not immediately destroy the
+    // component.
+    // Until that TODO is complete, destroy the object immediately to proceed
+    // with testing:
     UnityEngine.Object.DestroyImmediate(toDestroyObject.GetComponent<SingletonTestComponent>());
-    // Make sure that the component was destroyed:
     Assert.That(toDestroyObject.GetComponent<SingletonTestComponent>(),
                 Is.Null);
 
     var firstInstanceObj = firstInstance.gameObject;
     UnityEngine.Object.DestroyImmediate(firstInstance);
-    // Have to test that firstInstanceObj.GetComponent<SingletonTestComponent>()
-    // Is.Null. Testing firstInstance Is.Null fails, stating "Expected null but
-    // was <null>" for some reason.
+    // Note: have to test via firstInstanceObj.GetComponent. Directly testing
+    // firstInstance Is.Null fails, stating "Expected null but was <null>" for
+    // some reason.
     Assert.That(firstInstanceObj.GetComponent<SingletonTestComponent>(), Is.Null);
 
     Assert.That(() => { return SingletonTestComponent.Instance; }, Throws.ArgumentException);
