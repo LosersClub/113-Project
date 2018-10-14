@@ -45,9 +45,15 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
   private static bool instanceWasDestroyed = false;
 
   void Awake() {
-    // Prevent another instance of the singleton:
-    if(instance != null && instance != this) {
-      Destroy(this.gameObject);
+    if(instance == null) {
+      // Note: have to cast to MonoBehaviour, and then cast to T. The compiler
+      // refuses to allow a direct cast to T.
+      // instance = GetComponent<T>();
+      instance = (T)((MonoBehaviour)this);
+    }
+    else if(instance != this) {
+      // Prevent another instance of the singleton:
+      Destroy(this);
     }
   }
 
@@ -56,7 +62,12 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
     // calls OnDestroy. So, have to make sure that Instance is the one being
     // destroyed before setting instanceWasDestroyed flag:
     if(instance == this) {
+      Debug.LogFormat("[Singleton] {0} Instance destroyed", typeof(T));
       instanceWasDestroyed = true;
+    }
+    else {
+      Debug.LogFormat("[Singleton] {0} extraneous instance destroyed",
+                      typeof(T));
     }
   }
 
@@ -75,19 +86,26 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
       }
 
       lock(_lock) {
-        if (instance == null) {
-          instance = (T)FindObjectOfType(typeof(T));
-          
+        // instance would have been set in Awake. So, if instance == null,
+        // there are no existing singleton components. So, create a new one on
+        // a new GameObject:
+        if(instance == null) {
+          string objName = String.Format("(Singleton) {0}", typeof(T));
+          GameObject singletonObj = new GameObject(objName);
+          DontDestroyOnLoad(singletonObj);
+          var newComponent = singletonObj.AddComponent<T>();
+          // The new component should have called Awake, which should have set
+          // instance. In case it was not set, assign it now and print a log
+          // message in case there is a problem (since Awake *should* have been
+          // called).
           if(instance == null) {
-            string objName = String.Format("(Singleton) {0}", typeof(T));
-            GameObject singleton = new GameObject(objName);
-            DontDestroyOnLoad(singleton);
-            instance = singleton.AddComponent<T>();
-            
-            Debug.LogFormat("[Singleton] An instance of {0} was requested, " +
-                            "so GameObject {1} was created with " +
-                            "DontDestroyOnLoad", typeof(T), singleton);
+            Debug.Log("Awake was not called by new singleton. Setting instance.");
+            instance = newComponent;
           }
+
+          Debug.LogFormat("[Singleton] {0} Instance was requested, " +
+                          "so GameObject {1} was created with " +
+                          "DontDestroyOnLoad", typeof(T), singletonObj);
         }
         
         return instance;
