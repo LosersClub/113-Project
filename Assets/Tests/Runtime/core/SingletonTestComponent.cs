@@ -8,4 +8,15 @@ public class SingletonTestComponent : SingletonMonoBehavior<SingletonTestCompone
   // enforcing use of singleton instance:
   protected SingletonTestComponent() {}
 
+  // Override Awake to test that this does not break SingletonMonoBehavior:
+  protected override void Awake() {
+    base.Awake();
+    Debug.Log("SingletonTestComponent Awake");
+  }
+
+  // Override OnDestroy to test that this does not break SingletonMonoBehavior:
+  protected override void OnDestroy() {
+    base.OnDestroy();
+    Debug.Log("SingletonTestComponent OnDestroy");
+  }
 }
