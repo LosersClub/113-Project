@@ -66,12 +66,6 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
         if (instance == null) {
           instance = (T)FindObjectOfType(typeof(T));
           
-          if(FindObjectsOfType(typeof(T)).Length > 1) {
-            string eStr = String.Format("[Singleton] More than one {0} " +
-                                          "Instance", typeof(T));
-            throw new ArgumentException(eStr);
-          }
-          
           if(instance == null) {
             GameObject singleton = new GameObject();
             instance = singleton.AddComponent<T>();
