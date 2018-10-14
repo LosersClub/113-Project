@@ -67,14 +67,14 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
           instance = (T)FindObjectOfType(typeof(T));
           
           if(instance == null) {
-            GameObject singleton = new GameObject();
-            instance = singleton.AddComponent<T>();
-            singleton.name = "(singleton) "+ typeof(T).ToString();
-            
+            string objName = String.Format("(Singleton) {0}", typeof(T));
+            GameObject singleton = new GameObject(objName);
             DontDestroyOnLoad(singleton);
+            instance = singleton.AddComponent<T>();
             
             Debug.LogFormat("[Singleton] An instance of {0} was requested, " +
-                            "so {1} was created", typeof(T), singleton);
+                            "so GameObject {1} was created with " +
+                            "DontDestroyOnLoad", typeof(T), singleton);
           }
         }
         
