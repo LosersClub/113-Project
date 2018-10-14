@@ -4,7 +4,12 @@ using UnityEngine.Assertions;
 
 /// <summary>
 /// Base class that implements Singleton pattern for MonoBehavior class.
-/// Inherit from this to create a singleton MonoBehavior subclass.
+/// Inherit from this to create a singleton MonoBehavior subclass. Make sure
+/// to:
+/// 1. Set constructor to protected (to prevent externally constructing
+///    additional instances).
+/// 2. If defining Awake(), set to protected override and call base.Awake().
+///    Do similarly if defining OnDestroy().
 /// </summary>
 /// <example>
 /// // Define a class that inherits from SingletonMonoBehavior:
@@ -16,6 +21,13 @@ using UnityEngine.Assertions;
 ///   // Now can implement your code, such as MonoBehavior methods:
 ///   void Start () {
 ///     // Do stuff
+///   }
+///
+///   // But make sure to set protected override and call base method if
+///   // needed:
+///   protected override void OnDestroy() {
+///     base.OnDestroy();
+///     // Do subclass stuff.
 ///   }
 ///   
 ///   void myFunc() {
@@ -30,13 +42,6 @@ using UnityEngine.Assertions;
 /// MyClass.Instance.myFunc();
 /// </example>
 /// <remarks>
-/// Be aware that inheriting the class alone will not prevent a non singleton
-/// constructor calls such as `T myT = new T();`.
-/// To prevent that, add `protected T () {}` to your singleton class as in the
-/// example.
-/// 
-/// As a note, this is made as MonoBehaviour because Coroutines are needed.
-/// 
 /// Adapted from class at http://wiki.unity3d.com/index.php/Singleton
 /// </remarks>
 public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
@@ -45,7 +50,7 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
   private static object _lock = new object();
   private static bool instanceWasDestroyed = false;
 
-  void Awake() {
+  protected virtual void Awake() {
     if(instance == null) {
       // Note: have to cast to MonoBehaviour, and then cast to T. The compiler
       // refuses to allow a direct cast to T.
@@ -58,7 +63,7 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
     }
   }
 
-  void OnDestroy () {
+  protected virtual void OnDestroy () {
     // Extraneous instances of the singleton will be destroyed on Awake, which
     // calls OnDestroy. So, have to make sure that Instance is the one being
     // destroyed before setting instanceWasDestroyed flag:
