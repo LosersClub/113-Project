@@ -56,6 +56,7 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
       // refuses to allow a direct cast to T.
       // instance = GetComponent<T>();
       instance = (T)((MonoBehaviour)this);
+      DontDestroyOnLoad(this.gameObject);
     }
     else if(instance != this) {
       // Prevent another instance of the singleton:
