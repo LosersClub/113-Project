@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using XInputWrapper;
 
-public class AnalogAction2D : IAction {
+public class AnalogAction2D : IAnalogAction {
 
   private IAnalog2D binding;
   private string name;

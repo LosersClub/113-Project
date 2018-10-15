@@ -37,7 +37,11 @@ public static class InputManager {
 
   public static void Update() {
     foreach (IAction action in registeredActions.Values) {
-      action.Update();
+      // assume user index is 0 for now
+      // this check makes sure that if it's an analog action that the controller is connected
+      if (!(action is IAnalogAction && !ControllerInput.ControllerConnected(0))) {
+        action.Update();
+      }
     }
   }
 }

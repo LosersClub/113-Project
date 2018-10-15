@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class AnalogAction1D : IAction {
+public class AnalogAction1D : IAnalogAction {
   private IAnalog1D binding;
   private string name;
   public delegate void ActionToExecute(float axis);
