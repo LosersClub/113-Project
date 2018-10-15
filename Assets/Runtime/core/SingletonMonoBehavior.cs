@@ -60,7 +60,7 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
     }
     else if(instance != this) {
       // Prevent another instance of the singleton:
-      Destroy(this);
+      Destroy(this.gameObject);
     }
   }
 
