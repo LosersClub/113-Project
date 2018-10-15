@@ -42,7 +42,9 @@ public class Player : MonoBehaviour {
   }
 
   public void Move(float dir) {
-    this.xVelocity = dir * this.maxSpeed;
+    if (dir != 0) {
+      this.xVelocity = dir * this.maxSpeed;
+    }
   }
 
   public void Jump() {
