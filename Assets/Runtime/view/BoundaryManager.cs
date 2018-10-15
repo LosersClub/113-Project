@@ -11,7 +11,7 @@ public class BoundaryManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		managerBox = GetComponent<BoxCollider2D>();
-		player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+    player = GameManager.Player.transform;
 	}
 	
 	// Update is called once per frame

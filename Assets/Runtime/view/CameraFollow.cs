@@ -10,7 +10,7 @@ public class CameraFollow : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		cameraBox = GetComponent<BoxCollider2D>();
-		player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>(); 
+    player = GameManager.Player.transform; 
 	}
 	
 	// Update is called once per frame
@@ -44,8 +44,6 @@ public class CameraFollow : MonoBehaviour {
 	
 	void FollowPlayer() {
 		if (GameObject.Find("Boundary")) {
-			
-			
 			BoxCollider2D boxCollider = GameObject.Find("Boundary").GetComponent<BoxCollider2D>();
 			transform.position = new Vector3 (	Mathf.Clamp(player.position.x, boxCollider.bounds.min.x + cameraBox.size.x / 2, boxCollider.bounds.max.x - cameraBox.size.x / 2),
 												Mathf.Clamp(player.position.y, boxCollider.bounds.min.y + cameraBox.size.y / 2, boxCollider.bounds.max.y - cameraBox.size.y / 2),
