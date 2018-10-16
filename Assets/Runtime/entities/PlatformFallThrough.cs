@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 [RequireComponent(typeof(Collider2D))]
 public class PlatformFallThrough : MonoBehaviour {
@@ -11,6 +12,9 @@ public class PlatformFallThrough : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		boxCollider2DComponent = GetComponent<BoxCollider2D>();
+
+		Assert.AreEqual(LayerMask.NameToLayer("Ground"), this.gameObject.layer,
+						"PlatformFallThrough should be on Ground layer");
 	}
 
 	// Update is called once per frame
