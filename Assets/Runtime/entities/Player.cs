@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class Player : MonoBehaviour {
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour {
   private bool jumpHeld = false;
   private float jumpCounter = 0;
   private float xVelocity = 0;
+  private List<PlatformFallThrough> currentFallThroughs = new List<PlatformFallThrough>();
 
   public void Awake() {
     this.rb = this.GetComponent<Rigidbody2D>();
@@ -60,6 +62,30 @@ public class Player : MonoBehaviour {
   }
 
   private bool Grounded() {
+    return (GetCurrentGroundCollider() != null);
+  }
+
+  private Collider2D GetCurrentGroundCollider() {
     return Physics2D.OverlapBox(this.feetPos.position, this.feetSize, 0, this.groundLayer);
+  }
+
+  public void DropDown() {
+    // Note: allows multiple calls as drop key is held down, for case where
+    // drop key starts being held down before touching platform.
+    Collider2D groundCollider = GetCurrentGroundCollider();
+    if(groundCollider != null) {
+      var platformFallThrough = groundCollider.gameObject.GetComponent<PlatformFallThrough>();
+      if(platformFallThrough != null) {
+        platformFallThrough.AllowFallThrough(gameObject);
+        currentFallThroughs.Add(platformFallThrough);
+      }
+    }
+  }
+
+  public void EndDropDown() {
+    foreach(PlatformFallThrough p in currentFallThroughs) {
+      p.EndFallThrough(gameObject);
+    }
+    currentFallThroughs.Clear();
   }
 }
