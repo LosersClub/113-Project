@@ -14,6 +14,7 @@ public class Bindings {
       new KeyboardButton(KeyCode.Space));
     InputManager.AddButtonAction("Jump", GameManager.Player.Jump,
       new KeyboardButton(KeyCode.Space));
+
     InputManager.AddAnalog2DAction("Controller move", (float x, float y) => GameManager.Player.Move(x),
       new ControllerAnalog2D(Side.Left));
     InputManager.AddButtonAction("Controller Jump", GameManager.Player.Jump,
