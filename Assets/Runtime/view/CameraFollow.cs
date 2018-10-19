@@ -20,7 +20,7 @@ public class CameraFollow : MonoBehaviour {
 	}
 	
 	void AspectRatioBoxChange() {
-		Debug.Log(Camera.main.aspect); 
+		// Debug.Log(Camera.main.aspect); 
 		
 		// 16:10 
 		if (Camera.main.aspect >= (1.575f) && Camera.main.aspect < 1.7f) {
