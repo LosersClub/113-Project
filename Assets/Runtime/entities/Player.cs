@@ -15,6 +15,7 @@ public class Player : MonoBehaviour {
   public float maxJumpTime = 1.0f;
   public Vector2 feetSize = new Vector2(1f, 0.05f);
 
+  private bool crouching = false;
   private bool jumping = false;
   private bool jumpHeld = false;
   private float jumpCounter = 0;
@@ -36,15 +37,20 @@ public class Player : MonoBehaviour {
 
     this.xVelocity = 0;
     this.jumpHeld = false;
+    this.crouching = false;
   }
 
   private void FixedUpdate() {
     this.rb.velocity = new Vector2(this.xVelocity, this.rb.velocity.y);
   }
 
-  public void Move(float dir) {
-    if (dir != 0) {
-      this.xVelocity = dir * this.maxSpeed;
+  public void Move(float x, float y) {
+    if (x != 0) {
+      this.xVelocity = x * this.maxSpeed;
+    }
+
+    if(y < 0) {
+      this.crouching = true;
     }
   }
 
@@ -68,7 +74,7 @@ public class Player : MonoBehaviour {
     return Physics2D.OverlapBox(this.feetPos.position, this.feetSize, 0, this.groundLayer);
   }
 
-  public void DropDown() {
+  private void DropDown() {
     // Note: allows multiple calls as drop key is held down, for case where
     // drop key starts being held down before touching platform.
     Collider2D groundCollider = GetCurrentGroundCollider();
