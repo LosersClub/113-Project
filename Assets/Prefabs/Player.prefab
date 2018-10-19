@@ -134,7 +134,7 @@ MonoBehaviour:
   feetPos: {fileID: 4600726635500678}
   maxSpeed: 5
   jumpForce: 3.5
-  maxJumpTime: 0.35
+  maxJumpTime: 0.6
   feetSize: {x: 0.75, y: 0.05}
 --- !u!212 &212545765943488554
 SpriteRenderer:
