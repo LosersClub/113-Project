@@ -19,7 +19,7 @@ public class Player : MonoBehaviour {
   private bool jumpHeld = false;
   private float jumpCounter = 0;
   private float xVelocity = 0;
-  private List<PlatformFallThrough> currentFallThroughs = new List<PlatformFallThrough>();
+  private List<Platform> currentFallThroughs = new List<Platform>();
 
   public void Awake() {
     this.rb = this.GetComponent<Rigidbody2D>();
@@ -74,16 +74,16 @@ public class Player : MonoBehaviour {
     // drop key starts being held down before touching platform.
     Collider2D groundCollider = GetCurrentGroundCollider();
     if(groundCollider != null) {
-      var platformFallThrough = groundCollider.gameObject.GetComponent<PlatformFallThrough>();
-      if(platformFallThrough != null) {
-        platformFallThrough.AllowFallThrough(gameObject);
-        currentFallThroughs.Add(platformFallThrough);
+      var platform = groundCollider.gameObject.GetComponent<Platform>();
+      if(platform != null) {
+        platform.AllowFallThrough(gameObject);
+        currentFallThroughs.Add(platform);
       }
     }
   }
 
   public void EndDropDown() {
-    foreach(PlatformFallThrough p in currentFallThroughs) {
+    foreach(Platform p in currentFallThroughs) {
       p.EndFallThrough(gameObject);
     }
     currentFallThroughs.Clear();
