@@ -10,8 +10,6 @@ public class Bindings {
       new KeyboardButton(KeyCode.A));
     InputManager.AddButtonAction("DropDown", GameManager.Player.DropDown,
       new KeyboardButton(KeyCode.S));
-    InputManager.AddButtonAction("EndDropDown", GameManager.Player.EndDropDown,
-      new KeyboardButton(KeyCode.Space));
     InputManager.AddButtonAction("Jump", GameManager.Player.Jump,
       new KeyboardButton(KeyCode.Space));
 

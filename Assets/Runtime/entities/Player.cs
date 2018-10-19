@@ -19,7 +19,6 @@ public class Player : MonoBehaviour {
   private bool jumpHeld = false;
   private float jumpCounter = 0;
   private float xVelocity = 0;
-  private List<Platform> currentFallThroughs = new List<Platform>();
 
   public void Awake() {
     this.rb = this.GetComponent<Rigidbody2D>();
@@ -76,16 +75,8 @@ public class Player : MonoBehaviour {
     if(groundCollider != null) {
       var platform = groundCollider.gameObject.GetComponent<Platform>();
       if(platform != null) {
-        platform.AllowFallThrough(gameObject);
-        currentFallThroughs.Add(platform);
+        platform.AllowFallThrough(this.gameObject);
       }
     }
-  }
-
-  public void EndDropDown() {
-    foreach(Platform p in currentFallThroughs) {
-      p.EndFallThrough(gameObject);
-    }
-    currentFallThroughs.Clear();
   }
 }
