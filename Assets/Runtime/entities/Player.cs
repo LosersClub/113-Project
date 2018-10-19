@@ -54,7 +54,19 @@ public class Player : MonoBehaviour {
     }
   }
 
-  public void Jump() {
+  /// <summary>
+  /// If crouching, drop down. If not crouching, jump.
+  /// </summary>
+  public void JumpOrDropDown() {
+    if(this.crouching) {
+      DropDown();
+    }
+    else {
+      Jump();
+    }
+  }
+
+  private void Jump() {
     this.jumpHeld = true;
     if (this.Grounded()) {
       this.rb.velocity = Vector2.up * this.jumpForce;
