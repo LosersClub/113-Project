@@ -31,7 +31,9 @@ public class Player : MonoBehaviour {
       this.transform.eulerAngles = new Vector3(0, 180, 0);
     }
 
-    if (this.jumpCounter > 0) {
+    if (this.jumpCounter > 0 && this.physics.Collision.Above) {
+      this.jumpCounter = 0;
+    } else if (this.jumpCounter > 0) {
       this.physics.velocity.y = Mathf.Sqrt(2f * minJumpHeight * -gravity);
     }
 
