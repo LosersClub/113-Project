@@ -13,12 +13,15 @@ public sealed class PhysicsController : MonoBehaviour {
   [SerializeField]
   private LayerMask groundMask = 0;
   [SerializeField]
+  private LayerMask platformMask = 0;
+  [SerializeField]
   private LayerMask triggerMask = 0;
   [ReadOnly]
   public Vector2 velocity;
 
   private BoxCollider2D boxCollider;
   private Vector2 raySpacing;
+  private bool ignorePlatforms = false;
 
   public struct CollisionState {
     public bool Left { get; set; }
@@ -50,6 +53,11 @@ public sealed class PhysicsController : MonoBehaviour {
   #region Properties
   public CollisionState Collision { get { return this.state; } }
   public bool Grounded { get { return this.state.Below; } }
+  public bool IgnorePlatforms {
+    get { return this.ignorePlatforms; }
+    set { this.ignorePlatforms = value; }
+  }
+  
   public float RayInset {
     get { return this.rayInset; }
     set {
@@ -93,6 +101,7 @@ public sealed class PhysicsController : MonoBehaviour {
     if (Time.deltaTime > 0f) {
       this.velocity = movement / Time.deltaTime;
     }
+    this.ignorePlatforms = false;
   }
 
   public void RecalculateRaySpacing() {
@@ -174,12 +183,15 @@ public sealed class PhysicsController : MonoBehaviour {
 
     // raycast from x-pos we will be at (horiz before vert)
     origin.x += movement.x;
-
+    LayerMask mask = groundMask;
+    if (!up && !ignorePlatforms) {
+      mask |= platformMask;
+    }
     for (int i = 0; i < this.verticalRays; i++) {
       Vector2 ray = new Vector2(origin.x + i * this.raySpacing.x, origin.y);
       DrawRay(ray, direction * distance, Color.blue);
 
-      RaycastHit2D hit = Physics2D.Raycast(ray, direction, distance, groundMask);
+      RaycastHit2D hit = Physics2D.Raycast(ray, direction, distance, mask);
       if (hit) {
         movement.y = hit.point.y - ray.y;
         distance = Mathf.Abs(movement.y);
