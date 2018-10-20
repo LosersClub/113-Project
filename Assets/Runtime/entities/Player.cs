@@ -30,8 +30,12 @@ public class Player : MonoBehaviour {
     } else if (normalizedMovement < 0) {
       this.transform.eulerAngles = new Vector3(0, 180, 0);
     }
-
-    if (this.jumpCounter > 0 && this.physics.Collision.Above) {
+    
+    if (this.jumping && this.crouching) {
+      this.physics.IgnorePlatforms = true;
+    }
+    if ((this.jumpCounter > 0 && this.physics.Collision.Above) ||
+         this.jumpCounter == this.maxJumpTime && this.crouching) {
       this.jumpCounter = 0;
     } else if (this.jumpCounter > 0) {
       this.physics.velocity.y = Mathf.Sqrt(2f * minJumpHeight * -gravity);
@@ -51,7 +55,7 @@ public class Player : MonoBehaviour {
   public void Move(float x, float y) {
     this.normalizedMovement += x;
 
-    if (y < 0) {
+    if (y < -0.3f) {
       this.crouching = true;
     }
   }
@@ -62,22 +66,6 @@ public class Player : MonoBehaviour {
       this.jumpCounter = this.maxJumpTime;
     } else if (this.jumpCounter > 0) {
       this.jumpCounter -= Time.deltaTime;
-    }
-  }
-
-  private Collider2D GetCurrentGroundCollider() {
-    return null;
-  }
-
-  private void DropDown() {
-    // Note: allows multiple calls as drop key is held down, for case where
-    // drop key starts being held down before touching platform.
-    Collider2D groundCollider = GetCurrentGroundCollider();
-    if(groundCollider != null) {
-      var platform = groundCollider.gameObject.GetComponent<Platform>();
-      if(platform != null) {
-        platform.AllowFallThrough(this.gameObject);
-      }
     }
   }
 }
