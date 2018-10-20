@@ -3,14 +3,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+  [Header("Run Settings")]
   public float gravity = -25f;
   public float runSpeed = 8f;
   public float groundDamping = 20f;
 
+  [Header("Jump Settings")]
   public float airDamping = 10f;
   public float minJumpHeight = 1f;
   public float maxJumpTime = 0.35f;
 
+  [Header("Dash Settings")]
   public float dashSpeed = 100f;
   public float dashDistance = 3f;
   public float dashCooldown = 1f;

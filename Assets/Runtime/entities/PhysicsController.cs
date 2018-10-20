@@ -4,20 +4,24 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public sealed class PhysicsController : MonoBehaviour {
 
+  [ReadOnly]
+  public Vector2 velocity;
+
+  [Header("Ray Settings")]
   [SerializeField, Range(2,20)]
   private int horizontalRays = 8;
   [SerializeField, Range(2,20)]
   private int verticalRays = 4;
   [SerializeField, Range(0.001f, 0.3f)]
   private float rayInset = 0.02f;
+
+  [Header("Layer Masks")]
   [SerializeField]
   private LayerMask groundMask = 0;
   [SerializeField]
   private LayerMask platformMask = 0;
   [SerializeField]
   private LayerMask triggerMask = 0;
-  [ReadOnly]
-  public Vector2 velocity;
 
   private BoxCollider2D boxCollider;
   private Vector2 raySpacing;
