@@ -12,10 +12,14 @@ public class Bindings {
       new KeyboardButton(KeyCode.S));
     InputManager.AddButtonAction("Jump", GameManager.Player.Jump,
       new KeyboardButton(KeyCode.Space));
+    InputManager.AddButtonAction("Dash", GameManager.Player.Dash,
+      new KeyboardButton(KeyCode.LeftShift));
 
     InputManager.AddAnalog2DAction("Controller move", GameManager.Player.Move,
       new ControllerAnalog2D(Side.Left));
     InputManager.AddButtonAction("Controller Jump", GameManager.Player.Jump,
       new ControllerButton(Button.A));
+    InputManager.AddButtonAction("Controller Dash", GameManager.Player.Dash,
+      new ControllerButton(Button.B));
   }
 }

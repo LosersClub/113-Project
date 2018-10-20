@@ -104,6 +104,9 @@ MonoBehaviour:
   airDamping: 20
   minJumpHeight: 1
   maxJumpTime: 0.35
+  dashSpeed: 40
+  dashDistance: 1
+  dashCooldown: 1
 --- !u!114 &114458177214946920
 MonoBehaviour:
   m_ObjectHideFlags: 1
