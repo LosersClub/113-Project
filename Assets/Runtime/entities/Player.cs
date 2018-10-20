@@ -13,6 +13,7 @@ public class Player : MonoBehaviour {
   private PhysicsController physics;
   private float normalizedMovement;
 
+  private bool crouching = false;
   private bool jumping = false;
   private float jumpCounter = 0;
 
@@ -42,10 +43,15 @@ public class Player : MonoBehaviour {
       this.jumpCounter = 0;
     }
     this.jumping = false;
+    this.crouching = false;
   }
 
-  public void Move(float x) {
+  public void Move(float x, float y) {
     this.normalizedMovement += x;
+
+    if (y < 0) {
+      this.crouching = true;
+    }
   }
 
   public void Jump() {
@@ -54,6 +60,22 @@ public class Player : MonoBehaviour {
       this.jumpCounter = this.maxJumpTime;
     } else if (this.jumpCounter > 0) {
       this.jumpCounter -= Time.deltaTime;
+    }
+  }
+
+  private Collider2D GetCurrentGroundCollider() {
+    return null;
+  }
+
+  private void DropDown() {
+    // Note: allows multiple calls as drop key is held down, for case where
+    // drop key starts being held down before touching platform.
+    Collider2D groundCollider = GetCurrentGroundCollider();
+    if(groundCollider != null) {
+      var platform = groundCollider.gameObject.GetComponent<Platform>();
+      if(platform != null) {
+        platform.AllowFallThrough(this.gameObject);
+      }
     }
   }
 }
