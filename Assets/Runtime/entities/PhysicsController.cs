@@ -18,8 +18,26 @@ public sealed class PhysicsController : MonoBehaviour {
   public Vector2 velocity;
 
   private BoxCollider2D boxCollider;
-  private bool grounded = true;
   private Vector2 raySpacing;
+
+  public struct CollisionState {
+    public bool Left { get; set; }
+    public bool Right { get; set; }
+    public bool Above { get; set; }
+    public bool Below { get; set; }
+
+    public bool Collision {
+      get { return Left || Right || Above || Below; }
+    }
+
+    public void Reset() {
+      this.Left = false;
+      this.Right = false;
+      this.Above = false;
+      this.Below = false;
+    }
+  }
+  private CollisionState state;
 
   private struct Origins {
     public Vector2 topLeft;
@@ -30,7 +48,8 @@ public sealed class PhysicsController : MonoBehaviour {
   private const float insetPrecision = 0.001f;
 
   #region Properties
-  public bool Grounded { get { return grounded; } }
+  public CollisionState Collision { get { return this.state; } }
+  public bool Grounded { get { return this.state.Below; } }
   public float RayInset {
     get { return this.rayInset; }
     set {
@@ -59,7 +78,7 @@ public sealed class PhysicsController : MonoBehaviour {
   #endregion
 
   public void Move(Vector2 movement) {
-    this.grounded = false;
+    this.state.Reset();
     this.CreateRayOrigins();
 
     if (movement.x != 0f) {
@@ -71,7 +90,6 @@ public sealed class PhysicsController : MonoBehaviour {
 
     this.transform.Translate(movement, Space.World);
 
-    // TODO: Switch to FixedDeltaTime
     if (Time.deltaTime > 0f) {
       this.velocity = movement / Time.deltaTime;
     }
@@ -127,7 +145,13 @@ public sealed class PhysicsController : MonoBehaviour {
         movement.x = hit.point.x - ray.x;
         distance = Mathf.Abs(movement.x);
         // Remove inset from movement
-        movement.x += right ? -this.rayInset : this.rayInset;
+        if (right) {
+          movement.x -= this.rayInset;
+          this.state.Right = true;
+        } else {
+          movement.x += this.rayInset;
+          this.state.Left = true;
+        }
 
         if (distance < this.rayInset + insetPrecision) {
           break;
@@ -162,9 +186,10 @@ public sealed class PhysicsController : MonoBehaviour {
 
         if (up) {
           movement.y -= this.rayInset;
+          this.state.Above = true;
         } else {
           movement.y += this.rayInset;
-          this.grounded = true;
+          this.state.Below = true;
         }
 
         if (distance < this.rayInset + insetPrecision) {
