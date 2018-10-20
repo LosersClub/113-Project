@@ -2,7 +2,6 @@
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-
   [Header("Run Settings")]
   public float gravity = -25f;
   public float runSpeed = 8f;
@@ -19,6 +18,7 @@ public class Player : MonoBehaviour {
   public float dashCooldown = 1f;
 
   private PhysicsController physics;
+  private Animator animator;
   private float normalizedMovement;
   private bool facingRight = true;
 
@@ -31,6 +31,7 @@ public class Player : MonoBehaviour {
 
   private void Awake() {
     this.physics = this.GetComponent<PhysicsController>();
+    this.animator = this.GetComponent<Animator>();
   }
 
   private void Update() {
@@ -61,6 +62,7 @@ public class Player : MonoBehaviour {
       this.physics.velocity.y += gravity * Time.deltaTime;
     }
     this.physics.Move(this.physics.velocity * Time.deltaTime);
+    this.animator.SetFloat("horizontalSpeed", Mathf.Abs(this.normalizedMovement));
 
     this.normalizedMovement = 0;
     if (!this.jumping) {
@@ -71,7 +73,11 @@ public class Player : MonoBehaviour {
   }
 
   public void Move(float x, float y) {
-    this.normalizedMovement += x;
+    if (x > 0.3f) {
+      this.normalizedMovement += 1.0f;
+    } else if (x < -0.3f) {
+      this.normalizedMovement -= 1.0f;
+    }
 
     if (y < -0.3f) {
       this.crouching = true;
