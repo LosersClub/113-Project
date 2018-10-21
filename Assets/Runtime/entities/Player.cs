@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#define DEBUG_PHYS_RAYS
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -18,12 +19,24 @@ public class Player : MonoBehaviour {
   public float dashDistance = 3f;
   public float dashCooldown = 1f;
 
+  [Header("Checker Rays")]
+  public float standSize = 1f;
+
+  [Header("Collider stuff")]
+  public Vector2 playerOffset = new Vector2(0f, -0.06f);
+  public Vector2 playerSize = new Vector2(0.625f, 1.87f);
+  public Vector2 crouchOffset = new Vector2(0f, -0.4f);
+  public Vector2 crouchSize = new Vector2(0.625f, 1.17f);
+
   private PhysicsController physics;
   private Animator animator;
+  private new BoxCollider2D collider;
   private float normalizedMovement;
   private bool facingRight = true;
 
   private bool crouching = false;
+  private bool prevCrouching = false;
+
   private bool jumping = false;
   private float jumpCounter = 0;
 
@@ -33,13 +46,30 @@ public class Player : MonoBehaviour {
   private void Awake() {
     this.physics = this.GetComponent<PhysicsController>();
     this.animator = this.GetComponent<Animator>();
+    this.collider = this.GetComponent<BoxCollider2D>();
   }
 
   private void Update() {
-    this.animator.SetLayerWeight(1, this.crouching ? 1 : 0);
+    float targetSpeed = normalizedMovement * runSpeed;
+    if (this.crouching) {
+      this.animator.SetLayerWeight(1, 1);
+      targetSpeed *= crouchSpeed;
+    } else {
+      this.animator.SetLayerWeight(1, 0);
+    }
+
+    if (this.prevCrouching != this.crouching) {
+      if (this.crouching) {
+        this.collider.offset = this.crouchOffset;
+        this.collider.size = this.crouchSize;
+      } else {
+        this.collider.offset = this.playerOffset;
+        this.collider.size = this.playerSize;
+      }
+      this.physics.RecalculateRaySpacing();
+    }
 
     if (!dashing) {
-      float targetSpeed = normalizedMovement * runSpeed * (this.crouching ? crouchSpeed : 1.0f);
       this.physics.velocity.x = Mathf.Lerp(this.physics.velocity.x, targetSpeed,
         Time.deltaTime * (this.physics.Grounded ? this.groundDamping : this.airDamping));
     }
@@ -75,7 +105,26 @@ public class Player : MonoBehaviour {
       this.jumpCounter = 0;
     }
     this.jumping = false;
-    this.crouching = false;
+    this.prevCrouching = this.crouching;
+    if (this.crouching) {
+      this.crouching = !this.SpaceToStand();
+    }
+  }
+
+  private bool SpaceToStand() {
+    Bounds inset = this.collider.bounds;
+    inset.Expand(-2f * this.physics.RayInset);
+    Vector2 origin = new Vector2(inset.min.x, inset.max.y);
+
+    for (int i = 0; i < this.physics.VerticalRays; i++) {
+      Vector2 ray = new Vector2(origin.x + i * this.physics.RaySpacing.x, origin.y);
+      Debug.DrawRay(ray, Vector2.up * standSize, Color.blue);
+      RaycastHit2D hit = Physics2D.Raycast(ray, Vector2.up, standSize, this.physics.Ground);
+      if (hit) {
+        return false;
+      }
+    }
+    return true;
   }
 
   public void Move(float x, float y) {

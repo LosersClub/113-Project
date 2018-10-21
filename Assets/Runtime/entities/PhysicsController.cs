@@ -69,6 +69,16 @@ public sealed class PhysicsController : MonoBehaviour {
       this.RecalculateRaySpacing();
     }
   }
+  public int VerticalRays {
+    get { return this.verticalRays; }
+  }
+  public Vector2 RaySpacing {
+    get { return this.raySpacing; }
+  }
+
+  public LayerMask Ground {
+    get { return this.groundMask; }
+  }
   #endregion
 
   #region Unity Methods
