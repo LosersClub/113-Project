@@ -5,6 +5,7 @@ public class Player : MonoBehaviour {
   [Header("Run Settings")]
   public float gravity = -25f;
   public float runSpeed = 8f;
+  public float crouchSpeed = 0.8f;
   public float groundDamping = 20f;
 
   [Header("Jump Settings")]
@@ -35,8 +36,11 @@ public class Player : MonoBehaviour {
   }
 
   private void Update() {
+    this.animator.SetLayerWeight(1, this.crouching ? 1 : 0);
+
     if (!dashing) {
-      this.physics.velocity.x = Mathf.Lerp(this.physics.velocity.x, normalizedMovement * runSpeed,
+      float targetSpeed = normalizedMovement * runSpeed * (this.crouching ? crouchSpeed : 1.0f);
+      this.physics.velocity.x = Mathf.Lerp(this.physics.velocity.x, targetSpeed,
         Time.deltaTime * (this.physics.Grounded ? this.groundDamping : this.airDamping));
     }
 

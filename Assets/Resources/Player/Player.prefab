@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravity: -50
   runSpeed: 8
+  crouchSpeed: 0.8
   groundDamping: 40
   airDamping: 20
   minJumpHeight: 1
@@ -118,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdbfb268b6c1ad84abab3a78b83e0346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: {x: 0, y: 0}
+  velocity: {x: 0, y: 0.0000011241955}
   horizontalRays: 8
   verticalRays: 4
   rayInset: 0.02
@@ -166,7 +167,7 @@ SpriteRenderer:
   m_SortingLayerID: -1216080841
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 38ed9272cfbd62647b429d29b3df3e90, type: 3}
+  m_Sprite: {fileID: 21300004, guid: 38ed9272cfbd62647b429d29b3df3e90, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
