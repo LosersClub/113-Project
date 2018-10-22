@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbf856bd945b2524a9ef10b13ec46b3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  melee: {fileID: 0}
   gravity: -50
   runSpeed: 8
   crouchSpeed: 0.8
@@ -108,6 +109,11 @@ MonoBehaviour:
   dashSpeed: 40
   dashDistance: 1
   dashCooldown: 1
+  standSize: 1
+  playerOffset: {x: 0, y: -0.06}
+  playerSize: {x: 0.625, y: 1.87}
+  crouchOffset: {x: 0, y: -0.4}
+  crouchSize: {x: 0.625, y: 1.17}
 --- !u!114 &114458177214946920
 MonoBehaviour:
   m_ObjectHideFlags: 1
