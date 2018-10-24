@@ -5,7 +5,8 @@ using UnityEngine;
 public class ScrollingBackground : MonoBehaviour {
 
   public float assetSize;
-  public float parallaxSpeed;
+  public float parallaxSpeedX;
+  public float parallaxSpeedY;
 
   private Transform cameraTransform;
   private Transform[] layers;
@@ -13,6 +14,7 @@ public class ScrollingBackground : MonoBehaviour {
   private int leftIndex;
   private int rightIndex;
   private float lastCameraX;
+  private float lastCameraY;
 
   private void Start() {
     cameraTransform = Camera.main.transform;
@@ -23,17 +25,21 @@ public class ScrollingBackground : MonoBehaviour {
     leftIndex = 0;
     rightIndex = layers.Length - 1;
     lastCameraX = cameraTransform.position.x;
+    lastCameraY = cameraTransform.position.y;
   }
 
   private void Update() {
     float deltaX = cameraTransform.position.x - lastCameraX;
-    transform.position += Vector3.right * (deltaX * parallaxSpeed);
+    float deltaY = cameraTransform.position.y - lastCameraY;
+    transform.position +=
+      new Vector3(deltaX * parallaxSpeedX, deltaY * parallaxSpeedY, 0);
     if (cameraTransform.position.x < layers[leftIndex].transform.position.x + viewZone) {
       ScrollLeft();
     } else if (cameraTransform.position.x > layers[rightIndex].transform.position.x - viewZone) {
       ScrollRight();
     }
     lastCameraX = cameraTransform.position.x;
+    lastCameraY = cameraTransform.position.y;
   }
 
   private void ScrollLeft() {
