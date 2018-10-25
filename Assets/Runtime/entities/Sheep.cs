@@ -5,7 +5,7 @@ using UnityEngine;
 public class Sheep : MonoBehaviour {
 	
 	public float speed = 3f;
-	public float distance = 1f;
+	public float distance = .5f;
 	
 	private bool facingRight = true; 
 	private Vector2 dir = Vector2.right; 

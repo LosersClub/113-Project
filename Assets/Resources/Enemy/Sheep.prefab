@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  distance: 2
+  distance: 0.5
   groundPoint: {fileID: 4030303239144754}
   wallPoint: {fileID: 4238636388487334}
 --- !u!212 &212899680541362992
