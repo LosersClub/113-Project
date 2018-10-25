@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
 
+	public float damping = 4f; 
 	private BoxCollider2D cameraBox; 
 	private Transform player; 
+	private BoxCollider2D currentBoundary; 
 
 	// Use this for initialization
 	void Start () {
 		cameraBox = GetComponent<BoxCollider2D>();
-    player = GameManager.Player.transform; 
+		player = GameManager.Player.transform; 
+		currentBoundary = GameObject.Find("Boundary").GetComponent<BoxCollider2D>();
 	}
 	
 	// Update is called once per frame
@@ -47,11 +50,19 @@ public class CameraFollow : MonoBehaviour {
 	}
 	
 	void FollowPlayer() {
-		if (GameObject.Find("Boundary")) {
-			BoxCollider2D boxCollider = GameObject.Find("Boundary").GetComponent<BoxCollider2D>();
-			transform.position = new Vector3 (	Mathf.Clamp(player.position.x, boxCollider.bounds.min.x + cameraBox.size.x / 2, boxCollider.bounds.max.x - cameraBox.size.x / 2),
-												Mathf.Clamp(player.position.y, boxCollider.bounds.min.y + cameraBox.size.y / 2, boxCollider.bounds.max.y - cameraBox.size.y / 2),
-												transform.position.z); 
+		//  exit function if no active boundary  
+		if (!GameObject.Find("Boundary")) return; 
+		
+		BoxCollider2D newBoundary = GameObject.Find("Boundary").GetComponent<BoxCollider2D>();
+		Vector3 newPosition = new Vector3 (	Mathf.Clamp(player.position.x, newBoundary.bounds.min.x + cameraBox.size.x / 2, newBoundary.bounds.max.x - cameraBox.size.x / 2),
+									Mathf.Clamp(player.position.y, newBoundary.bounds.min.y + cameraBox.size.y / 2, newBoundary.bounds.max.y - cameraBox.size.y / 2),
+									transform.position.z); 
+
+		// when player steps into new boundary 
+		if (newBoundary != currentBoundary) {
+			transform.position = newPosition; 
 		}
+		else transform.position = Vector3.Lerp(transform.position, newPosition, damping * Time.deltaTime); 
+		currentBoundary = newBoundary; 
 	}
 }
