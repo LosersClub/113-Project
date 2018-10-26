@@ -5,9 +5,14 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour {
 
 	public float damping = 4f; 
+	public Animator transitionAnim; 
+	
+	
 	private BoxCollider2D cameraBox; 
 	private Transform player; 
 	private BoxCollider2D currentBoundary; 
+	private bool transitioning = false; 
+	
 
 	// Use this for initialization
 	void Start () {
@@ -24,7 +29,6 @@ public class CameraFollow : MonoBehaviour {
 	
 	void AspectRatioBoxChange() {
 		// Debug.Log(Camera.main.aspect); 
-		
 		// 16:10 
 		if (Camera.main.aspect >= (1.575f) && Camera.main.aspect < 1.7f) {
 			cameraBox.size = new Vector2 (25.5f, 16f);
@@ -51,7 +55,7 @@ public class CameraFollow : MonoBehaviour {
 	
 	void FollowPlayer() {
 		//  exit function if no active boundary  
-		if (!GameObject.Find("Boundary")) return; 
+		if (!GameObject.Find("Boundary") || transitioning) return; 
 		
 		BoxCollider2D newBoundary = GameObject.Find("Boundary").GetComponent<BoxCollider2D>();
 		Vector3 newPosition = new Vector3 (	Mathf.Clamp(player.position.x, newBoundary.bounds.min.x + cameraBox.size.x / 2, newBoundary.bounds.max.x - cameraBox.size.x / 2),
@@ -59,10 +63,23 @@ public class CameraFollow : MonoBehaviour {
 									transform.position.z); 
 
 		// when player steps into new boundary 
-		if (newBoundary != currentBoundary) {
-			transform.position = newPosition; 
+		if (newBoundary != currentBoundary) { 
+			transitioning = true; 
+			transitionAnim.SetTrigger("exit"); 
+			StartCoroutine(WaitForAnimation(newPosition)); 
 		}
 		else transform.position = Vector3.Lerp(transform.position, newPosition, damping * Time.deltaTime); 
 		currentBoundary = newBoundary; 
 	}
+	
+	IEnumerator WaitForAnimation(Vector3 newPosition)
+    {	
+		if(transitionAnim) 
+			do { 
+				yield return null; 
+			} while (!transitionAnim.GetCurrentAnimatorStateInfo(0).IsName("fade_in")); 
+
+		transform.position = newPosition; 
+		transitioning = false; 		
+    }
 }

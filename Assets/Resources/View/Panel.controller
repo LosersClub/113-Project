@@ -126,7 +126,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: fade_out
-  m_Speed: 5
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101416345858797394}
@@ -151,8 +151,8 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: fade
-  m_Speed: 1
+  m_Name: fade_in
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101155725545358384}
@@ -181,7 +181,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102782501896306960}
-    m_Position: {x: 252, y: -24, z: 0}
+    m_Position: {x: 252, y: -12, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102456717346636966}
     m_Position: {x: 252, y: 96, z: 0}
