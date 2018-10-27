@@ -99,6 +99,7 @@ public class Player : MonoBehaviour {
     this.physics.Move(this.physics.velocity * Time.deltaTime);
     this.animator.SetFloat("horizontalSpeed", Mathf.Abs(this.normalizedMovement));
     this.animator.SetFloat("verticalSpeed", this.physics.velocity.y);
+    this.animator.SetBool("dashing", this.dashing);
 
     this.normalizedMovement = 0;
     if (!this.jumping) {
