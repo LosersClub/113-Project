@@ -7,8 +7,8 @@ using UnityEngine;
 public class Ghost : MonoBehaviour {
 
   public float driftSpeedMultiplier = 2.0f;
+  public float barrierDetectionDistance = 0.5f;
 
-  private const float BarrierDetectionDistance = 0.5f;
   private const float BarrierDetectionWidth = 0.05f;
 
   private BoxCollider2D boxCollider2D;
@@ -45,10 +45,10 @@ public class Ghost : MonoBehaviour {
     float horizCastCenterY = this.boxCollider2D.bounds.center.y;
     RaycastHit2D rightCastHit = Physics2D.BoxCast(new Vector2(rightCastCenterX, horizCastCenterY),
                                                 horizCastSize, 0.0f, Vector2.right,
-                                                Ghost.BarrierDetectionDistance);
+                                                this.barrierDetectionDistance);
     RaycastHit2D leftCastHit = Physics2D.BoxCast(new Vector2(leftCastCenterX, horizCastCenterY),
                                                 horizCastSize, 0.0f, Vector2.left,
-                                                Ghost.BarrierDetectionDistance);
+                                                this.barrierDetectionDistance);
 
     if(rightCastHit.collider != null && leftCastHit.collider != null) {
       // Debug.LogFormat("Ghost sees right and left. Not moving horizontally.");
