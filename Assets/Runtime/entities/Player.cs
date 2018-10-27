@@ -1,4 +1,4 @@
-﻿#define DEBUG_PHYS_RAYS
+﻿//#define DEBUG_PHYS_RAYS
 using System.Collections;
 using UnityEngine;
 
@@ -114,14 +114,13 @@ public class Player : MonoBehaviour {
 
   private bool SpaceToStand() {
     Bounds inset = this.collider.bounds;
-    inset.Expand(-2f * this.physics.RayInset);
-    Vector2 origin = new Vector2(inset.min.x, inset.max.y);
-
+    //inset.Expand(-2f * this.physics.RayInset);
+    Vector2 origin = new Vector2(inset.min.x + this.physics.Inset, inset.max.y - this.physics.Inset);
+    Vector2 ray;
     for (int i = 0; i < this.physics.VerticalRays; i++) {
-      Vector2 ray = new Vector2(origin.x + i * this.physics.RaySpacing.x, origin.y);
-      Debug.DrawRay(ray, Vector2.up * standSize, Color.blue);
-      RaycastHit2D hit = Physics2D.Raycast(ray, Vector2.up, standSize, this.physics.Ground);
-      if (hit) {
+      ray = new Vector2(origin.x + i * this.physics.Spacing.x, origin.y);
+      Rays.DrawRay(ray, Vector2.up, standSize, Color.blue);
+      if (Physics2D.RaycastNonAlloc(ray, Vector2.up, Rays.singleHit, standSize, this.physics.Ground) > 0) {
         return false;
       }
     }
