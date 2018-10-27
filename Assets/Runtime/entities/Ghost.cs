@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -8,6 +9,8 @@ public class Ghost : MonoBehaviour {
 
   public float driftSpeedMultiplier = 2.0f;
   public float barrierDetectionDistance = 0.5f;
+  public float barrierMinDistance = 0.1f;
+  public float barrierSlowdownMultiplier = 0.1f;
 
   private const float BarrierDetectionWidth = 0.05f;
 
@@ -19,6 +22,8 @@ public class Ghost : MonoBehaviour {
   private bool facingRight = true;
 
   void Start () {
+    Assert.IsTrue(barrierMinDistance < barrierDetectionDistance);
+
     this.boxCollider2D = this.GetComponent<BoxCollider2D>();
     this.rigidBody2D = this.GetComponent<Rigidbody2D>();
     this.spriteRenderer = this.GetComponent<SpriteRenderer>();
@@ -56,14 +61,24 @@ public class Ghost : MonoBehaviour {
     }
     else if(rightCastHit.collider != null) {
       // Debug.LogFormat("Ghost sees right: {0}", rightCastHit.collider);
-      this.velocity = new Vector2(-this.driftSpeedMultiplier, this.velocity.y);
+      if(rightCastHit.distance > this.barrierMinDistance) {
+        this.velocity -= new Vector2(this.barrierSlowdownMultiplier * this.driftSpeedMultiplier, 0);
+      }
+      else {
+        this.velocity = new Vector2(-this.driftSpeedMultiplier, this.velocity.y);
+      }
       if(this.facingRight) {
         this.facingRight = false;
       }
     }
     else if(leftCastHit.collider != null) {
       // Debug.LogFormat("Ghost sees left: {0}", leftCastHit.collider);
-      this.velocity = new Vector2(this.driftSpeedMultiplier, this.velocity.y);
+      if(leftCastHit.distance > this.barrierMinDistance) {
+        this.velocity += new Vector2(this.barrierSlowdownMultiplier * this.driftSpeedMultiplier, 0);
+      }
+      else {
+        this.velocity = new Vector2(this.driftSpeedMultiplier, this.velocity.y);
+      }
       if(!this.facingRight) {
         this.facingRight = true;
       }
