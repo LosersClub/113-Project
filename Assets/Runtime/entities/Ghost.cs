@@ -9,7 +9,7 @@ public class Ghost : MonoBehaviour {
   public float driftSpeedMultiplier = 2.0f;
 
   private const float BarrierDetectionDistance = 0.5f;
-  private const float BarrierDetectionWidth = 0.5f;
+  private const float BarrierDetectionWidth = 0.05f;
 
   private BoxCollider2D boxCollider2D;
   private Rigidbody2D rigidBody2D;
