@@ -59,28 +59,20 @@ public class Ghost : MonoBehaviour {
       // Debug.LogFormat("Ghost sees right and left. Not moving horizontally.");
       this.velocity = new Vector2(0, this.velocity.y);
     }
-    else if(rightCastHit.collider != null) {
-      // Debug.LogFormat("Ghost sees right: {0}", rightCastHit.collider);
-      if(rightCastHit.distance > this.barrierMinDistance) {
-        this.velocity -= new Vector2(this.barrierSlowdownMultiplier * this.driftSpeedMultiplier, 0);
+    else if(rightCastHit.collider != null || leftCastHit.collider != null){
+      bool hitRight = rightCastHit.collider != null;
+      float hitDistance = hitRight ? rightCastHit.distance : leftCastHit.distance;
+      float directionMultiplier = hitRight ? 1 : -1;
+
+      if(hitDistance > this.barrierMinDistance) {
+        this.velocity -= new Vector2(directionMultiplier * this.barrierSlowdownMultiplier * this.driftSpeedMultiplier, 0);
       }
       else {
-        this.velocity = new Vector2(-this.driftSpeedMultiplier, this.velocity.y);
+        this.velocity = new Vector2(-directionMultiplier * this.driftSpeedMultiplier, this.velocity.y);
       }
-      if(this.facingRight) {
-        this.facingRight = false;
-      }
-    }
-    else if(leftCastHit.collider != null) {
-      // Debug.LogFormat("Ghost sees left: {0}", leftCastHit.collider);
-      if(leftCastHit.distance > this.barrierMinDistance) {
-        this.velocity += new Vector2(this.barrierSlowdownMultiplier * this.driftSpeedMultiplier, 0);
-      }
-      else {
-        this.velocity = new Vector2(this.driftSpeedMultiplier, this.velocity.y);
-      }
-      if(!this.facingRight) {
-        this.facingRight = true;
+
+      if(this.facingRight == hitRight) {
+        this.facingRight = !this.facingRight;
       }
     }
 
