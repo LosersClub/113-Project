@@ -121,7 +121,8 @@ MonoBehaviour:
   driftSpeedMultiplier: 2
   barrierDetectionDistance: 1
   barrierMinDistance: 0.1
-  barrierSlowdownMultiplier: 0.05
+  barrierSlowdownXMultiplier: 0.1
+  barrierSlowdownYMultiplier: 1
   driftWaveAmplitude: 5
   driftWaveFrequency: 2
 --- !u!212 &212247195072144678

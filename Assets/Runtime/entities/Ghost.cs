@@ -10,7 +10,8 @@ public class Ghost : MonoBehaviour {
   public float driftSpeedMultiplier = 2.0f;
   public float barrierDetectionDistance = 0.5f;
   public float barrierMinDistance = 0.1f;
-  public float barrierSlowdownMultiplier = 0.1f;
+  public float barrierSlowdownXMultiplier = 0.1f;
+  public float barrierSlowdownYMultiplier = 0.5f;
   public float driftWaveAmplitude = 2.0f;
   public float driftWaveFrequency = 2.0f;
 
@@ -77,7 +78,7 @@ public class Ghost : MonoBehaviour {
       float directionMultiplier = hitRight ? 1 : -1;
 
       if(hitDistance > this.barrierMinDistance) {
-        this.velocity -= new Vector2(directionMultiplier * this.barrierSlowdownMultiplier * this.driftSpeedMultiplier, 0);
+        this.velocity -= new Vector2(directionMultiplier * this.barrierSlowdownXMultiplier * this.driftSpeedMultiplier, 0);
       }
       else {
         this.velocity = new Vector2(-directionMultiplier * this.driftSpeedMultiplier, this.velocity.y);
@@ -100,7 +101,7 @@ public class Ghost : MonoBehaviour {
 
         if((this.velocity.y > 0) == hitUp) {
           if(hitDistance > this.barrierMinDistance) {
-            yVelocityOffset = -directionMultiplier * this.barrierSlowdownMultiplier * this.driftSpeedMultiplier;
+            yVelocityOffset = -directionMultiplier * this.barrierSlowdownYMultiplier * this.driftSpeedMultiplier;
           }
           else {
             this.driftWaveTimeOffset = -Time.time + Mathf.Asin(0.1f);
@@ -113,6 +114,7 @@ public class Ghost : MonoBehaviour {
       this.velocity = new Vector2(this.velocity.x, yVelocityOffset + this.driftWaveAmplitude * this.driftWaveAmplitudeMultiplier * yVelocitySin);
     }
 
+    // Debug.LogFormat("velocity = {0}", this.velocity);
     this.rigidBody2D.MovePosition(this.rigidBody2D.position + this.velocity * Time.deltaTime);
   }
 }
