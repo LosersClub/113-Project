@@ -16,6 +16,7 @@ public class Ghost : MonoBehaviour {
   public float driftWaveAmplitude = 2.0f;
   public float driftWaveFrequency = 2.0f;
   public float cameraBoundsBuffer = 2.0f;
+  public LayerMask barrierLayerMask = 0;
 
   private const float BarrierDetectionWidth = 0.05f;
 
@@ -62,16 +63,16 @@ public class Ghost : MonoBehaviour {
     float vertCastCenterX = this.boxCollider2D.bounds.center.x;
     RaycastHit2D rightCastHit = Physics2D.BoxCast(new Vector2(rightCastCenterX, horizCastCenterY),
                                                 horizCastSize, 0.0f, Vector2.right,
-                                                this.barrierDetectionDistance);
+                                                this.barrierDetectionDistance, this.barrierLayerMask);
     RaycastHit2D leftCastHit = Physics2D.BoxCast(new Vector2(leftCastCenterX, horizCastCenterY),
                                                 horizCastSize, 0.0f, Vector2.left,
-                                                this.barrierDetectionDistance);
+                                                this.barrierDetectionDistance, this.barrierLayerMask);
     RaycastHit2D upCastHit = Physics2D.BoxCast(new Vector2(vertCastCenterX, upCastCenterY),
                                                 vertCastSize, 0.0f, Vector2.up,
-                                                this.barrierDetectionDistance);
+                                                this.barrierDetectionDistance, this.barrierLayerMask);
     RaycastHit2D downCastHit = Physics2D.BoxCast(new Vector2(vertCastCenterX, downCastCenterY),
                                                   vertCastSize, 0.0f, Vector2.down,
-                                                  this.barrierDetectionDistance);
+                                                  this.barrierDetectionDistance, this.barrierLayerMask);
 
     if(rightCastHit.collider != null && leftCastHit.collider != null) {
       this.velocity = new Vector2(0, this.velocity.y);
