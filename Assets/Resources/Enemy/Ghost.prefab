@@ -122,6 +122,8 @@ MonoBehaviour:
   barrierDetectionDistance: 1
   barrierMinDistance: 0.1
   barrierSlowdownMultiplier: 0.05
+  driftWaveAmplitude: 5
+  driftWaveFrequency: 2
 --- !u!212 &212247195072144678
 SpriteRenderer:
   m_ObjectHideFlags: 1
