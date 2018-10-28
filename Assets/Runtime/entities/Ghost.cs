@@ -7,6 +7,7 @@ using UnityEngine.Assertions;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Ghost : MonoBehaviour {
 
+  public Camera cameraForBounds;
   public float driftSpeedMultiplier = 2.0f;
   public float barrierDetectionDistance = 0.5f;
   public float barrierMinDistance = 0.1f;
@@ -14,6 +15,7 @@ public class Ghost : MonoBehaviour {
   public float barrierSlowdownYMultiplier = 0.5f;
   public float driftWaveAmplitude = 2.0f;
   public float driftWaveFrequency = 2.0f;
+  public float cameraBoundsBuffer = 2.0f;
 
   private const float BarrierDetectionWidth = 0.05f;
 
@@ -27,7 +29,9 @@ public class Ghost : MonoBehaviour {
   private float driftWaveAmplitudeMultiplier = 1.0f;
 
   void Start () {
-    Assert.IsTrue(barrierMinDistance < barrierDetectionDistance);
+    Assert.IsTrue(this.barrierMinDistance < this.barrierDetectionDistance);
+    Assert.IsNotNull(this.cameraForBounds);
+    Assert.IsTrue(this.cameraForBounds.orthographic);
 
     this.boxCollider2D = this.GetComponent<BoxCollider2D>();
     this.rigidBody2D = this.GetComponent<Rigidbody2D>();
@@ -88,6 +92,14 @@ public class Ghost : MonoBehaviour {
         this.facingRight = !this.facingRight;
       }
     }
+    else if(this.boxCollider2D.bounds.max.x < this.getCameraLowerLeft().x - this.cameraBoundsBuffer) {
+      this.velocity = new Vector2(this.driftSpeedMultiplier, this.velocity.y);
+      this.facingRight = true;
+    }
+    else if(this.boxCollider2D.bounds.min.x > this.getCameraUpperRight().x + this.cameraBoundsBuffer) {
+      this.velocity = new Vector2(-this.driftSpeedMultiplier, this.velocity.y);
+      this.facingRight = false;
+    }
 
     if(upCastHit.collider != null && downCastHit.collider != null) {
       this.velocity = new Vector2(this.velocity.x, 0);
@@ -109,6 +121,14 @@ public class Ghost : MonoBehaviour {
           }
         }
       }
+      else if(this.boxCollider2D.bounds.max.y < this.getCameraLowerLeft().y - this.cameraBoundsBuffer) {
+        this.driftWaveTimeOffset = -Time.time + Mathf.Asin(0.1f);
+        this.driftWaveAmplitudeMultiplier = 1;
+      }
+      else if(this.boxCollider2D.bounds.min.y > this.getCameraUpperRight().y + this.cameraBoundsBuffer) {
+        this.driftWaveTimeOffset = -Time.time + Mathf.Asin(0.1f);
+        this.driftWaveAmplitudeMultiplier = -1;
+      }
 
       float yVelocitySin = Mathf.Sin(this.driftWaveFrequency * ((Time.time + this.driftWaveTimeOffset) % (2 * Mathf.PI)));
       this.velocity = new Vector2(this.velocity.x, yVelocityOffset + this.driftWaveAmplitude * this.driftWaveAmplitudeMultiplier * yVelocitySin);
@@ -116,5 +136,15 @@ public class Ghost : MonoBehaviour {
 
     // Debug.LogFormat("velocity = {0}", this.velocity);
     this.rigidBody2D.MovePosition(this.rigidBody2D.position + this.velocity * Time.deltaTime);
+  }
+
+  private Vector2 getCameraLowerLeft() {
+    return new Vector2(this.cameraForBounds.transform.position.x - this.cameraForBounds.orthographicSize * this.cameraForBounds.aspect,
+                        this.cameraForBounds.transform.position.y - this.cameraForBounds.orthographicSize);
+  }
+
+  private Vector2 getCameraUpperRight() {
+    return new Vector2(this.cameraForBounds.transform.position.x + this.cameraForBounds.orthographicSize * this.cameraForBounds.aspect,
+                        this.cameraForBounds.transform.position.y + this.cameraForBounds.orthographicSize);
   }
 }
