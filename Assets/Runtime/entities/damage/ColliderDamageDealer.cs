@@ -3,6 +3,7 @@
 public class ColliderDamageDealer : DamageDealer {
 
   public bool UseBaseCollider = true;
+  [SerializeField, ConditionalHide("UseBaseCollider", inverse: true)]
   private BoxCollider2D damageCollider;
 
   private readonly Collider2D[] hits = new Collider2D[10];
