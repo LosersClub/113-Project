@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [Serializable]
-public class RayCollider {
+public class RayData {
   [SerializeField, Range(2, 20)]
   private int horizontalRays = 8;
   [SerializeField, Range(2, 20)]

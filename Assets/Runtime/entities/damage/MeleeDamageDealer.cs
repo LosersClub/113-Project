@@ -7,7 +7,7 @@ public class MeleeDamageDealer : DamageDealer {
   public LayerMask groundLayer;
 
   [SerializeField]
-  private RayCollider rayData = new RayCollider();
+  private RayData rayData = new RayData();
 
   private readonly RaycastHit2D[] hits = new RaycastHit2D[10];
   private BoxCollider2D startBounds;

@@ -28,7 +28,7 @@ public class Player : MonoBehaviour {
   public Vector2 crouchOffset = new Vector2(0f, -0.4f);
   public Vector2 crouchSize = new Vector2(0.625f, 1.17f);
 
-  private PhysicsController physics;
+  private MovementController physics;
   private Animator animator;
   private new BoxCollider2D collider;
   private float normalizedMovement;
@@ -44,7 +44,7 @@ public class Player : MonoBehaviour {
   private bool dashing = false;
 
   private void Awake() {
-    this.physics = this.GetComponent<PhysicsController>();
+    this.physics = this.GetComponent<MovementController>();
     this.animator = this.GetComponent<Animator>();
     this.collider = this.GetComponent<BoxCollider2D>();
   }
@@ -70,7 +70,7 @@ public class Player : MonoBehaviour {
     }
 
     if (!dashing) {
-      this.physics.velocity.x = Mathf.Lerp(this.physics.velocity.x, targetSpeed,
+      this.physics.Velocity.x = Mathf.Lerp(this.physics.Velocity.x, targetSpeed,
         Time.deltaTime * (this.physics.Grounded ? this.groundDamping : this.airDamping));
     }
 
@@ -89,16 +89,16 @@ public class Player : MonoBehaviour {
          this.jumpCounter == this.maxJumpTime && this.crouching) {
       this.jumpCounter = 0;
     } else if (this.jumpCounter > 0) {
-      this.physics.velocity.y = Mathf.Sqrt(2f * minJumpHeight * -gravity);
+      this.physics.Velocity.y = Mathf.Sqrt(2f * minJumpHeight * -gravity);
     }
 
     if (!this.dashing) {
-      this.physics.velocity.y += gravity * Time.deltaTime;
+      this.physics.Velocity.y += gravity * Time.deltaTime;
     }
 
-    this.physics.Move(this.physics.velocity * Time.deltaTime);
+    this.physics.Move(this.physics.Velocity * Time.deltaTime);
     this.animator.SetFloat("horizontalSpeed", Mathf.Abs(this.normalizedMovement));
-    this.animator.SetFloat("verticalSpeed", this.physics.velocity.y);
+    this.animator.SetFloat("verticalSpeed", this.physics.Velocity.y);
     this.animator.SetBool("dashing", this.dashing);
 
     this.normalizedMovement = 0;
@@ -161,9 +161,9 @@ public class Player : MonoBehaviour {
     this.dashing = true;
     while (duration > time) {
       time += Time.deltaTime;
-      this.physics.velocity.x = this.dashSpeed;
+      this.physics.Velocity.x = this.dashSpeed;
       if (!this.facingRight) {
-        this.physics.velocity.x *= -1;
+        this.physics.Velocity.x *= -1;
       }
       yield return 0;
     }

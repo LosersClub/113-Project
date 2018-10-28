@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public sealed class PhysicsController : MonoBehaviour {
+public sealed class MovementController : MonoBehaviour {
 
   [ReadOnly]
-  public Vector2 velocity;
-  public RayCollider rayCollider;
+  public Vector2 Velocity;
+  public RayData RayData;
 
   [Header("Layer Masks")]
   [SerializeField]
@@ -19,17 +19,17 @@ public sealed class PhysicsController : MonoBehaviour {
   private readonly RaycastHit2D[] hit = new RaycastHit2D[1];
 
   public float Inset {
-    get { return this.rayCollider.Inset; }
+    get { return this.RayData.Inset; }
   }
   public Vector2 Spacing {
-    get { return this.rayCollider.Spacing; }
+    get { return this.RayData.Spacing; }
   }
 
   public int HorizontalRays {
-    get { return this.rayCollider.HorizontalRays; }
+    get { return this.RayData.HorizontalRays; }
   }
   public int VerticalRays {
-    get { return this.rayCollider.VerticalRays; }
+    get { return this.RayData.VerticalRays; }
   }
 
   public struct CollisionState {
@@ -53,7 +53,7 @@ public sealed class PhysicsController : MonoBehaviour {
 
   private void Awake() {
     this.boxCollider = this.GetComponent<BoxCollider2D>();
-    this.rayCollider.Bounds = this.boxCollider.size;
+    this.RayData.Bounds = this.boxCollider.size;
   }
 
   #region Properties
@@ -70,11 +70,11 @@ public sealed class PhysicsController : MonoBehaviour {
   #endregion
 
   public void RecalculateRaySpacing() {
-    this.rayCollider.Bounds = this.boxCollider.size;
+    this.RayData.Bounds = this.boxCollider.size;
   }
 
   public void Move(Vector2 movement) {
-    this.rayCollider.UpdateOrigins(this.boxCollider);
+    this.RayData.UpdateOrigins(this.boxCollider);
     this.state.Reset();
 
     if (movement.x != 0f) {
@@ -87,21 +87,21 @@ public sealed class PhysicsController : MonoBehaviour {
     this.transform.Translate(movement, Space.World);
 
     if (Time.deltaTime > 0f) {
-      this.velocity = movement / Time.deltaTime;
+      this.Velocity = movement / Time.deltaTime;
     }
     this.ignorePlatforms = false;
   }
 
   private void CalculateHorizontal(ref Vector2 movement) {
     bool right = movement.x > 0;
-    float distance = Mathf.Abs(movement.x) + this.rayCollider.Inset;
+    float distance = Mathf.Abs(movement.x) + this.RayData.Inset;
     Vector2 direction, origin;
     if (right) {
       direction = Vector2.right;
-      origin = this.rayCollider.origins.bottomRight;
+      origin = this.RayData.origins.bottomRight;
     } else {
       direction = Vector2.left;
-      origin = this.rayCollider.origins.bottomLeft;
+      origin = this.RayData.origins.bottomLeft;
     }
 
     for (int i = 0; i < this.HorizontalRays; i++) {
@@ -132,10 +132,10 @@ public sealed class PhysicsController : MonoBehaviour {
     Vector2 direction, origin;
     if (up) {
       direction = Vector2.up;
-      origin = this.rayCollider.origins.topLeft;
+      origin = this.RayData.origins.topLeft;
     } else {
       direction = Vector2.down;
-      origin = this.rayCollider.origins.bottomLeft;
+      origin = this.RayData.origins.bottomLeft;
     }
 
     // raycast from x-pos we will be at (horiz before vert)
