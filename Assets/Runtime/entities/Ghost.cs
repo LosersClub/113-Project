@@ -29,6 +29,68 @@ public class Ghost : MonoBehaviour {
   private float driftWaveTimeOffset = 0.0f;
   private float driftWaveAmplitudeMultiplier = 1.0f;
 
+  private struct MovementBoundaries {
+    private float? rightBarrierDistance, leftBarrierDistance, upBarrierDistance,
+                    downBarrierDistance;
+
+    // If near a barrier, that argument should be a float value. Else, should be null.
+    public MovementBoundaries(float? rightBarrierDistance, float? leftBarrierDistance,
+                              float? upBarrierDistance, float? downBarrierDistance,
+                              bool isPastCameraLeft, bool isPastCameraRight,
+                              bool isPastCameraBottom, bool isPastCameraTop) {
+      this.rightBarrierDistance = rightBarrierDistance;
+      this.leftBarrierDistance = leftBarrierDistance;
+      this.upBarrierDistance = upBarrierDistance;
+      this.downBarrierDistance = downBarrierDistance;
+
+      this.IsPastCameraLeft = isPastCameraLeft;
+      this.IsPastCameraRight = isPastCameraRight;
+      this.IsPastCameraBottom = isPastCameraBottom;
+      this.IsPastCameraTop = isPastCameraTop;
+    }
+
+    private static bool NearBarrier(float? barrierDistance) {
+      return barrierDistance != null;
+    }
+    private static float BarrierDistanceHelper(float? barrierDistance) {
+      if(!barrierDistance.HasValue) {
+          throw new System.InvalidOperationException("No barrier distance when not near barrier");
+      }
+      return barrierDistance.Value;
+    }
+
+    public bool NearBarrierRight {
+      get { return MovementBoundaries.NearBarrier(this.rightBarrierDistance); }
+    }
+    public bool NearBarrierLeft {
+      get { return MovementBoundaries.NearBarrier(this.leftBarrierDistance); }
+    }
+    public bool NearBarrierUp {
+      get { return MovementBoundaries.NearBarrier(this.upBarrierDistance); }
+    }
+    public bool NearBarrierDown {
+      get { return MovementBoundaries.NearBarrier(this.downBarrierDistance); }
+    }
+
+    public float BarrierRightDistance {
+      get { return MovementBoundaries.BarrierDistanceHelper(this.rightBarrierDistance); }
+    }
+    public float BarrierLeftDistance {
+      get { return MovementBoundaries.BarrierDistanceHelper(this.leftBarrierDistance); }
+    }
+    public float BarrierUpDistance {
+      get { return MovementBoundaries.BarrierDistanceHelper(this.upBarrierDistance); }
+    }
+    public float BarrierDownDistance {
+      get { return MovementBoundaries.BarrierDistanceHelper(this.downBarrierDistance); }
+    }
+
+    public bool IsPastCameraLeft { get; }
+    public bool IsPastCameraRight { get; }
+    public bool IsPastCameraBottom { get; }
+    public bool IsPastCameraTop { get; }
+  }
+
   void Start () {
     Assert.IsTrue(this.barrierMinDistance < this.barrierDetectionDistance);
     Assert.IsNotNull(this.cameraForBounds);
@@ -51,6 +113,72 @@ public class Ghost : MonoBehaviour {
   }
 
   void FixedUpdate() {
+    MovementBoundaries moveBoundaries = this.CalculateMovementBoundaries();
+
+    if(moveBoundaries.NearBarrierRight && moveBoundaries.NearBarrierLeft) {
+      this.velocity = new Vector2(0, this.velocity.y);
+    }
+    else if(moveBoundaries.NearBarrierRight || moveBoundaries.NearBarrierLeft){
+      float hitDistance = moveBoundaries.NearBarrierRight ? moveBoundaries.BarrierRightDistance : moveBoundaries.BarrierLeftDistance;
+      float directionMultiplier = moveBoundaries.NearBarrierRight ? 1 : -1;
+
+      if(hitDistance > this.barrierMinDistance) {
+        this.velocity -= new Vector2(directionMultiplier * this.barrierSlowdownXMultiplier * this.driftSpeedMultiplier, 0);
+      }
+      else {
+        this.velocity = new Vector2(-directionMultiplier * this.driftSpeedMultiplier, this.velocity.y);
+      }
+
+      if(this.facingRight == moveBoundaries.NearBarrierRight) {
+        this.facingRight = !this.facingRight;
+      }
+    }
+    else if(moveBoundaries.IsPastCameraLeft) {
+      this.velocity = new Vector2(this.driftSpeedMultiplier, this.velocity.y);
+      this.facingRight = true;
+    }
+    else if(moveBoundaries.IsPastCameraRight) {
+      this.velocity = new Vector2(-this.driftSpeedMultiplier, this.velocity.y);
+      this.facingRight = false;
+    }
+
+    if(moveBoundaries.NearBarrierUp && moveBoundaries.NearBarrierDown) {
+      this.velocity = new Vector2(this.velocity.x, 0);
+    }
+    else {
+      float yVelocityOffset = 0;
+      if(moveBoundaries.NearBarrierUp || moveBoundaries.NearBarrierDown) {
+        float hitDistance = moveBoundaries.NearBarrierUp ? moveBoundaries.BarrierUpDistance : moveBoundaries.BarrierDownDistance;
+        float directionMultiplier = moveBoundaries.NearBarrierUp ? 1 : -1;
+
+        if((this.velocity.y > 0) == moveBoundaries.NearBarrierUp) {
+          if(hitDistance > this.barrierMinDistance) {
+            yVelocityOffset = -directionMultiplier * this.barrierSlowdownYMultiplier * this.driftSpeedMultiplier;
+          }
+          else {
+            this.driftWaveTimeOffset = -Time.time + Mathf.Asin(0.1f);
+            this.driftWaveAmplitudeMultiplier = moveBoundaries.NearBarrierUp ? -1 : 1;
+          }
+        }
+      }
+      else if(moveBoundaries.IsPastCameraBottom) {
+        this.driftWaveTimeOffset = -Time.time + Mathf.Asin(0.1f);
+        this.driftWaveAmplitudeMultiplier = 1;
+      }
+      else if(moveBoundaries.IsPastCameraTop) {
+        this.driftWaveTimeOffset = -Time.time + Mathf.Asin(0.1f);
+        this.driftWaveAmplitudeMultiplier = -1;
+      }
+
+      float yVelocitySin = Mathf.Sin(this.driftWaveFrequency * ((Time.time + this.driftWaveTimeOffset) % (2 * Mathf.PI)));
+      this.velocity = new Vector2(this.velocity.x, yVelocityOffset + this.driftWaveAmplitude * this.driftWaveAmplitudeMultiplier * yVelocitySin);
+    }
+
+    // Debug.LogFormat("velocity = {0}", this.velocity);
+    this.rigidBody2D.MovePosition(this.rigidBody2D.position + this.velocity * Time.deltaTime);
+  }
+
+  private MovementBoundaries CalculateMovementBoundaries() {
     Vector2 horizCastSize = new Vector2(Ghost.BarrierDetectionWidth, this.boxCollider2D.size.y);
     Vector2 vertCastSize = new Vector2(this.boxCollider2D.size.x, Ghost.BarrierDetectionWidth);
     // To avoid detecting ghost's own collider, include buffer distance in center x:
@@ -73,79 +201,22 @@ public class Ghost : MonoBehaviour {
     RaycastHit2D downCastHit = Physics2D.BoxCast(new Vector2(vertCastCenterX, downCastCenterY),
                                                   vertCastSize, 0.0f, Vector2.down,
                                                   this.barrierDetectionDistance, this.barrierLayerMask);
+    float? rightCastDistance = rightCastHit.collider == null ? null : (float?)rightCastHit.distance;
+    float? leftCastDistance = leftCastHit.collider == null ? null : (float?)leftCastHit.distance;
+    float? upCastDistance = upCastHit.collider == null ? null : (float?)upCastHit.distance;
+    float? downCastDistance = downCastHit.collider == null ? null : (float?)downCastHit.distance;
 
-    if(rightCastHit.collider != null && leftCastHit.collider != null) {
-      this.velocity = new Vector2(0, this.velocity.y);
-    }
-    else if(rightCastHit.collider != null || leftCastHit.collider != null){
-      bool hitRight = rightCastHit.collider != null;
-      float hitDistance = hitRight ? rightCastHit.distance : leftCastHit.distance;
-      float directionMultiplier = hitRight ? 1 : -1;
+    Vector2 cameraLowerLeft = new Vector2(this.cameraForBounds.transform.position.x - this.cameraForBounds.orthographicSize * this.cameraForBounds.aspect,
+                                          this.cameraForBounds.transform.position.y - this.cameraForBounds.orthographicSize);
+    Vector2 cameraUpperRight = new Vector2(this.cameraForBounds.transform.position.x + this.cameraForBounds.orthographicSize * this.cameraForBounds.aspect,
+                                            this.cameraForBounds.transform.position.y + this.cameraForBounds.orthographicSize);
+    bool isPastCameraLeft = this.boxCollider2D.bounds.max.x < cameraLowerLeft.x - this.cameraBoundsBuffer;
+    bool isPastCameraRight = this.boxCollider2D.bounds.min.x > cameraUpperRight.x + this.cameraBoundsBuffer;
+    bool isPastCameraBottom = this.boxCollider2D.bounds.max.y < cameraLowerLeft.y - this.cameraBoundsBuffer;
+    bool isPastCameraTop = this.boxCollider2D.bounds.min.y > cameraUpperRight.y + this.cameraBoundsBuffer;
 
-      if(hitDistance > this.barrierMinDistance) {
-        this.velocity -= new Vector2(directionMultiplier * this.barrierSlowdownXMultiplier * this.driftSpeedMultiplier, 0);
-      }
-      else {
-        this.velocity = new Vector2(-directionMultiplier * this.driftSpeedMultiplier, this.velocity.y);
-      }
-
-      if(this.facingRight == hitRight) {
-        this.facingRight = !this.facingRight;
-      }
-    }
-    else if(this.boxCollider2D.bounds.max.x < this.getCameraLowerLeft().x - this.cameraBoundsBuffer) {
-      this.velocity = new Vector2(this.driftSpeedMultiplier, this.velocity.y);
-      this.facingRight = true;
-    }
-    else if(this.boxCollider2D.bounds.min.x > this.getCameraUpperRight().x + this.cameraBoundsBuffer) {
-      this.velocity = new Vector2(-this.driftSpeedMultiplier, this.velocity.y);
-      this.facingRight = false;
-    }
-
-    if(upCastHit.collider != null && downCastHit.collider != null) {
-      this.velocity = new Vector2(this.velocity.x, 0);
-    }
-    else {
-      float yVelocityOffset = 0;
-      if(upCastHit.collider != null || downCastHit.collider != null) {
-        bool hitUp = upCastHit.collider != null;
-        float hitDistance = hitUp ? upCastHit.distance : downCastHit.distance;
-        float directionMultiplier = hitUp ? 1 : -1;
-
-        if((this.velocity.y > 0) == hitUp) {
-          if(hitDistance > this.barrierMinDistance) {
-            yVelocityOffset = -directionMultiplier * this.barrierSlowdownYMultiplier * this.driftSpeedMultiplier;
-          }
-          else {
-            this.driftWaveTimeOffset = -Time.time + Mathf.Asin(0.1f);
-            this.driftWaveAmplitudeMultiplier = hitUp ? -1 : 1;
-          }
-        }
-      }
-      else if(this.boxCollider2D.bounds.max.y < this.getCameraLowerLeft().y - this.cameraBoundsBuffer) {
-        this.driftWaveTimeOffset = -Time.time + Mathf.Asin(0.1f);
-        this.driftWaveAmplitudeMultiplier = 1;
-      }
-      else if(this.boxCollider2D.bounds.min.y > this.getCameraUpperRight().y + this.cameraBoundsBuffer) {
-        this.driftWaveTimeOffset = -Time.time + Mathf.Asin(0.1f);
-        this.driftWaveAmplitudeMultiplier = -1;
-      }
-
-      float yVelocitySin = Mathf.Sin(this.driftWaveFrequency * ((Time.time + this.driftWaveTimeOffset) % (2 * Mathf.PI)));
-      this.velocity = new Vector2(this.velocity.x, yVelocityOffset + this.driftWaveAmplitude * this.driftWaveAmplitudeMultiplier * yVelocitySin);
-    }
-
-    // Debug.LogFormat("velocity = {0}", this.velocity);
-    this.rigidBody2D.MovePosition(this.rigidBody2D.position + this.velocity * Time.deltaTime);
-  }
-
-  private Vector2 getCameraLowerLeft() {
-    return new Vector2(this.cameraForBounds.transform.position.x - this.cameraForBounds.orthographicSize * this.cameraForBounds.aspect,
-                        this.cameraForBounds.transform.position.y - this.cameraForBounds.orthographicSize);
-  }
-
-  private Vector2 getCameraUpperRight() {
-    return new Vector2(this.cameraForBounds.transform.position.x + this.cameraForBounds.orthographicSize * this.cameraForBounds.aspect,
-                        this.cameraForBounds.transform.position.y + this.cameraForBounds.orthographicSize);
+    return new MovementBoundaries(rightCastDistance, leftCastDistance, upCastDistance,
+                                  downCastDistance, isPastCameraLeft, isPastCameraRight,
+                                  isPastCameraBottom, isPastCameraTop);
   }
 }
