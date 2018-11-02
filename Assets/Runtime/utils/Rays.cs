@@ -9,7 +9,7 @@ public struct RaycastOrigins {
 public static class Rays {
   public const float Precision = 0.001f;
   // NOT THREAD SAFE
-  public static readonly RaycastHit2D[] singleHit = new RaycastHit2D[1];
+  private static readonly RaycastHit2D[] singleHit = new RaycastHit2D[1];
 
   [System.Diagnostics.Conditional("DEBUG_PHYS_RAYS")]
   public static void DrawRay(Vector2 start, Vector2 dir, Color color) {
@@ -19,6 +19,10 @@ public static class Rays {
   [System.Diagnostics.Conditional("DEBUG_PHYS_RAYS")]
   public static void DrawRay(Vector2 start, Vector2 direction, float distance, Color color) {
     Debug.DrawRay(start, direction * distance, color);
+  }
+
+  public static bool IsHitting(Vector2 origin, Vector2 direction, float distance, LayerMask layer) {
+    return Physics2D.RaycastNonAlloc(origin, direction, singleHit, distance, layer) > 0;
   }
 
   public static void UpdateRayOrigins(BoxCollider2D collider, float inset, ref RaycastOrigins origins) {

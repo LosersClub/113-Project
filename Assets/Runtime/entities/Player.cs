@@ -21,6 +21,7 @@ public class Player : MonoBehaviour {
 
   [Header("Checker Rays")]
   public float standSize = 1f;
+  public float groundDist = 1f;
 
   [Header("Collider stuff")]
   public Vector2 playerOffset = new Vector2(0f, -0.06f);
@@ -100,6 +101,9 @@ public class Player : MonoBehaviour {
     this.animator.SetFloat("horizontalSpeed", Mathf.Abs(this.normalizedMovement));
     this.animator.SetFloat("verticalSpeed", this.physics.Velocity.y);
     this.animator.SetBool("dashing", this.dashing);
+    if (this.physics.Velocity.y < -0.01f) {
+      this.FallingGroundCheck();
+    }
 
     this.normalizedMovement = 0;
     if (!this.jumping) {
@@ -120,11 +124,19 @@ public class Player : MonoBehaviour {
     for (int i = 0; i < this.physics.VerticalRays; i++) {
       ray = new Vector2(origin.x + i * this.physics.Spacing.x, origin.y);
       Rays.DrawRay(ray, Vector2.up, standSize, Color.blue);
-      if (Physics2D.RaycastNonAlloc(ray, Vector2.up, Rays.singleHit, standSize, this.physics.Ground) > 0) {
+      if (Rays.IsHitting(ray, Vector2.up, standSize, this.physics.Ground)) {
         return false;
       }
     }
     return true;
+  }
+
+  private void FallingGroundCheck() {
+    Vector2 ray = new Vector2(this.collider.bounds.center.x, this.collider.bounds.min.y);
+    Rays.DrawRay(ray, Vector2.down, this.groundDist, Color.blue);
+    if (Rays.IsHitting(ray, Vector2.down, this.groundDist, this.physics.GroundOrPlatform)) {
+      this.animator.SetTrigger("hitGround");
+    }
   }
 
   public void Move(float x, float y) {

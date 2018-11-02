@@ -67,6 +67,12 @@ public sealed class MovementController : MonoBehaviour {
   public LayerMask Ground {
     get { return this.groundMask; }
   }
+  public LayerMask Platform {
+    get { return this.platformMask; }
+  }
+  public LayerMask GroundOrPlatform {
+    get { return this.groundMask | this.platformMask; }
+  }
   #endregion
 
   public void RecalculateRaySpacing() {
@@ -104,8 +110,9 @@ public sealed class MovementController : MonoBehaviour {
       origin = this.RayData.origins.bottomLeft;
     }
 
+    Vector2 ray;
     for (int i = 0; i < this.HorizontalRays; i++) {
-      Vector2 ray = new Vector2(origin.x, origin.y + i * this.Spacing.y);
+      ray = new Vector2(origin.x, origin.y + i * this.Spacing.y);
       Rays.DrawRay(ray, direction, distance, Color.blue);
 
       if (Physics2D.RaycastNonAlloc(ray, direction, this.hit, distance, this.groundMask) > 0) {
@@ -145,8 +152,9 @@ public sealed class MovementController : MonoBehaviour {
       mask |= platformMask;
     }
 
+    Vector2 ray;
     for (int i = 0; i < this.VerticalRays; i++) {
-      Vector2 ray = new Vector2(origin.x + i * this.Spacing.x, origin.y);
+      ray = new Vector2(origin.x + i * this.Spacing.x, origin.y);
       Rays.DrawRay(ray, direction, distance, Color.blue);
 
       if (Physics2D.RaycastNonAlloc(ray, direction, this.hit, distance, mask) > 0) {
