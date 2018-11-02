@@ -118,6 +118,14 @@ public class Ghost : MonoBehaviour {
     this.updateVelocityY(moveBoundaries);
     // Debug.LogFormat("velocity = {0}", this.velocity);
 
+    if(this.velocity.x > 0) {
+      this.facingRight = true;
+    }
+    else if(this.velocity.x < 0) {
+      this.facingRight = false;
+    }
+    // If velocity.x == 0, don't change direction.
+
     this.rigidBody2D.MovePosition(this.rigidBody2D.position + this.velocity * Time.deltaTime);
   }
 
@@ -135,18 +143,12 @@ public class Ghost : MonoBehaviour {
       else {
         this.velocity = new Vector2(-directionMultiplier * this.driftSpeedMultiplier, this.velocity.y);
       }
-
-      if(this.facingRight == moveBoundaries.NearBarrierRight) {
-        this.facingRight = !this.facingRight;
-      }
     }
     else if(moveBoundaries.IsPastCameraLeft) {
       this.velocity = new Vector2(this.driftSpeedMultiplier, this.velocity.y);
-      this.facingRight = true;
     }
     else if(moveBoundaries.IsPastCameraRight) {
       this.velocity = new Vector2(-this.driftSpeedMultiplier, this.velocity.y);
-      this.facingRight = false;
     }
   }
 
