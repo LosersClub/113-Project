@@ -7,7 +7,6 @@ using UnityEngine.Assertions;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Ghost : MonoBehaviour {
 
-  public Camera cameraForBounds;
   public float driftSpeedMultiplier = 2.0f;
   public float barrierDetectionDistance = 0.5f;
   public float barrierMinDistance = 0.1f;
@@ -23,6 +22,7 @@ public class Ghost : MonoBehaviour {
   private BoxCollider2D boxCollider2D;
   private Rigidbody2D rigidBody2D;
   private SpriteRenderer spriteRenderer;
+  private Camera cameraForBounds;
 
   private Vector2 velocity;
   private bool facingRight = true;
@@ -92,12 +92,13 @@ public class Ghost : MonoBehaviour {
 
   void Start () {
     Assert.IsTrue(this.barrierMinDistance < this.barrierDetectionDistance);
-    Assert.IsNotNull(this.cameraForBounds);
-    Assert.IsTrue(this.cameraForBounds.orthographic);
 
     this.boxCollider2D = this.GetComponent<BoxCollider2D>();
     this.rigidBody2D = this.GetComponent<Rigidbody2D>();
     this.spriteRenderer = this.GetComponent<SpriteRenderer>();
+    this.cameraForBounds = Camera.main;
+    Assert.IsNotNull(this.cameraForBounds);
+    Assert.IsTrue(this.cameraForBounds.orthographic);
 
     this.velocity = new Vector2(this.driftSpeedMultiplier, this.driftSpeedMultiplier);
   }
