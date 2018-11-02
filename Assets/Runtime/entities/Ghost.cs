@@ -130,31 +130,34 @@ public class Ghost : MonoBehaviour {
   }
 
   private void updateVelocityX(MovementBoundaries moveBoundaries) {
+    float newVelocityX = this.velocity.x;
+
     if(moveBoundaries.NearBarrierRight && moveBoundaries.NearBarrierLeft) {
-      this.velocity = new Vector2(0, this.velocity.y);
+      newVelocityX = 0;
     }
     else if(moveBoundaries.NearBarrierRight || moveBoundaries.NearBarrierLeft){
       float hitDistance = moveBoundaries.NearBarrierRight ? moveBoundaries.BarrierRightDistance : moveBoundaries.BarrierLeftDistance;
       float directionMultiplier = moveBoundaries.NearBarrierRight ? 1 : -1;
 
       if(hitDistance > this.barrierMinDistance) {
-        this.velocity -= new Vector2(directionMultiplier * this.barrierSlowdownXMultiplier * this.driftSpeedMultiplier, 0);
+        newVelocityX -= directionMultiplier * this.barrierSlowdownXMultiplier * this.driftSpeedMultiplier;
       }
       else {
-        this.velocity = new Vector2(-directionMultiplier * this.driftSpeedMultiplier, this.velocity.y);
+        newVelocityX = -directionMultiplier * this.driftSpeedMultiplier;
       }
     }
-    else if(moveBoundaries.IsPastCameraLeft) {
-      this.velocity = new Vector2(this.driftSpeedMultiplier, this.velocity.y);
+    else if(moveBoundaries.IsPastCameraLeft || moveBoundaries.IsPastCameraRight) {
+      newVelocityX = (moveBoundaries.IsPastCameraLeft ? 1 : -1) * this.driftSpeedMultiplier;
     }
-    else if(moveBoundaries.IsPastCameraRight) {
-      this.velocity = new Vector2(-this.driftSpeedMultiplier, this.velocity.y);
-    }
+
+    this.velocity = new Vector2(newVelocityX, this.velocity.y);
   }
 
   private void updateVelocityY(MovementBoundaries moveBoundaries) {
+    float newVelocityY = this.velocity.y;
+
     if(moveBoundaries.NearBarrierUp && moveBoundaries.NearBarrierDown) {
-      this.velocity = new Vector2(this.velocity.x, 0);
+      newVelocityY = 0;
     }
     else {
       float yVelocityOffset = 0;
@@ -182,8 +185,10 @@ public class Ghost : MonoBehaviour {
       }
 
       float yVelocitySin = Mathf.Sin(this.driftWaveFrequency * ((Time.time + this.driftWaveTimeOffset) % (2 * Mathf.PI)));
-      this.velocity = new Vector2(this.velocity.x, yVelocityOffset + this.driftWaveAmplitude * this.driftWaveAmplitudeMultiplier * yVelocitySin);
+      newVelocityY = yVelocityOffset + this.driftWaveAmplitude * this.driftWaveAmplitudeMultiplier * yVelocitySin;
     }
+
+    this.velocity = new Vector2(this.velocity.x, newVelocityY);
   }
 
   private MovementBoundaries CalculateMovementBoundaries() {
