@@ -114,7 +114,14 @@ public class Ghost : MonoBehaviour {
 
   void FixedUpdate() {
     MovementBoundaries moveBoundaries = this.CalculateMovementBoundaries();
+    this.updateVelocityX(moveBoundaries);
+    this.updateVelocityY(moveBoundaries);
+    // Debug.LogFormat("velocity = {0}", this.velocity);
 
+    this.rigidBody2D.MovePosition(this.rigidBody2D.position + this.velocity * Time.deltaTime);
+  }
+
+  private void updateVelocityX(MovementBoundaries moveBoundaries) {
     if(moveBoundaries.NearBarrierRight && moveBoundaries.NearBarrierLeft) {
       this.velocity = new Vector2(0, this.velocity.y);
     }
@@ -141,7 +148,9 @@ public class Ghost : MonoBehaviour {
       this.velocity = new Vector2(-this.driftSpeedMultiplier, this.velocity.y);
       this.facingRight = false;
     }
+  }
 
+  private void updateVelocityY(MovementBoundaries moveBoundaries) {
     if(moveBoundaries.NearBarrierUp && moveBoundaries.NearBarrierDown) {
       this.velocity = new Vector2(this.velocity.x, 0);
     }
@@ -173,9 +182,6 @@ public class Ghost : MonoBehaviour {
       float yVelocitySin = Mathf.Sin(this.driftWaveFrequency * ((Time.time + this.driftWaveTimeOffset) % (2 * Mathf.PI)));
       this.velocity = new Vector2(this.velocity.x, yVelocityOffset + this.driftWaveAmplitude * this.driftWaveAmplitudeMultiplier * yVelocitySin);
     }
-
-    // Debug.LogFormat("velocity = {0}", this.velocity);
-    this.rigidBody2D.MovePosition(this.rigidBody2D.position + this.velocity * Time.deltaTime);
   }
 
   private MovementBoundaries CalculateMovementBoundaries() {
