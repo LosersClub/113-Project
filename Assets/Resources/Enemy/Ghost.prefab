@@ -125,7 +125,7 @@ MonoBehaviour:
   barrierSlowdownXMultiplier: 0.1
   barrierSlowdownYMultiplier: 1
   driftWaveAmplitude: 5
-  driftWaveFrequency: 2
+  driftWaveFrequency: 0.25
   cameraBoundsBuffer: 2
   barrierLayerMask:
     serializedVersion: 2

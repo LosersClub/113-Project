@@ -26,8 +26,7 @@ public class Ghost : MonoBehaviour {
 
   private Vector2 velocity;
   private bool facingRight = true;
-  private float driftWaveTimeOffset = 0.0f;
-  private float driftWaveAmplitudeMultiplier = 1.0f;
+  private float driftWavePhase = 0.0f;
 
   private struct MovementBoundaries {
     private float? rightBarrierDistance, leftBarrierDistance, upBarrierDistance,
@@ -155,38 +154,29 @@ public class Ghost : MonoBehaviour {
 
   private void updateVelocityY(MovementBoundaries moveBoundaries) {
     float newVelocityY = this.velocity.y;
+    float velocityYOffset = 0;
 
     if(moveBoundaries.NearBarrierUp && moveBoundaries.NearBarrierDown) {
       newVelocityY = 0;
     }
-    else {
-      float yVelocityOffset = 0;
-      if(moveBoundaries.NearBarrierUp || moveBoundaries.NearBarrierDown) {
-        float hitDistance = moveBoundaries.NearBarrierUp ? moveBoundaries.BarrierUpDistance : moveBoundaries.BarrierDownDistance;
-        float directionMultiplier = moveBoundaries.NearBarrierUp ? 1 : -1;
+    else if(moveBoundaries.NearBarrierUp || moveBoundaries.NearBarrierDown){
+      float hitDistance = moveBoundaries.NearBarrierUp ? moveBoundaries.BarrierUpDistance : moveBoundaries.BarrierDownDistance;
+      float directionMultiplier = moveBoundaries.NearBarrierUp ? -1 : 1;
 
-        if((this.velocity.y > 0) == moveBoundaries.NearBarrierUp) {
-          if(hitDistance > this.barrierMinDistance) {
-            yVelocityOffset = -directionMultiplier * this.barrierSlowdownYMultiplier * this.driftSpeedMultiplier;
-          }
-          else {
-            this.driftWaveTimeOffset = -Time.time + Mathf.Asin(0.1f);
-            this.driftWaveAmplitudeMultiplier = moveBoundaries.NearBarrierUp ? -1 : 1;
-          }
-        }
+      if(hitDistance > this.barrierMinDistance) {
+        velocityYOffset = directionMultiplier * this.barrierSlowdownYMultiplier * this.driftSpeedMultiplier;
       }
-      else if(moveBoundaries.IsPastCameraBottom) {
-        this.driftWaveTimeOffset = -Time.time + Mathf.Asin(0.1f);
-        this.driftWaveAmplitudeMultiplier = 1;
+      else {
+        this.driftWavePhase = -2 * Mathf.PI * this.driftWaveFrequency * Time.time + (moveBoundaries.NearBarrierUp ? 1.05f : 0.05f) * Mathf.PI;
       }
-      else if(moveBoundaries.IsPastCameraTop) {
-        this.driftWaveTimeOffset = -Time.time + Mathf.Asin(0.1f);
-        this.driftWaveAmplitudeMultiplier = -1;
-      }
-
-      float yVelocitySin = Mathf.Sin(this.driftWaveFrequency * ((Time.time + this.driftWaveTimeOffset) % (2 * Mathf.PI)));
-      newVelocityY = yVelocityOffset + this.driftWaveAmplitude * this.driftWaveAmplitudeMultiplier * yVelocitySin;
     }
+    else if(moveBoundaries.IsPastCameraTop || moveBoundaries.IsPastCameraBottom) {
+      this.driftWavePhase = -2 * Mathf.PI * this.driftWaveFrequency * Time.time + (moveBoundaries.IsPastCameraTop ? 1.05f : 0.05f) * Mathf.PI;
+    }
+
+    // Mod argument to Mathf.Sin by 2*pi, since Mathf.Sin fails for large values:
+    float newVelocityYSin = Mathf.Sin((2 * Mathf.PI * this.driftWaveFrequency * Time.time + this.driftWavePhase) % (2 * Mathf.PI));
+    newVelocityY = velocityYOffset + this.driftWaveAmplitude * newVelocityYSin;
 
     this.velocity = new Vector2(this.velocity.x, newVelocityY);
   }
