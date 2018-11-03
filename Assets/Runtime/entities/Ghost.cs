@@ -14,6 +14,7 @@ public class Ghost : MonoBehaviour {
   public float barrierSlowdownYMultiplier = 0.5f;
   public float driftWaveAmplitude = 2.0f;
   public float driftWaveFrequency = 2.0f;
+  public float driftWaveYShiftMultiplier = 0.1f;
   public float cameraBoundsBuffer = 2.0f;
   public LayerMask barrierLayerMask = 0;
   public bool initialFacingRight = true;
@@ -28,6 +29,7 @@ public class Ghost : MonoBehaviour {
   private Vector2 velocity = Vector2.zero; // will be changed on first FixedUpdate
   private bool facingRight;
   private float driftWavePhase = 0.0f;
+  private bool waveShiftUp = true;
 
   private struct MovementBoundaries {
     private float? rightBarrierDistance, leftBarrierDistance, upBarrierDistance,
@@ -165,8 +167,11 @@ public class Ghost : MonoBehaviour {
     }
     else {
       float velocityYOffset = 0;
+      float waveShiftYVelocity = 0;
 
       if(moveBoundaries.NearBarrierUp || moveBoundaries.NearBarrierDown) {
+        this.waveShiftUp = moveBoundaries.NearBarrierDown;
+
         float hitDistance = moveBoundaries.NearBarrierUp ? moveBoundaries.BarrierUpDistance : moveBoundaries.BarrierDownDistance;
         float directionMultiplier = moveBoundaries.NearBarrierUp ? -1 : 1;
 
@@ -178,12 +183,17 @@ public class Ghost : MonoBehaviour {
         }
       }
       else if(moveBoundaries.IsPastCameraTop || moveBoundaries.IsPastCameraBottom) {
+        this.waveShiftUp = moveBoundaries.IsPastCameraBottom;
+
         this.driftWavePhase = -2 * Mathf.PI * this.driftWaveFrequency * Time.time + (moveBoundaries.IsPastCameraTop ? 1.05f : 0.05f) * Mathf.PI;
+      }
+      else {
+        waveShiftYVelocity = (this.waveShiftUp ? 1 : -1) * this.driftWaveYShiftMultiplier * this.driftSpeedMultiplier;
       }
 
       // Mod argument to Mathf.Sin by 2*pi, since Mathf.Sin fails for large values:
       float newVelocityYSin = Mathf.Sin((2 * Mathf.PI * this.driftWaveFrequency * Time.time + this.driftWavePhase) % (2 * Mathf.PI));
-      newVelocityY = velocityYOffset + this.driftWaveAmplitude * newVelocityYSin;
+      newVelocityY = this.driftWaveAmplitude * newVelocityYSin + velocityYOffset + waveShiftYVelocity;
     }
 
     this.velocity = new Vector2(this.velocity.x, newVelocityY);
