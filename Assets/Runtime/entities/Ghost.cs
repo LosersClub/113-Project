@@ -16,6 +16,7 @@ public class Ghost : MonoBehaviour {
   public float driftWaveFrequency = 2.0f;
   public float cameraBoundsBuffer = 2.0f;
   public LayerMask barrierLayerMask = 0;
+  public bool initialFacingRight = true;
 
   private const float BarrierDetectionWidth = 0.05f;
 
@@ -25,7 +26,7 @@ public class Ghost : MonoBehaviour {
   private Camera cameraForBounds;
 
   private Vector2 velocity = Vector2.zero; // will be changed on first FixedUpdate
-  private bool facingRight = true;
+  private bool facingRight;
   private float driftWavePhase = 0.0f;
 
   private struct MovementBoundaries {
@@ -99,6 +100,8 @@ public class Ghost : MonoBehaviour {
     this.cameraForBounds = Camera.main;
     Assert.IsNotNull(this.cameraForBounds);
     Assert.IsTrue(this.cameraForBounds.orthographic);
+
+    this.facingRight = initialFacingRight;
   }
   
   void Update () {
