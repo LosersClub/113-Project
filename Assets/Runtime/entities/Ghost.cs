@@ -24,7 +24,7 @@ public class Ghost : MonoBehaviour {
   private SpriteRenderer spriteRenderer;
   private Camera cameraForBounds;
 
-  private Vector2 velocity;
+  private Vector2 velocity = Vector2.zero; // will be changed on first FixedUpdate
   private bool facingRight = true;
   private float driftWavePhase = 0.0f;
 
@@ -99,8 +99,6 @@ public class Ghost : MonoBehaviour {
     this.cameraForBounds = Camera.main;
     Assert.IsNotNull(this.cameraForBounds);
     Assert.IsTrue(this.cameraForBounds.orthographic);
-
-    this.velocity = new Vector2(this.driftSpeedMultiplier, this.driftSpeedMultiplier);
   }
   
   void Update () {
