@@ -148,6 +148,10 @@ public class Ghost : MonoBehaviour {
     else if(moveBoundaries.IsPastCameraLeft || moveBoundaries.IsPastCameraRight) {
       newVelocityX = (moveBoundaries.IsPastCameraLeft ? 1 : -1) * this.driftSpeedMultiplier;
     }
+    else if(Mathf.Abs(this.velocity.x) < 0.01) { // if almost stopped moving
+      // Start moving again:
+      newVelocityX = (this.facingRight ? 1 : -1) * this.driftSpeedMultiplier;
+    }
 
     this.velocity = new Vector2(newVelocityX, this.velocity.y);
   }
