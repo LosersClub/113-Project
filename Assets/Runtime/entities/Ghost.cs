@@ -116,7 +116,6 @@ public class Ghost : MonoBehaviour {
     MovementBoundaries moveBoundaries = this.CalculateMovementBoundaries();
     this.updateVelocityX(moveBoundaries);
     this.updateVelocityY(moveBoundaries);
-    // Debug.LogFormat("velocity = {0}", this.velocity);
 
     if(this.velocity.x > 0) {
       this.facingRight = true;
@@ -135,7 +134,7 @@ public class Ghost : MonoBehaviour {
     if(moveBoundaries.NearBarrierRight && moveBoundaries.NearBarrierLeft) {
       newVelocityX = 0;
     }
-    else if(moveBoundaries.NearBarrierRight || moveBoundaries.NearBarrierLeft){
+    else if(moveBoundaries.NearBarrierRight || moveBoundaries.NearBarrierLeft) {
       float hitDistance = moveBoundaries.NearBarrierRight ? moveBoundaries.BarrierRightDistance : moveBoundaries.BarrierLeftDistance;
       float directionMultiplier = moveBoundaries.NearBarrierRight ? 1 : -1;
 
@@ -185,30 +184,52 @@ public class Ghost : MonoBehaviour {
   private MovementBoundaries CalculateMovementBoundaries() {
     Vector2 horizCastSize = new Vector2(Ghost.BarrierDetectionWidth, this.boxCollider2D.size.y);
     Vector2 vertCastSize = new Vector2(this.boxCollider2D.size.x, Ghost.BarrierDetectionWidth);
-    // To avoid detecting ghost's own collider, include buffer distance in center x:
-    float bufferDistance = 0.01f;
-    float rightCastCenterX = this.boxCollider2D.bounds.max.x + horizCastSize.x / 2 + bufferDistance;
-    float leftCastCenterX = this.boxCollider2D.bounds.min.x - horizCastSize.x / 2 - bufferDistance;
-    float upCastCenterY = this.boxCollider2D.bounds.max.y + vertCastSize.y / 2 + bufferDistance;
-    float downCastCenterY = this.boxCollider2D.bounds.min.y - vertCastSize.y / 2 - bufferDistance;
     float horizCastCenterY = this.boxCollider2D.bounds.center.y;
     float vertCastCenterX = this.boxCollider2D.bounds.center.x;
-    RaycastHit2D rightCastHit = Physics2D.BoxCast(new Vector2(rightCastCenterX, horizCastCenterY),
-                                                horizCastSize, 0.0f, Vector2.right,
-                                                this.barrierDetectionDistance, this.barrierLayerMask);
-    RaycastHit2D leftCastHit = Physics2D.BoxCast(new Vector2(leftCastCenterX, horizCastCenterY),
-                                                horizCastSize, 0.0f, Vector2.left,
-                                                this.barrierDetectionDistance, this.barrierLayerMask);
-    RaycastHit2D upCastHit = Physics2D.BoxCast(new Vector2(vertCastCenterX, upCastCenterY),
-                                                vertCastSize, 0.0f, Vector2.up,
-                                                this.barrierDetectionDistance, this.barrierLayerMask);
-    RaycastHit2D downCastHit = Physics2D.BoxCast(new Vector2(vertCastCenterX, downCastCenterY),
-                                                  vertCastSize, 0.0f, Vector2.down,
+    // To avoid detecting ghost's own collider, include buffer distance in cast start:
+    float bufferDistance = 0.01f;
+
+    float? rightCastDistance = null;
+    float? leftCastDistance = null;
+    if(this.velocity.x > 0) {
+      float rightCastCenterX = this.boxCollider2D.bounds.max.x + horizCastSize.x / 2 + bufferDistance;
+      RaycastHit2D rightCastHit = Physics2D.BoxCast(new Vector2(rightCastCenterX, horizCastCenterY),
+                                                  horizCastSize, 0.0f, Vector2.right,
                                                   this.barrierDetectionDistance, this.barrierLayerMask);
-    float? rightCastDistance = rightCastHit.collider == null ? null : (float?)rightCastHit.distance;
-    float? leftCastDistance = leftCastHit.collider == null ? null : (float?)leftCastHit.distance;
-    float? upCastDistance = upCastHit.collider == null ? null : (float?)upCastHit.distance;
-    float? downCastDistance = downCastHit.collider == null ? null : (float?)downCastHit.distance;
+      if(rightCastHit.collider != null) {
+        rightCastDistance = (float?)rightCastHit.distance;
+      }
+    }
+    else {
+      float leftCastCenterX = this.boxCollider2D.bounds.min.x - horizCastSize.x / 2 - bufferDistance;
+      RaycastHit2D leftCastHit = Physics2D.BoxCast(new Vector2(leftCastCenterX, horizCastCenterY),
+                                                  horizCastSize, 0.0f, Vector2.left,
+                                                  this.barrierDetectionDistance, this.barrierLayerMask);
+      if(leftCastHit.collider != null) {
+        leftCastDistance = (float?)leftCastHit.distance;
+      }
+    }
+
+    float? upCastDistance = null;
+    float? downCastDistance = null;
+    if(this.velocity.y > 0) {
+      float upCastCenterY = this.boxCollider2D.bounds.max.y + vertCastSize.y / 2 + bufferDistance;
+      RaycastHit2D upCastHit = Physics2D.BoxCast(new Vector2(vertCastCenterX, upCastCenterY),
+                                                  vertCastSize, 0.0f, Vector2.up,
+                                                  this.barrierDetectionDistance, this.barrierLayerMask);
+      if(upCastHit.collider != null) {
+        upCastDistance = (float?)upCastHit.distance;
+      }
+    }
+    else {
+      float downCastCenterY = this.boxCollider2D.bounds.min.y - vertCastSize.y / 2 - bufferDistance;
+      RaycastHit2D downCastHit = Physics2D.BoxCast(new Vector2(vertCastCenterX, downCastCenterY),
+                                                    vertCastSize, 0.0f, Vector2.down,
+                                                    this.barrierDetectionDistance, this.barrierLayerMask);
+      if(downCastHit.collider != null) {
+        downCastDistance = (float?)downCastHit.distance;
+      }
+    }
 
     Vector2 cameraLowerLeft = new Vector2(this.cameraForBounds.transform.position.x - this.cameraForBounds.orthographicSize * this.cameraForBounds.aspect,
                                           this.cameraForBounds.transform.position.y - this.cameraForBounds.orthographicSize);
