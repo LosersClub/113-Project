@@ -159,29 +159,32 @@ public class Ghost : MonoBehaviour {
 
   private void UpdateVelocityY(MovementBoundaries moveBoundaries) {
     float newVelocityY = this.velocity.y;
-    float velocityYOffset = 0;
 
     if(moveBoundaries.NearBarrierUp && moveBoundaries.NearBarrierDown) {
       newVelocityY = 0;
     }
-    else if(moveBoundaries.NearBarrierUp || moveBoundaries.NearBarrierDown){
-      float hitDistance = moveBoundaries.NearBarrierUp ? moveBoundaries.BarrierUpDistance : moveBoundaries.BarrierDownDistance;
-      float directionMultiplier = moveBoundaries.NearBarrierUp ? -1 : 1;
+    else {
+      float velocityYOffset = 0;
 
-      if(hitDistance > this.barrierMinDistance) {
-        velocityYOffset = directionMultiplier * this.barrierSlowdownYMultiplier * this.driftSpeedMultiplier;
-      }
-      else {
-        this.driftWavePhase = -2 * Mathf.PI * this.driftWaveFrequency * Time.time + (moveBoundaries.NearBarrierUp ? 1.05f : 0.05f) * Mathf.PI;
-      }
-    }
-    else if(moveBoundaries.IsPastCameraTop || moveBoundaries.IsPastCameraBottom) {
-      this.driftWavePhase = -2 * Mathf.PI * this.driftWaveFrequency * Time.time + (moveBoundaries.IsPastCameraTop ? 1.05f : 0.05f) * Mathf.PI;
-    }
+      if(moveBoundaries.NearBarrierUp || moveBoundaries.NearBarrierDown) {
+        float hitDistance = moveBoundaries.NearBarrierUp ? moveBoundaries.BarrierUpDistance : moveBoundaries.BarrierDownDistance;
+        float directionMultiplier = moveBoundaries.NearBarrierUp ? -1 : 1;
 
-    // Mod argument to Mathf.Sin by 2*pi, since Mathf.Sin fails for large values:
-    float newVelocityYSin = Mathf.Sin((2 * Mathf.PI * this.driftWaveFrequency * Time.time + this.driftWavePhase) % (2 * Mathf.PI));
-    newVelocityY = velocityYOffset + this.driftWaveAmplitude * newVelocityYSin;
+        if(hitDistance > this.barrierMinDistance) {
+          velocityYOffset = directionMultiplier * this.barrierSlowdownYMultiplier * this.driftSpeedMultiplier;
+        }
+        else {
+          this.driftWavePhase = -2 * Mathf.PI * this.driftWaveFrequency * Time.time + (moveBoundaries.NearBarrierUp ? 1.05f : 0.05f) * Mathf.PI;
+        }
+      }
+      else if(moveBoundaries.IsPastCameraTop || moveBoundaries.IsPastCameraBottom) {
+        this.driftWavePhase = -2 * Mathf.PI * this.driftWaveFrequency * Time.time + (moveBoundaries.IsPastCameraTop ? 1.05f : 0.05f) * Mathf.PI;
+      }
+
+      // Mod argument to Mathf.Sin by 2*pi, since Mathf.Sin fails for large values:
+      float newVelocityYSin = Mathf.Sin((2 * Mathf.PI * this.driftWaveFrequency * Time.time + this.driftWavePhase) % (2 * Mathf.PI));
+      newVelocityY = velocityYOffset + this.driftWaveAmplitude * newVelocityYSin;
+    }
 
     this.velocity = new Vector2(this.velocity.x, newVelocityY);
   }
