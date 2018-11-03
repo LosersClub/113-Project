@@ -115,8 +115,8 @@ public class Ghost : MonoBehaviour {
 
   void FixedUpdate() {
     MovementBoundaries moveBoundaries = this.CalculateMovementBoundaries();
-    this.updateVelocityX(moveBoundaries);
-    this.updateVelocityY(moveBoundaries);
+    this.UpdateVelocityX(moveBoundaries);
+    this.UpdateVelocityY(moveBoundaries);
 
     if(this.velocity.x > 0) {
       this.facingRight = true;
@@ -129,7 +129,7 @@ public class Ghost : MonoBehaviour {
     this.rigidBody2D.MovePosition(this.rigidBody2D.position + this.velocity * Time.deltaTime);
   }
 
-  private void updateVelocityX(MovementBoundaries moveBoundaries) {
+  private void UpdateVelocityX(MovementBoundaries moveBoundaries) {
     float newVelocityX = this.velocity.x;
 
     if(moveBoundaries.NearBarrierRight && moveBoundaries.NearBarrierLeft) {
@@ -157,7 +157,7 @@ public class Ghost : MonoBehaviour {
     this.velocity = new Vector2(newVelocityX, this.velocity.y);
   }
 
-  private void updateVelocityY(MovementBoundaries moveBoundaries) {
+  private void UpdateVelocityY(MovementBoundaries moveBoundaries) {
     float newVelocityY = this.velocity.y;
     float velocityYOffset = 0;
 
