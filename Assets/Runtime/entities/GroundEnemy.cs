@@ -14,8 +14,10 @@ public abstract class GroundEnemy : MonoBehaviour {
 	protected  bool facingRight;
 	
 	// Use this for initialization
-	// void Start () {		
-	// }
+	public virtual void Start () {		
+		facingRight = true; 
+		anim = GetComponent<Animator>(); 
+	}
 	
 	// Update is called once per frame
 	void Update () {
