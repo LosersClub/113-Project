@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sheep : MonoBehaviour {
+public class Sheep : GroundEnemy {
 	
-	public float speed = 3f;
-	public float distance = .5f;
+	//public float speed = 3f;
+	//public float distance = .5f;
+	//private bool facingRight = true; 
 	
-	private bool facingRight = true; 
 	private Vector2 dir = Vector2.right; 
 	
 	public Transform groundPoint; 
@@ -15,6 +15,9 @@ public class Sheep : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		speed = 3f;
+		distance = .5f;
+		facingRight = true; 
 	}
 	
 	// Update is called once per frame
@@ -36,16 +39,5 @@ public class Sheep : MonoBehaviour {
 			Flip();
 			dir *= -1; 
 		}
-	}
-	
-	void Flip() {
-		if(facingRight == true) {
-				transform.eulerAngles = new Vector3(0, -180, 0); 
-				facingRight = false; 
-			}
-			else {
-				transform.eulerAngles = new Vector3(0, 0, 0); 
-				facingRight = true; 
-			}
 	}
 }
