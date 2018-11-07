@@ -105,8 +105,8 @@ MonoBehaviour:
   airDamping: 20
   minJumpHeight: 1
   maxJumpTime: 0.3
-  dashSpeed: 40
-  dashDistance: 1
+  dashSpeed: 25
+  dashDistance: 6
   dashCooldown: 1
   standSize: 1
   playerOffset: {x: 0, y: -0.06}
@@ -124,19 +124,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdbfb268b6c1ad84abab3a78b83e0346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: {x: 0, y: 0.0000011241955}
-  horizontalRays: 8
-  verticalRays: 4
-  rayInset: 0.02
+  Velocity: {x: 0, y: 0}
+  RayData:
+    horizontalRays: 8
+    verticalRays: 4
+    rayInset: 0.02
   groundMask:
     serializedVersion: 2
     m_Bits: 256
   platformMask:
     serializedVersion: 2
     m_Bits: 1024
-  triggerMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!212 &212475461191479644
 SpriteRenderer:
   m_ObjectHideFlags: 1
