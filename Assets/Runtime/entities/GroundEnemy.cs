@@ -4,8 +4,9 @@ using UnityEngine;
 
 public abstract class GroundEnemy : MonoBehaviour {
 	
-	protected Animator anim; 
-	
+	public Animator anim;
+    private IEnemyState currentState; 
+
 	[SerializeField]
 	protected float speed;
 	[SerializeField]
@@ -16,22 +17,39 @@ public abstract class GroundEnemy : MonoBehaviour {
 	// Use this for initialization
 	public virtual void Start () {		
 		facingRight = true; 
-		anim = GetComponent<Animator>(); 
+		anim = GetComponent<Animator>();
+
+        ChangeState(new IdleState()); 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        currentState.Execute(); 
 	}
 	
+    public void ChangeState(IEnemyState newState)
+    {
+        if (currentState != null) currentState.Exit();
+        currentState = newState;
+        currentState.Enter(this); 
+    }
+
 	public void Flip() {
-		if(facingRight == true) {
-				transform.eulerAngles = new Vector3(0, -180, 0); 
-				facingRight = false; 
-		}
-		else {
-			transform.eulerAngles = new Vector3(0, 0, 0); 
-			facingRight = true; 
-		}
+        facingRight = !facingRight;
+        transform.localScale = new Vector3(transform.localScale.x * -1, 1, 1); 
 	}
+
+    public virtual void Move()
+    {
+        anim.SetFloat("speed", 1);
+        transform.Translate(GetDirection() * speed * Time.deltaTime);  
+
+
+    }
+
+    public Vector2 GetDirection()
+    {
+        Vector2 dir = facingRight ? Vector2.right : Vector2.left;
+        return dir; 
+    }
 }

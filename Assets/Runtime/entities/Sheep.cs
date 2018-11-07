@@ -15,22 +15,19 @@ public class Sheep : GroundEnemy {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		transform.Translate(Vector2.right * speed * Time.deltaTime); 
-		
-		Vector2 dir = facingRight ? Vector2.right : Vector2.left; 
+	public override void Move() {
+        //base.Move();
+
+        Vector2 dir = GetDirection();
+        transform.Translate(dir * speed * Time.deltaTime);
 		Debug.DrawRay(groundPoint.position, Vector2.down*distance); 
 		Debug.DrawRay(wallPoint.position, dir*distance); 
 		
 		RaycastHit2D groundHit = Physics2D.Raycast(groundPoint.position, Vector2.down, distance); 
 		RaycastHit2D wallHit = Physics2D.Raycast(wallPoint.position, dir, distance); 
 		
-		if(groundHit == false) {
-			Flip();
-		}
-		
-		else if(wallHit == true) {
-			Flip();
-		}
+		if(groundHit == false) Flip();
+		else if(wallHit == true) Flip();
+	
 	}
 }
