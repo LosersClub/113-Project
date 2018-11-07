@@ -144,6 +144,10 @@ public class Player : MonoBehaviour {
   }
 
   public void Jump() {
+    if(this.dashing) {
+      return;
+    }
+
     this.jumping = true;
     if (this.physics.Grounded) {
       this.jumpCounter = this.maxJumpTime;
