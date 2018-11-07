@@ -92,7 +92,10 @@ public class Player : MonoBehaviour {
       this.physics.Velocity.y = Mathf.Sqrt(2f * minJumpHeight * -gravity);
     }
 
-    if (!this.dashing) {
+    if (this.dashing) {
+      this.physics.Velocity.y = 0;
+    }
+    else {
       this.physics.Velocity.y += gravity * Time.deltaTime;
     }
 
