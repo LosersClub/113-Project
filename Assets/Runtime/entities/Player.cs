@@ -155,20 +155,12 @@ public class Player : MonoBehaviour {
   }
 
   private IEnumerator DashCoroutine() {
-    float duration = this.dashDistance / this.dashSpeed;
-    float time = 0f;
     this.canDash = false;
     this.dashing = true;
-    while (duration > time) {
-      time += Time.deltaTime;
-      this.physics.Velocity.x = this.dashSpeed;
-      if (!this.facingRight) {
-        this.physics.Velocity.x *= -1;
-      }
-      yield return 0;
-    }
+    this.physics.Velocity.x = (this.facingRight ? 1 : -1) * this.dashSpeed;
+    yield return new WaitForSeconds(this.dashDistance / this.dashSpeed);
     this.dashing = false;
     yield return new WaitForSeconds(this.dashCooldown);
-    canDash = true;
+    this.canDash = true;
   }
 }
