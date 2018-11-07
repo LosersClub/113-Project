@@ -118,18 +118,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16045ece43d05f04dbc1baf1284c7778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraForBounds: {fileID: 0}
   driftSpeedMultiplier: 2
   barrierDetectionDistance: 1
   barrierMinDistance: 0.1
   barrierSlowdownXMultiplier: 0.1
   barrierSlowdownYMultiplier: 1
   driftWaveAmplitude: 5
-  driftWaveFrequency: 2
-  cameraBoundsBuffer: 2
+  driftWaveFrequency: 0.25
+  driftWaveYShiftMultiplier: 0.1
+  cameraBoundsBuffer: -0.2
   barrierLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  initialFacingRight: 1
 --- !u!212 &212247195072144678
 SpriteRenderer:
   m_ObjectHideFlags: 1

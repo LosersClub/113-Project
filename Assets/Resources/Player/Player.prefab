@@ -105,8 +105,8 @@ MonoBehaviour:
   airDamping: 20
   minJumpHeight: 1
   maxJumpTime: 0.3
-  dashSpeed: 40
-  dashDistance: 1
+  dashSpeed: 25
+  dashDistance: 6
   dashCooldown: 1
   standSize: 1
   groundDist: 0.01

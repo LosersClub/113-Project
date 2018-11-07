@@ -550,6 +550,21 @@ Prefab:
       propertyPath: cameraForBounds
       value: 
       objectReference: {fileID: 397625616}
+    - target: {fileID: 114927376027492674, guid: 8dfc8fec18eb4944aa100fff30bb10b6,
+        type: 2}
+      propertyPath: cameraBoundsBuffer
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927376027492674, guid: 8dfc8fec18eb4944aa100fff30bb10b6,
+        type: 2}
+      propertyPath: driftWaveFrequency
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927376027492674, guid: 8dfc8fec18eb4944aa100fff30bb10b6,
+        type: 2}
+      propertyPath: initialFacingRight
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8dfc8fec18eb4944aa100fff30bb10b6, type: 2}
   m_IsPrefabAsset: 0
