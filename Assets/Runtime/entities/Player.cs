@@ -128,6 +128,10 @@ public class Player : MonoBehaviour {
   }
 
   public void Move(float x, float y) {
+    if(this.dashing) {
+      return;
+    }
+
     if (x > 0.3f) {
       this.normalizedMovement += 1.0f;
     } else if (x < -0.3f) {
