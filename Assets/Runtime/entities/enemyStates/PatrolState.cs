@@ -18,7 +18,10 @@ public class PatrolState : IEnemyState {
     {
         Patrol();
 
-        enemy.Move(); 
+        enemy.Move();
+
+        if (enemy.Target != null && enemy.InMeleeRange) enemy.ChangeState(new MeleeState());
+        else if (enemy.Target != null) enemy.Move(); 
     }
 
     public void Exit()
