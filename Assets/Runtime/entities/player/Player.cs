@@ -203,10 +203,12 @@ public class Player : MonoBehaviour {
     }
   }
 
-  public void CheckForStand() {
+  public bool CheckForStand() {
     if (this.movement.y >= 0 && this.SpaceToStand()) {
       this.animator.SetBool(this.crouchingParam, false);
+      return true;
     }
+    return false;
   }
 
   public bool CheckForJump() {
