@@ -8,7 +8,7 @@ public class MeleeDamageDealer : DamageDealer {
   public LayerMask groundLayer;
 
   [SerializeField]
-  private RayData rayData = new RayData();
+  private RayData rayData;
 
   private readonly RaycastHit2D[] hits = new RaycastHit2D[10];
   private BoxCollider2D startBounds;
@@ -53,18 +53,14 @@ public class MeleeDamageDealer : DamageDealer {
     int count = Physics2D.RaycastNonAlloc(ray, direction, this.hits, distance,
       this.hittableLayers | this.groundLayer);
     for (int i = 0; i < count; i++) {
-      if (this.groundLayer == (this.groundLayer | (1 << this.hits[i].transform.gameObject.layer))) {
-        Rays.DrawRay(ray, direction, this.hits[i].distance, Color.blue);
-        break;
-      }
       this.lastHit = this.hits[i].collider;
       this.PerformHit(this.lastHit.GetComponent<DamageTaker>());
+      if (this.groundLayer == (this.groundLayer | (1 << this.hits[i].transform.gameObject.layer))) {
+        Rays.DrawRay(ray, direction, this.hits[i].distance, Color.blue);
+        return;
+      }
     }
-#if DEBUG_PHYS_RAYS
-    if (count == 0) {
-      Rays.DrawRay(ray, direction, size.y, Color.blue);
-    }
-#endif
+    Rays.DrawRay(ray, direction, size.y, Color.blue);
   }
 
   public void HorizontalHit(bool right) {
