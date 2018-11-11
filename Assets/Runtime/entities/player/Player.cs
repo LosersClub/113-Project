@@ -70,7 +70,7 @@ public class Player : MonoBehaviour {
   private Vector2 movement = Vector2.zero;
   private bool jumping = false;
   private bool meleeHeld = false;
-  private int altenator = 0;
+  private int alternator = 0;
   private bool dashHeld = false;
   private bool canMelee = true;
   private bool canDash = true;
@@ -170,8 +170,15 @@ public class Player : MonoBehaviour {
     this.sprite.material.SetColor(eyeColorId, color);
   }
 
-  public void SetMeleeDirection() {
-
+  public Action SetMeleeDirection() {
+    if (this.movement.y > 0.7f) {
+      return () => this.meleeAttack.VerticalHit(true);
+    } else if (this.movement.y < -0.7f && !this.controller.Grounded) {
+      return () => this.meleeAttack.VerticalHit(false);
+    } else if (this.sprite.flipX) {
+      return () => this.meleeAttack.HorizontalHit(false);
+    }
+    return () => this.meleeAttack.HorizontalHit(true);
   }
 
   public void HorizontalMovement(float damping, float scale = 1.0f) {
@@ -191,10 +198,6 @@ public class Player : MonoBehaviour {
     }
     this.controller.Velocity.y = Mathf.Sqrt(2f * this.minJumpHeight * this.gravity);
     this.jumpTimer -= Time.deltaTime;
-  }
-
-  public void UpdateMelee() {
-    this.meleeAttack.HorizontalHit(!this.sprite.flipX);
   }
 
   public void CheckForIgnorePlatform() {
@@ -224,7 +227,7 @@ public class Player : MonoBehaviour {
     if (this.meleeHeld && this.canMelee) {
       this.canMelee = false;
       this.animator.SetTrigger(this.meleeParam);
-      this.animator.SetFloat(this.alternatorParam, this.altenator = (this.altenator + 1) % 2);
+      this.animator.SetFloat(this.alternatorParam, this.alternator = (this.alternator + 1) % 2);
       return true;
     }
     return false;
@@ -256,16 +259,11 @@ public class Player : MonoBehaviour {
 
   #region Input
   public void Move(float x, float y) {
-    if (x > 0.3f) {
-      this.movement.x += 1.0f;
-    } else if (x < -0.3f) {
-      this.movement.x -= 1.0f;
+    if (Mathf.Abs(x) > 0.3f) {
+      this.movement.x += x;
     }
-
-    if (y < -0.3f) {
-      this.movement.y -= 1.0f;
-    } else if (y > 0.3f) {
-      this.movement.y += 1.0f;
+    if (Mathf.Abs(y) > 0.3f) {
+      this.movement.y += y;
     }
   }
 

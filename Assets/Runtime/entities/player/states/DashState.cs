@@ -11,4 +11,8 @@ public class DashState : SceneLinkedState<Player> {
       this.instance.SetStanding();
     }
   }
+
+  public override void OnUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+    this.instance.Reset();
+  }
 }

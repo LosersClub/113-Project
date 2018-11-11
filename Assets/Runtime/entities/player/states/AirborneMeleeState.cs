@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System;
 
-public class MeleeActionState : SceneLinkedState<Player> {
+public class AirborneMeleeState : SceneLinkedState<Player> {
   private Action attack;
 
-  public override void OnEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+  public override void OnEnter(Animator animator, AnimatorStateInfo info, int layerIndex) {
     this.instance.SetEyeColor(this.instance.EyeColor.melee);
     this.attack = this.instance.SetMeleeDirection();
   }
@@ -15,8 +15,11 @@ public class MeleeActionState : SceneLinkedState<Player> {
   }
 
   public override void OnUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-    this.instance.HorizontalMovement(this.instance.GroundDamping, this.instance.MeleeScalar);
+    this.instance.UpdateJump();
+    this.instance.HorizontalMovement(this.instance.AirDamping, this.instance.MeleeScalar);
+    this.instance.VerticalMovement();
     this.attack();
+    this.instance.CheckForIgnorePlatform();
     this.instance.Reset();
   }
 }
