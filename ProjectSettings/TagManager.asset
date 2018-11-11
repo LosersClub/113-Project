@@ -13,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - Ground
+  - Impassable
   - Player
   - Platform
   - Background
-  - 
+  - Hittable
   - 
   - 
   - 
@@ -50,6 +50,12 @@ TagManager:
   - name: Player
     uniqueID: 3078886455
     locked: 0
-  - name: Ground
+  - name: Entity
+    uniqueID: 808416019
+    locked: 0
+  - name: Impassable
     uniqueID: 847191451
+    locked: 0
+  - name: UI
+    uniqueID: 517628241
     locked: 0
