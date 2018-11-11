@@ -20,6 +20,7 @@ public class AirborneMeleeState : SceneLinkedState<Player> {
     this.instance.VerticalMovement();
     this.attack();
     this.instance.CheckForIgnorePlatform();
+    this.instance.CheckForRanged();
     this.instance.Reset();
   }
 }

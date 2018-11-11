@@ -56,6 +56,9 @@ TagManager:
   - name: Impassable
     uniqueID: 847191451
     locked: 0
+  - name: VFX
+    uniqueID: 3929392453
+    locked: 0
   - name: UI
     uniqueID: 517628241
     locked: 0

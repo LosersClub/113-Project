@@ -16,7 +16,7 @@ public class Bindings {
       new KeyboardButton(KeyCode.Space));
     InputManager.AddButtonAction("Dash", GameManager.Player.Dash,
       new KeyboardButton(KeyCode.LeftShift));
-   
+
     //InputManager.AddButtonAction("Shoot", GameManager.Player.Shoot,
     //  new KeyboardButton(KeyCode.E));
     InputManager.AddButtonAction("Melee", GameManager.Player.Melee,
@@ -24,11 +24,15 @@ public class Bindings {
 
     InputManager.AddAnalog2DAction("Controller Move", GameManager.Player.Move,
       new ControllerAnalog2D(Side.Left));
+    InputManager.AddAnalog2DAction("Controller Aim", GameManager.Player.JoystickAim,
+      new ControllerAnalog2D(Side.Right));
     InputManager.AddButtonAction("Controller Jump", GameManager.Player.Jump,
       new ControllerButton(Button.A));
     InputManager.AddButtonAction("Controller Dash", GameManager.Player.Dash,
       new ControllerButton(Button.B));
     InputManager.AddButtonAction("Controller Melee", GameManager.Player.Melee,
       new ControllerButton(Button.X));
+    InputManager.AddButtonAction("Controller Shoot", GameManager.Player.Shoot,
+      new ControllerButton(Button.Right_Bumper));
   }
 }

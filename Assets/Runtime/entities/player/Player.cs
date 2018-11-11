@@ -30,9 +30,18 @@ public class Player : MonoBehaviour {
   private float maxJumpTime = 0.3f;
 
   [Header("Dash Settings")]
-  public float dashSpeed = 25f;
-  public float dashDistance = 6f;
-  public float dashCooldown = 1f;
+  [SerializeField]
+  private float dashSpeed = 25f;
+  [SerializeField]
+  private float dashDistance = 6f;
+  [SerializeField]
+  private float dashCooldown = 1f;
+
+  [Header("Ranged Settings")]
+  [SerializeField]
+  private PlayerBulletSpawner bulletSpawner;
+  [SerializeField]
+  private float rangedEyeDuration = 0.5f;
 
   [Space]
   [SerializeField]
@@ -43,6 +52,9 @@ public class Player : MonoBehaviour {
   [Header("Misc Settings")]
   [SerializeField]
   private float standRoom = 0.75f;
+  [SerializeField]
+  [Range(0f, 1f)]
+  private float meleeDirectionZone = 0.7f;
 
   [Serializable]
   private class HitboxData {
@@ -70,10 +82,12 @@ public class Player : MonoBehaviour {
   private Vector2 movement = Vector2.zero;
   private bool jumping = false;
   private bool meleeHeld = false;
+  private bool shootHeld = false;
   private int alternator = 0;
   private bool dashHeld = false;
   private bool canMelee = true;
   private bool canDash = true;
+  private bool canShoot = true;
 
   #region Animator Variables
   private readonly int horizontalSpeedParam = Animator.StringToHash("HorizontalSpeed");
@@ -124,10 +138,14 @@ public class Player : MonoBehaviour {
     if (!this.meleeHeld) {
       this.canMelee = true;
     }
+    if (!this.shootHeld) {
+      this.canShoot = true;
+    }
     this.movement = Vector2.zero;
     this.jumping = false;
     this.meleeHeld = false;
     this.dashHeld = false;
+    this.shootHeld = false;
   }
 
   public void UpdateFacing() {
@@ -171,9 +189,9 @@ public class Player : MonoBehaviour {
   }
 
   public Action SetMeleeDirection() {
-    if (this.movement.y > 0.7f) {
+    if (this.movement.y > this.meleeDirectionZone) {
       return () => this.meleeAttack.VerticalHit(true);
-    } else if (this.movement.y < -0.7f && !this.controller.Grounded) {
+    } else if (this.movement.y < -this.meleeDirectionZone) {
       return () => this.meleeAttack.VerticalHit(false);
     } else if (this.sprite.flipX) {
       return () => this.meleeAttack.HorizontalHit(false);
@@ -233,6 +251,14 @@ public class Player : MonoBehaviour {
     return false;
   }
 
+  public void CheckForRanged() {
+    if (this.shootHeld && this.canShoot) {
+      this.canShoot = false;
+      this.bulletSpawner.SpawnBullet();
+      this.StartCoroutine(this.RangeEyeCoroutine());
+    }
+  }
+
   public bool CheckForDash() {
     if (this.dashHeld && this.canDash) {
       this.canDash = false;
@@ -246,6 +272,12 @@ public class Player : MonoBehaviour {
     this.jumpTimer = 0;
     this.controller.Velocity.y = 0;
     this.StartCoroutine(this.DashCoroutine());
+  }
+
+  private IEnumerator RangeEyeCoroutine() {
+    this.SetEyeColor(this.eyeColors.ranged);
+    yield return new WaitForSeconds(this.rangedEyeDuration);
+    this.SetEyeColor(this.eyeColors.original);
   }
 
   private IEnumerator DashCoroutine() {
@@ -265,6 +297,14 @@ public class Player : MonoBehaviour {
     if (Mathf.Abs(y) > 0.3f) {
       this.movement.y += y;
     }
+  }
+
+  public void JoystickAim(float x, float y) {
+    this.bulletSpawner.UpdatePosition(x, y);
+  }
+
+  public void Shoot() {
+    this.shootHeld = true;
   }
 
   public void Jump() {

@@ -5,6 +5,8 @@ public class LocomotionState : SceneLinkedState<Player> {
     this.instance.UpdateFacing();
     this.instance.HorizontalMovement(this.instance.GroundDamping);
     this.instance.VerticalMovement();
+    //this.instance.CheckForIgnorePlatform();
+    this.instance.CheckForRanged();
 
     if (this.instance.CheckForJump() || this.instance.CheckForDash() || this.instance.CheckForMelee()) { }
     this.instance.Reset();

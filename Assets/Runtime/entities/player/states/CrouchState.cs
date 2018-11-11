@@ -14,6 +14,7 @@ public class CrouchState : SceneLinkedState<Player> {
     this.instance.HorizontalMovement(this.instance.GroundDamping, this.instance.CrouchScalar);
     this.instance.VerticalMovement();
     this.instance.CheckForIgnorePlatform();
+    this.instance.CheckForRanged();
     this.instance.CheckForStand();
     this.instance.Reset();
   }

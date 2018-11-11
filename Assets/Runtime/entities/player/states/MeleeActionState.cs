@@ -17,6 +17,7 @@ public class MeleeActionState : SceneLinkedState<Player> {
   public override void OnUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
     this.instance.HorizontalMovement(this.instance.GroundDamping, this.instance.MeleeScalar);
     this.attack();
+    this.instance.CheckForRanged();
     this.instance.Reset();
   }
 }
