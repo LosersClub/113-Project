@@ -165,6 +165,8 @@ MonoBehaviour:
   dashCooldown: 1
   bulletSpawner: {fileID: 114953059818769142}
   rangedEyeDuration: 0.5
+  meleeBounceHeight: 1
+  meleeDirectionZone: 0.7
   boxData:
     standingOffset: {x: 0, y: -0.06}
     standingSize: {x: 0.625, y: 1.87}
@@ -176,7 +178,6 @@ MonoBehaviour:
     ranged: {r: 0, g: 0.788, b: 0.098, a: 1}
     magic: {r: 0, g: 0.949, b: 1, a: 1}
   standRoom: 0.75
-  meleeDirectionZone: 0.7
 --- !u!114 &114093224024557302
 MonoBehaviour:
   m_ObjectHideFlags: 1

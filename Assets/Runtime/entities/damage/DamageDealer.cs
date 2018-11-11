@@ -11,10 +11,8 @@ public abstract class DamageDealer : MonoBehaviour {
   [SerializeField]
   protected LayerMask hittableLayers;
 
-  [SerializeField]
-  protected DamageEvent OnDamageHit;
-  [SerializeField]
-  protected NonDamageEvent OnNoDamageHit;
+  public DamageEvent OnDamageHit;
+  public NonDamageEvent OnNoDamageHit;
 
   public abstract Collider2D LastHit { get; }
   private bool canDealDamage = true;

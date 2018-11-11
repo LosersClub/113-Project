@@ -37,11 +37,16 @@ public class Player : MonoBehaviour {
   [SerializeField]
   private float dashCooldown = 1f;
 
-  [Header("Ranged Settings")]
+  [Header("Attack Settings")]
   [SerializeField]
   private PlayerBulletSpawner bulletSpawner;
   [SerializeField]
   private float rangedEyeDuration = 0.5f;
+  [SerializeField]
+  private float meleeBounceHeight = 2f;
+  [SerializeField]
+  [Range(0f, 1f)]
+  private float meleeDirectionZone = 0.7f;
 
   [Space]
   [SerializeField]
@@ -52,9 +57,6 @@ public class Player : MonoBehaviour {
   [Header("Misc Settings")]
   [SerializeField]
   private float standRoom = 0.75f;
-  [SerializeField]
-  [Range(0f, 1f)]
-  private float meleeDirectionZone = 0.7f;
 
   [Serializable]
   private class HitboxData {
@@ -123,6 +125,7 @@ public class Player : MonoBehaviour {
     SceneLinkedState<Player>.Initialize(this.animator, this);
     this.SetStanding();
     this.SetEyeColor(this.eyeColors.original);
+    this.meleeAttack.OnDamageHit.AddListener(this.BounceOnDownHit);
   }
 
   private void Update() {
@@ -249,6 +252,12 @@ public class Player : MonoBehaviour {
       return true;
     }
     return false;
+  }
+
+  public void BounceOnDownHit(DamageDealer dealer, DamageTaker taker) {
+    if (((MeleeDamageDealer)dealer).HitDirection == Vector2.down) {
+      this.controller.Velocity.y = Mathf.Sqrt(2f * this.meleeBounceHeight * this.gravity);
+    }
   }
 
   public void CheckForRanged() {

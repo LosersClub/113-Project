@@ -17,6 +17,7 @@ public class MeleeDamageDealer : DamageDealer {
   public override Collider2D LastHit {
     get { return this.lastHit; }
   }
+  public Vector2 HitDirection { get; private set; }
 
   private struct Origins {
     public Vector2 rightSide;
@@ -52,6 +53,7 @@ public class MeleeDamageDealer : DamageDealer {
   private void ComputeHits(Vector2 ray, Vector2 direction, float distance) {
     int count = Physics2D.RaycastNonAlloc(ray, direction, this.hits, distance,
       this.hittableLayers | this.groundLayer);
+    this.HitDirection = direction;
     for (int i = 0; i < count; i++) {
       this.lastHit = this.hits[i].collider;
       this.PerformHit(this.lastHit.GetComponent<DamageTaker>());

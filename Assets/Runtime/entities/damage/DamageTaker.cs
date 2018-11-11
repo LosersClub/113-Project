@@ -6,8 +6,6 @@ public class DamageTaker : MonoBehaviour {
   [SerializeField]
   protected float maxHealth = 5.0f;
   [SerializeField]
-  protected bool invulnerableAfterDamage = true;
-  [SerializeField]
   protected float invulnerabilityDuration = 1f;
   [SerializeField]
   protected bool disableOnDeath = false;
