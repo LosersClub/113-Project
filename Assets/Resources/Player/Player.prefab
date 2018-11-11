@@ -159,7 +159,7 @@ MonoBehaviour:
   ignoreInvulnerability: 0
   hittableLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4096
   OnDamageHit:
     m_PersistentCalls:
       m_Calls: []
@@ -169,7 +169,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: NonDamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  size: 1.5
+  size: {x: 1, y: 1.5}
+  offset: {x: 0, y: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 256

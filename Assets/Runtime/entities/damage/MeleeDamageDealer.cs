@@ -3,7 +3,8 @@
 [RequireComponent(typeof(BoxCollider2D))]
 public class MeleeDamageDealer : DamageDealer {
 
-  public float size = 1.0f;
+  public Vector2 size;
+  public Vector2 offset;
   public LayerMask groundLayer;
 
   [SerializeField]
@@ -27,11 +28,11 @@ public class MeleeDamageDealer : DamageDealer {
 
   private void Awake() {
     this.startBounds = this.GetComponent<BoxCollider2D>();
-    this.rayData.Bounds = new Vector2(size, size);
+    this.rayData.Bounds = size;
   }
 
   private void OnValidate() {
-    this.rayData.Bounds = new Vector2(size, size);
+    this.rayData.Bounds = size;
   }
 
   public void CalculateOrigins() {
@@ -39,12 +40,12 @@ public class MeleeDamageDealer : DamageDealer {
     baseBounds.Expand(-2f * this.rayData.Inset);
 
     this.origins.rightSide = new Vector2(baseBounds.max.x,
-        this.startBounds.bounds.center.y + size / 2.0f);
+        this.startBounds.bounds.center.y + offset.y + size.x / 2.0f);
     this.origins.leftSide = new Vector2(baseBounds.min.x,
-        this.startBounds.bounds.center.y + size / 2.0f);
-    this.origins.topSide = new Vector2(this.startBounds.bounds.center.x  - size / 2.0f,
+        this.startBounds.bounds.center.y + offset.y + size.x / 2.0f);
+    this.origins.topSide = new Vector2(this.startBounds.bounds.center.x - offset.x - size.x / 2.0f,
         baseBounds.max.y);
-    this.origins.botSide = new Vector2(this.startBounds.bounds.center.x - size / 2.0f,
+    this.origins.botSide = new Vector2(this.startBounds.bounds.center.x - offset.x - size.x / 2.0f,
         baseBounds.min.y);
   }
 
@@ -61,7 +62,7 @@ public class MeleeDamageDealer : DamageDealer {
     }
 #if DEBUG_PHYS_RAYS
     if (count == 0) {
-      Rays.DrawRay(ray, direction, size, Color.blue);
+      Rays.DrawRay(ray, direction, size.y, Color.blue);
     }
 #endif
   }
@@ -72,7 +73,7 @@ public class MeleeDamageDealer : DamageDealer {
     }
     this.CalculateOrigins();
 
-    float distance = this.size + this.rayData.Inset;
+    float distance = this.size.y + this.rayData.Inset;
     Vector2 direction, origin;
     if (right) {
       direction = Vector2.right;
@@ -83,7 +84,7 @@ public class MeleeDamageDealer : DamageDealer {
     }
 
     for (int i = 0; i < this.rayData.HorizontalRays; i++) {
-      this.ComputeHits(new Vector2(origin.x, origin.y - (i * this.rayData.Spacing.y)),
+      this.ComputeHits(new Vector2(origin.x, origin.y - (i * this.rayData.Spacing.x)),
         direction, distance);
     }
   }
@@ -94,7 +95,7 @@ public class MeleeDamageDealer : DamageDealer {
     }
     this.CalculateOrigins();
 
-    float distance = size + this.rayData.Inset;
+    float distance = size.y + this.rayData.Inset;
     Vector2 direction, origin;
     if (up) {
       direction = Vector2.up;
