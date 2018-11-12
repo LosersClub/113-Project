@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(MovementController))]
 [RequireComponent(typeof(MeleeDamageDealer))]
+[RequireComponent(typeof(DamageTaker))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour {
@@ -57,6 +58,8 @@ public class Player : MonoBehaviour {
   [Header("Misc Settings")]
   [SerializeField]
   private float standRoom = 0.75f;
+  [SerializeField]
+  private int numBlinks = 10;
 
   [Serializable]
   private class HitboxData {
@@ -76,6 +79,7 @@ public class Player : MonoBehaviour {
 
   private MovementController controller;
   private MeleeDamageDealer meleeAttack;
+  private DamageTaker damageTaker;
   private new BoxCollider2D collider;
   private SpriteRenderer sprite;
   private Animator animator;
@@ -119,6 +123,7 @@ public class Player : MonoBehaviour {
     this.sprite = this.GetComponent<SpriteRenderer>();
     this.animator = this.GetComponent<Animator>();
     this.meleeAttack = this.GetComponent<MeleeDamageDealer>();
+    this.damageTaker = this.GetComponent<DamageTaker>();
   }
 
   private void Start() {
@@ -126,6 +131,7 @@ public class Player : MonoBehaviour {
     this.SetStanding();
     this.SetEyeColor(this.eyeColors.original);
     this.meleeAttack.OnDamageHit.AddListener(this.BounceOnDownHit);
+    this.damageTaker.OnTakeDamage.AddListener(this.BlinkOnHit);
   }
 
   private void Update() {
@@ -254,12 +260,6 @@ public class Player : MonoBehaviour {
     return false;
   }
 
-  public void BounceOnDownHit(DamageDealer dealer, DamageTaker taker) {
-    if (((MeleeDamageDealer)dealer).HitDirection == Vector2.down) {
-      this.controller.Velocity.y = Mathf.Sqrt(2f * this.meleeBounceHeight * this.gravity);
-    }
-  }
-
   public void CheckForRanged() {
     if (this.shootHeld && this.canShoot) {
       this.canShoot = false;
@@ -283,6 +283,17 @@ public class Player : MonoBehaviour {
     this.StartCoroutine(this.DashCoroutine());
   }
 
+  private IEnumerator Blink(float duration) {
+    float blinkDuration = duration / (numBlinks + 1);
+    for (float timer = duration; timer > 0;) {
+      timer -= Time.deltaTime;
+      this.sprite.enabled = !this.sprite.enabled;
+      yield return new WaitForSeconds(blinkDuration);
+      timer -= blinkDuration;
+    }
+    this.sprite.enabled = true;
+  }
+
   private IEnumerator RangeEyeCoroutine() {
     this.SetEyeColor(this.eyeColors.ranged);
     yield return new WaitForSeconds(this.rangedEyeDuration);
@@ -296,6 +307,16 @@ public class Player : MonoBehaviour {
     this.animator.SetBool(this.dashingParam, false);
     yield return new WaitForSeconds(this.dashCooldown);
     this.canDash = true;
+  }
+
+  private void BounceOnDownHit(DamageDealer dealer, DamageTaker taker) {
+    if (((MeleeDamageDealer)dealer).HitDirection == Vector2.down) {
+      this.controller.Velocity.y = Mathf.Sqrt(2f * this.meleeBounceHeight * this.gravity);
+    }
+  }
+
+  private void BlinkOnHit(DamageDealer dealer, DamageTaker taker) {
+    this.StartCoroutine(this.Blink(taker.InvulnerabilityDuration));
   }
 
   #region Input

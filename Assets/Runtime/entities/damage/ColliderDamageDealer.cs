@@ -23,6 +23,10 @@ public class ColliderDamageDealer : DamageDealer {
     this.contactFilter.useTriggers = true;
   }
 
+  private void OnValidate() {
+    this.contactFilter.layerMask = this.hittableLayers;
+  }
+
   private void Update() {
     if (!this.CanDealDamage) {
       return;
