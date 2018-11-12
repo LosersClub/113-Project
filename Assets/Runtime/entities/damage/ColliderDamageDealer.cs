@@ -32,7 +32,7 @@ public class ColliderDamageDealer : DamageDealer {
       return;
     }
 
-    int count = Physics2D.OverlapCollider(this.damageCollider, this.contactFilter, this.hits);
+    int count = this.damageCollider.OverlapCollider(this.contactFilter, this.hits);
     for (int i = 0; i < count; i++) {
       this.lastHit = this.hits[i];
       this.PerformHit(this.lastHit.GetComponent<DamageTaker>());

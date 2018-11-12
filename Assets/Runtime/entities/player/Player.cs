@@ -138,6 +138,10 @@ public class Player : MonoBehaviour {
     this.animator = this.GetComponent<Animator>();
     this.meleeAttack = this.GetComponent<MeleeDamageDealer>();
     this.damageTaker = this.GetComponent<DamageTaker>();
+
+    for (int i = 0; i < 32; i++) {
+      Physics2D.IgnoreLayerCollision(this.gameObject.layer, i);
+    }
   }
 
   private void Start() {
