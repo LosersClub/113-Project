@@ -54,6 +54,8 @@ public class Player : MonoBehaviour {
   private HitboxData boxData;
   [SerializeField]
   private EyeColors eyeColors;
+  [SerializeField]
+  private VFXSystems vfx;
 
   [Header("Misc Settings")]
   [SerializeField]
@@ -79,6 +81,13 @@ public class Player : MonoBehaviour {
     public Color melee = new Color(0.717f, 0.015f, 0.847f);
     public Color ranged = new Color(0f, 0.788f, 0.098f);
     public Color magic = new Color(0f, 0.949f, 1f);
+  }
+
+  [Serializable]
+  public class VFXSystems {
+    public ParticleSystem slashHorizontal;
+    public Vector2 horizontalSlashPosition;
+    public ParticleSystem slashVertical;
   }
 
   private MovementController controller;
@@ -205,12 +214,26 @@ public class Player : MonoBehaviour {
   public Action SetMeleeDirection() {
     if (this.movement.y > this.meleeDirectionZone) {
       return () => this.meleeAttack.VerticalHit(true);
-    } else if (this.movement.y < -this.meleeDirectionZone) {
+    }
+    if (this.movement.y < -this.meleeDirectionZone) {
       return () => this.meleeAttack.VerticalHit(false);
-    } else if (this.sprite.flipX) {
+    }
+
+    if (this.sprite.flipX) {
+      this.HorizontalSlash(false);
       return () => this.meleeAttack.HorizontalHit(false);
     }
+    this.HorizontalSlash(true);
     return () => this.meleeAttack.HorizontalHit(true);
+  }
+
+  private void HorizontalSlash(bool right) {
+    var sheet = this.vfx.slashHorizontal.textureSheetAnimation;
+    sheet.startFrame = alternator;
+    this.vfx.slashHorizontal.transform.localScale = new Vector3(right?1:-1, 1, 1);
+    this.vfx.slashHorizontal.transform.localPosition = new Vector2(
+      (right?1:-1) * this.vfx.horizontalSlashPosition.x, this.vfx.horizontalSlashPosition.y);
+    this.vfx.slashHorizontal.Play();
   }
 
   public void HorizontalMovement(float damping, float scale = 1.0f) {
@@ -321,7 +344,7 @@ public class Player : MonoBehaviour {
   }
 
   private void BlinkOnHit(DamageDealer dealer, DamageTaker taker) {
-    GameManager.CameraShake.ShakeCamera(this.hitShakeDuration, this.hitShakeDuration);
+    GameManager.CameraShake.ShakeCamera(this.hitShakeDuration, this.hitShakeDistance);
     this.StartCoroutine(this.Blink(taker.InvulnerabilityDuration));
   }
 
