@@ -6,6 +6,8 @@ Shader "Custom/PlayerShader" {
     _Color("Tint", Color) = (1,1,1,1)
     _TargetColor("Original Eye Color", Color) = (1, 1, 0)
     _OutputColor("New Eye Color", Color) = (1, 1, 1)
+    _FlashColor("Flash Color", Color) = (1,1,1,1)
+    _FlashAmount("Flash Amount", Range(0.0,1.0)) = 0.0
   }
   SubShader {
     Tags {
@@ -58,10 +60,13 @@ Shader "Custom/PlayerShader" {
       sampler2D _MainTex;
       fixed4 _TargetColor;
       fixed4 _OutputColor;
+      fixed4 _FlashColor;
+      float _FlashAmount;
 
       fixed4 frag(v2f i) : SV_Target {
         fixed4 x = tex2D(_MainTex, i.uv);
         x.rgb = x.rgb + bump3(_TargetColor, x.rgb) * (_OutputColor - _TargetColor);
+        x.rgb = lerp(x.rgb, _FlashColor.rgb, _FlashAmount);
         x.rgb *= i.color * x.a;
         return x;
       }

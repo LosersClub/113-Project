@@ -251,7 +251,7 @@ public class Player : MonoBehaviour {
   }
 
   public bool CheckForMelee() {
-    if (this.meleeHeld && this.canMelee) {
+    if (this.meleeHeld && this.canMelee && !this.damageTaker.Invulnerable) {
       this.canMelee = false;
       this.animator.SetTrigger(this.meleeParam);
       this.animator.SetFloat(this.alternatorParam, this.alternator = (this.alternator + 1) % 2);
@@ -261,7 +261,7 @@ public class Player : MonoBehaviour {
   }
 
   public void CheckForRanged() {
-    if (this.shootHeld && this.canShoot) {
+    if (this.shootHeld && this.canShoot && !this.damageTaker.Invulnerable) {
       this.canShoot = false;
       this.bulletSpawner.SpawnBullet();
       this.StartCoroutine(this.RangeEyeCoroutine());
@@ -284,7 +284,7 @@ public class Player : MonoBehaviour {
   }
 
   private IEnumerator Blink(float duration) {
-    float blinkDuration = duration / (numBlinks + 1);
+    float blinkDuration = duration / (numBlinks * 2);
     for (float timer = duration; timer > 0;) {
       timer -= Time.deltaTime;
       this.sprite.enabled = !this.sprite.enabled;
