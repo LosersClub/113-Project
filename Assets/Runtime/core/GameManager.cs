@@ -1,11 +1,13 @@
 ﻿using System;
 using UnityEngine;
 
+[RequireComponent(typeof(CameraShake))]
 public class GameManager : SingletonMonoBehavior<GameManager> {
   private GameState state = GameState.ACTIVE;
 
   [SerializeField]
   private Player player;
+  private CameraShake cameraShake;
 
   // protected constructor to enforce use of singleton instance:
   protected GameManager() {}
@@ -16,6 +18,7 @@ public class GameManager : SingletonMonoBehavior<GameManager> {
     if(this == GameManager.Instance) {
       Bindings.Initialize();
     }
+    this.cameraShake = this.GetComponent<CameraShake>();
   }
 
   private void Update() {
@@ -41,6 +44,12 @@ public class GameManager : SingletonMonoBehavior<GameManager> {
   public static Player Player {
     get {
       return GameManager.Instance.player;
+    }
+  }
+
+  public static CameraShake CameraShake {
+    get {
+      return GameManager.Instance.cameraShake;
     }
   }
   #endregion

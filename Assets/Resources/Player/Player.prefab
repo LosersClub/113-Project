@@ -181,6 +181,8 @@ MonoBehaviour:
     magic: {r: 0, g: 0.949, b: 1, a: 1}
   standRoom: 0.75
   numBlinks: 5
+  hitShakeDuration: 0.2
+  hitShakeDistance: 0.3
 --- !u!114 &114093224024557302
 MonoBehaviour:
   m_ObjectHideFlags: 1

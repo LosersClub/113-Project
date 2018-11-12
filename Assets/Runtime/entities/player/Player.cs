@@ -60,6 +60,10 @@ public class Player : MonoBehaviour {
   private float standRoom = 0.75f;
   [SerializeField]
   private int numBlinks = 10;
+  [SerializeField]
+  private float hitShakeDuration = 0.1f;
+  [SerializeField]
+  private float hitShakeDistance = 0.3f;
 
   [Serializable]
   private class HitboxData {
@@ -114,6 +118,7 @@ public class Player : MonoBehaviour {
   public float CrouchScalar { get { return this.crouchModifier; } }
   public float MeleeScalar { get { return this.meleeModifier; } }
   public EyeColors EyeColor { get { return this.eyeColors; } }
+  public DamageTaker DamageTaker { get { return this.damageTaker; } }
   #endregion
 
   #region Unity Methods
@@ -316,6 +321,7 @@ public class Player : MonoBehaviour {
   }
 
   private void BlinkOnHit(DamageDealer dealer, DamageTaker taker) {
+    GameManager.CameraShake.ShakeCamera(this.hitShakeDuration, this.hitShakeDuration);
     this.StartCoroutine(this.Blink(taker.InvulnerabilityDuration));
   }
 

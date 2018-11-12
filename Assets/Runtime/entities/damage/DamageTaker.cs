@@ -37,6 +37,11 @@ public class DamageTaker : MonoBehaviour {
     }
   }
 
+  public void DisableInvlnerability() {
+    this.invulnerable = false;
+    this.invulnerableTimer = 0f;
+  }
+
   public void EnableInvulnerability(bool noTimer = false) {
     this.invulnerable = true;
     this.invulnerableTimer = noTimer ? float.MaxValue : this.invulnerabilityDuration;
