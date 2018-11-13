@@ -5,8 +5,10 @@ using UnityEngine;
 public abstract class GroundEnemy : MonoBehaviour {
 	
 	public Animator anim;
-    private IEnemyState currentState; 
+    public Transform groundPoint;
+    public Transform wallPoint;
     public GameObject Target { get; set; }
+    private IEnemyState currentState;
 
     public float meleeRange;
     public bool InMeleeRange
@@ -24,14 +26,27 @@ public abstract class GroundEnemy : MonoBehaviour {
 	protected float speed;
 	[SerializeField]
 	protected float distance;
-	
-	protected  bool facingRight;
+    [SerializeField]
+    protected float front_sight;
+    [SerializeField]
+    protected float behind_sight;
+    [SerializeField]
+    protected float vertical_sight;
+
+    protected  bool facingRight;
 	
 	// Use this for initialization
-	public virtual void Start () {		
-		facingRight = true;
-        meleeRange = 2; 
-		anim = GetComponent<Animator>();
+	public virtual void Start () {
+        anim = GetComponent<Animator>();
+
+        speed = 3;
+        distance = 0.5f; 
+        //front_sight = 8;
+        //behind_sight = 2;
+        //vertical_sight = 2; 
+
+        meleeRange = 2;
+        facingRight = true;
 
         ChangeState(new IdleState()); 
 	}
@@ -40,8 +55,29 @@ public abstract class GroundEnemy : MonoBehaviour {
 	void Update () {
         currentState.Execute();
 
+        DetectTarget(); 
         LookAtTarget(); 
 	}
+
+    private void DetectTarget()
+    {
+        float xDelta = GameManager.Player.transform.position.x - transform.position.x;
+        float yDelta = GameManager.Player.transform.position.y - transform.position.y;
+
+        Debug.DrawRay(transform.position, GetDirection() * front_sight);
+        Debug.DrawRay(transform.position, GetDirection() * behind_sight * -1); 
+
+        if (yDelta <= vertical_sight)
+        {
+            if (xDelta > -behind_sight && xDelta < front_sight && facingRight ||
+                xDelta < behind_sight && xDelta > -front_sight && !facingRight)
+            {
+                Target = GameManager.Player.gameObject;
+            }
+            else
+                Target = null;
+        }
+    }
 
     private void LookAtTarget()
     {
@@ -67,9 +103,25 @@ public abstract class GroundEnemy : MonoBehaviour {
     public virtual void Move()
     {
         anim.SetFloat("speed", 1);
-        transform.Translate(GetDirection() * speed * Time.deltaTime);  
+        Vector2 dir = GetDirection();
+        transform.Translate(dir * speed * Time.deltaTime);
+        
+        Debug.DrawRay(groundPoint.position, Vector2.down * distance);
+        Debug.DrawRay(wallPoint.position, dir * distance);
 
+        RaycastHit2D groundHit = Physics2D.Raycast(groundPoint.position, Vector2.down, distance);
+        RaycastHit2D wallHit = Physics2D.Raycast(wallPoint.position, dir, distance);
 
+        if (groundHit == false)
+        {
+            //Debug.Log("no ground"); 
+            Flip();
+        }
+        else if (wallHit == true && !wallHit.collider.CompareTag("Player"))
+        {
+            //Debug.Log("wall hit"); 
+            Flip();
+        }
     }
 
     public Vector2 GetDirection()
