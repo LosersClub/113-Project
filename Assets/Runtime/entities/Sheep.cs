@@ -27,7 +27,7 @@ public class Sheep : GroundEnemy {
 		RaycastHit2D wallHit = Physics2D.Raycast(wallPoint.position, dir, distance); 
 		
 		if(groundHit == false) Flip();
-		else if(wallHit == true) Flip();
+        else if (wallHit == true && !wallHit.collider.CompareTag("Player")) Flip();
 	
 	}
 }

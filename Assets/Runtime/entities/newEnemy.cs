@@ -29,7 +29,7 @@ public class newEnemy : GroundEnemy {
             Debug.Log("no ground"); 
             Flip();
         }
-        else if (wallHit == true)
+        else if (wallHit == true && !wallHit.collider.CompareTag("Player"))
         {
             Debug.Log("wall hit"); 
             Flip();
