@@ -196,6 +196,7 @@ MonoBehaviour:
   dashSpeed: 25
   dashDistance: 6
   dashCooldown: 1
+  dashPause: 0.1
   bulletSpawner: {fileID: 114953059818769142}
   rangedEyeDuration: 0.5
   meleeBounceHeight: 1

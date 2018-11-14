@@ -37,6 +37,8 @@ public class Player : MonoBehaviour {
   private float dashDistance = 6f;
   [SerializeField]
   private float dashCooldown = 1f;
+  [SerializeField]
+  private float dashPause = 0.1f;
 
   [Header("Attack Settings")]
   [SerializeField]
@@ -334,8 +336,12 @@ public class Player : MonoBehaviour {
 
   private IEnumerator DashCoroutine() {
     this.canDash = false;
+    this.controller.Velocity.x = 0;
+    yield return new WaitForSeconds(this.dashPause);
     this.controller.Velocity.x = (this.sprite.flipX ? -1 : 1) * this.dashSpeed;
     yield return new WaitForSeconds(this.dashDistance / this.dashSpeed);
+    this.controller.Velocity.x = 0;
+    yield return new WaitForSeconds(this.dashPause);
     this.animator.SetBool(this.dashingParam, false);
     yield return new WaitForSeconds(this.dashCooldown);
     this.canDash = true;
