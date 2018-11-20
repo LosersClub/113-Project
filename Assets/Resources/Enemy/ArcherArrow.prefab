@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212958730987121074}
   - component: {fileID: 61243535546054566}
   - component: {fileID: 114687795451804120}
+  - component: {fileID: 114865268377340054}
   m_Layer: 0
   m_Name: ArcherArrow
   m_TagString: Untagged
@@ -95,6 +96,17 @@ MonoBehaviour:
       PublicKeyToken=null
   UseBaseCollider: 1
   damageCollider: {fileID: 0}
+--- !u!114 &114865268377340054
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1995327165405730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3412d692f752ca24c8b69e87a291cc81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212958730987121074
 SpriteRenderer:
   m_ObjectHideFlags: 1
