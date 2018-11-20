@@ -20,7 +20,7 @@ public class Bindings {
     //InputManager.AddButtonAction("Shoot", GameManager.Player.Shoot,
     //  new KeyboardButton(KeyCode.E));
     InputManager.AddButtonAction("Melee", GameManager.Player.Melee,
-      new KeyboardButton(KeyCode.Q));
+      new KeyboardButton(KeyCode.LeftControl));
 
     InputManager.AddAnalog2DAction("Controller Move", GameManager.Player.Move,
       new ControllerAnalog2D(Side.Left));

@@ -777,6 +777,7 @@ GameObject:
   - component: {fileID: 611213513}
   - component: {fileID: 611213515}
   - component: {fileID: 611213514}
+  - component: {fileID: 611213517}
   - component: {fileID: 611213516}
   m_Layer: 12
   m_Name: NewEnemy
@@ -921,7 +922,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e423d1ae816cfc4419fa737bdda9897c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
   groundPoint: {fileID: 1960582763}
   wallPoint: {fileID: 1456905734}
   meleeRange: 1.5
@@ -1001,6 +1001,41 @@ MonoBehaviour:
   minFlashAmount: 0
   useInvulnerabilityDuration: 1
   duration: 0.5
+--- !u!114 &611213517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 611213507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 954c7bdfa1319e647b4497500ddc35e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  disableDamageAfterHit: 0
+  ignoreInvulnerability: 0
+  hittableLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  OnDamageHit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: DamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnNoDamageHit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: NonDamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  size: {x: 1, y: 1.5}
+  offset: {x: 0, y: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  rayData:
+    horizontalRays: 8
+    verticalRays: 4
+    rayInset: 0.02
 --- !u!1001 &627783778
 Prefab:
   m_ObjectHideFlags: 0
@@ -1052,6 +1087,11 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7c3940101053e542b57be9fd4a0921e, type: 2}
   m_IsPrefabAsset: 0
+--- !u!4 &636951474 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4030303239144754, guid: 0cd33a7e0e6739f42a7e673c2c995d88,
+    type: 2}
+  m_PrefabInternal: {fileID: 1086937928}
 --- !u!1001 &639142694
 Prefab:
   m_ObjectHideFlags: 0
@@ -1451,11 +1491,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4760322746596736, guid: 0cd33a7e0e6739f42a7e673c2c995d88, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 16.61
+      value: 9.21
       objectReference: {fileID: 0}
     - target: {fileID: 4760322746596736, guid: 0cd33a7e0e6739f42a7e673c2c995d88, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 5.78
+      value: 2.12
       objectReference: {fileID: 0}
     - target: {fileID: 4760322746596736, guid: 0cd33a7e0e6739f42a7e673c2c995d88, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1713,6 +1753,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 611213513}
+--- !u!4 &1079101620 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4238636388487334, guid: 0cd33a7e0e6739f42a7e673c2c995d88,
+    type: 2}
+  m_PrefabInternal: {fileID: 1086937928}
 --- !u!1001 &1086937928
 Prefab:
   m_ObjectHideFlags: 0
@@ -1722,11 +1767,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4760322746596736, guid: 0cd33a7e0e6739f42a7e673c2c995d88, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: 15.73
       objectReference: {fileID: 0}
     - target: {fileID: 4760322746596736, guid: 0cd33a7e0e6739f42a7e673c2c995d88, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.09
+      value: 5.76
       objectReference: {fileID: 0}
     - target: {fileID: 4760322746596736, guid: 0cd33a7e0e6739f42a7e673c2c995d88, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1760,7 +1805,8 @@ Prefab:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114518297356609874, guid: 0cd33a7e0e6739f42a7e673c2c995d88, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 0cd33a7e0e6739f42a7e673c2c995d88, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &1147554770
@@ -2714,3 +2760,36 @@ Transform:
   m_Father: {fileID: 611213510}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2013332372 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1443489206913764, guid: 0cd33a7e0e6739f42a7e673c2c995d88,
+    type: 2}
+  m_PrefabInternal: {fileID: 1086937928}
+--- !u!114 &2013332379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2013332372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 491e442e110455341b1dfc3437e8c46e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundPoint: {fileID: 636951474}
+  wallPoint: {fileID: 1079101620}
+  speed: 0
+  distance: 0
+--- !u!114 &2013332382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2013332372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367fb074780a124468ee3a70ef95667f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  facingRight: 0

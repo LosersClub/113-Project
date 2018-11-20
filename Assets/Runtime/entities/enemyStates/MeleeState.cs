@@ -42,7 +42,8 @@ public class MeleeState : IEnemyState {
         if (canAttack)
         {
             canAttack = false;
-            enemy.anim.SetTrigger("attack"); 
+            enemy.Attack();
+          
         }
     }
 

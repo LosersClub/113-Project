@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class GroundEnemy : MonoBehaviour {
-	
-	public Animator anim;
+	[HideInInspector]
+	public Animator anim { get; set; }
+
+    private MeleeDamageDealer meleeAttack { get; set; }
+    public GameObject Target { get; set; }
+
     public Transform groundPoint;
     public Transform wallPoint;
-    public GameObject Target { get; set; }
     private IEnemyState currentState;
 
     public float meleeRange;
@@ -23,9 +26,9 @@ public abstract class GroundEnemy : MonoBehaviour {
     }
 
 	[SerializeField]
-	protected float speed;
+	public float speed;
 	[SerializeField]
-	protected float distance;
+	public float distance;
     [SerializeField]
     protected float front_sight;
     [SerializeField]
@@ -33,11 +36,12 @@ public abstract class GroundEnemy : MonoBehaviour {
     [SerializeField]
     protected float vertical_sight;
 
-    protected  bool facingRight;
+    private bool facingRight; 
 	
 	// Use this for initialization
 	public virtual void Start () {
         anim = GetComponent<Animator>();
+        meleeAttack = GetComponent<MeleeDamageDealer>();
 
         speed = 3;
         distance = 0.5f; 
@@ -124,14 +128,34 @@ public abstract class GroundEnemy : MonoBehaviour {
         }
     }
 
+
+
     public Vector2 GetDirection()
     {
         Vector2 dir = facingRight ? Vector2.right : Vector2.left;
         return dir; 
     }
 
-    private void MeleeAtack()
+    public void Attack()
+    {
+        Debug.Log("horizontal attacc"); 
+        anim.SetTrigger("attack");
+        StartCoroutine(WaitForAnimation("Attack"));         
+    }
+
+    public void Projectile()
     {
 
+    }
+
+    IEnumerator WaitForAnimation(string name)
+    {
+        if (anim)
+            do
+            {
+                yield return null;
+            } while (!anim.GetCurrentAnimatorStateInfo(0).IsName(name));
+
+        meleeAttack.HorizontalHit(facingRight);
     }
 }
