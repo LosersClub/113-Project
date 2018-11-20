@@ -31,8 +31,6 @@ public class MeleeComponent : MonoBehaviour {
         }
 	}
 
-
-
     void attack()
     {
         enemy.anim.SetTrigger("attack");
