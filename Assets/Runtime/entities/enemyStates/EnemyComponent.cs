@@ -5,12 +5,18 @@ using UnityEngine;
 public class EnemyComponent : MonoBehaviour {
     public Animator anim;
     public bool facingRight;
-
     public float deltaX
     {
         get
         {
             return GameManager.Player.transform.position.x - transform.position.x; 
+        }
+    }
+    public float deltaY
+    {
+        get
+        {
+            return GameManager.Player.transform.position.y - transform.position.y;
         }
     }
 

@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4030303239144754}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GroundPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,7 +34,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4238636388487334}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: WallPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,13 +50,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4760322746596736}
   - component: {fileID: 212899680541362992}
-  - component: {fileID: 114518297356609874}
   - component: {fileID: 61127208543984548}
   - component: {fileID: 50833213134046764}
   - component: {fileID: 95473783564583966}
   - component: {fileID: 114092053583619682}
   - component: {fileID: 114256934636978386}
   - component: {fileID: 114952518855557292}
+  - component: {fileID: 114390306196800948}
+  - component: {fileID: 114174567761211394}
   m_Layer: 12
   m_Name: Sheep
   m_TagString: Untagged
@@ -97,7 +98,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1443489206913764}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 2.09, z: 0}
+  m_LocalPosition: {x: 15.73, y: 5.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4030303239144754}
@@ -184,6 +185,21 @@ MonoBehaviour:
   minFlashAmount: 0
   useInvulnerabilityDuration: 1
   duration: 0.5
+--- !u!114 &114174567761211394
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1443489206913764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 491e442e110455341b1dfc3437e8c46e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundPoint: {fileID: 4030303239144754}
+  wallPoint: {fileID: 4238636388487334}
+  speed: 3
+  distance: 0.5
 --- !u!114 &114256934636978386
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -212,7 +228,7 @@ MonoBehaviour:
       PublicKeyToken=null
   UseBaseCollider: 1
   damageCollider: {fileID: 0}
---- !u!114 &114518297356609874
+--- !u!114 &114390306196800948
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -220,15 +236,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1443489206913764}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 443d43266c37f6a4b94f99e4429c39fd, type: 3}
+  m_Script: {fileID: 11500000, guid: 367fb074780a124468ee3a70ef95667f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
-  meleeRange: 0
-  speed: 3
-  distance: 0.5
-  groundPoint: {fileID: 4030303239144754}
-  wallPoint: {fileID: 4238636388487334}
+  facingRight: 0
 --- !u!114 &114952518855557292
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class PatrolComponent : MonoBehaviour {
     private EnemyComponent enemy;
-    private float flipTimer; 
-    private float flipCooldown = 1f;
+    private float flipTimer;
+    private float flipCooldown
+    {
+        get
+        {
+            return UnityEngine.Random.Range(.25f, 1);
+        }
+    }
 
 
     public Transform groundPoint;
@@ -14,14 +20,10 @@ public class PatrolComponent : MonoBehaviour {
     public float speed = 3f;
     public float distance = 0.5f;
 
-
-
-    // Use this for initialization
     void Start () {
         enemy = GetComponent<EnemyComponent>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
         flipTimer += Time.deltaTime;
         if (flipTimer >= flipCooldown)
@@ -50,9 +52,6 @@ public class PatrolComponent : MonoBehaviour {
     void Move(Vector2 direction)
     {
         Animator anim = enemy.anim;
-        //anim.SetFloat("speed", 1);
-
         transform.Translate(direction * speed * Time.deltaTime);
-    
     }
 }
