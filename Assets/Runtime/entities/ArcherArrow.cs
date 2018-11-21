@@ -8,15 +8,16 @@ using UnityEngine.Assertions;
 [RequireComponent(typeof(DamageDealer))]
 public class ArcherArrow : MonoBehaviour {
 
-  private enum State {Init, Fired, HitDamageTaker, HitImpassable, ToBeDestroyed};
+  private enum State {Init, Fired, HitDamageTaker, HitImpassable, FiredTimeout, ToBeDestroyed};
 
   // Note: should use ReadOnlyDictionary instead, but that is only available in .NET 4 (while we
   // are using .NET 3.5):
   private static readonly Dictionary<State, HashSet<State>> StateTransitions = new Dictionary<State, HashSet<State>> {
     {State.Init, new HashSet<State>{State.Fired}},
-    {State.Fired, new HashSet<State>{State.HitDamageTaker, State.HitImpassable}},
+    {State.Fired, new HashSet<State>{State.HitDamageTaker, State.HitImpassable, State.FiredTimeout}},
     {State.HitDamageTaker, new HashSet<State>{State.ToBeDestroyed}},
     {State.HitImpassable, new HashSet<State>{State.ToBeDestroyed}},
+    {State.FiredTimeout, new HashSet<State>{State.ToBeDestroyed}},
     {State.ToBeDestroyed, new HashSet<State>()}
   };
 
@@ -26,6 +27,8 @@ public class ArcherArrow : MonoBehaviour {
   private Color impassableHitColor = Color.gray;
   [SerializeField]
   private float impassableHitDestroyDelay = 5f;
+  [SerializeField]
+  private float firedTimeout = 60f;
 
   private Rigidbody2D rigidBody2D;
   private DamageDealer damageDealer;
@@ -79,6 +82,16 @@ public class ArcherArrow : MonoBehaviour {
     this.ChangeState(State.ToBeDestroyed);
   }
 
+  private IEnumerator FiredTimeoutCoroutine() {
+    yield return new WaitForSeconds(this.firedTimeout);
+    if(this.state == State.Fired) {
+      this.ChangeState(State.FiredTimeout);
+      // Note: uses FiredTimeout as intermediate state between Fired and ToBeDestroyed to guard
+      // against bugs where transition directly from Fired to ToBeDestroyed.
+      this.ChangeState(State.ToBeDestroyed);
+    }
+  }
+
   private void ChangeState(State newState) {
     if(!ArcherArrow.StateTransitions[this.state].Contains(newState)) {
       throw new ArgumentException(String.Format("Cannot transition from State {0} to State {1}",
@@ -89,6 +102,9 @@ public class ArcherArrow : MonoBehaviour {
     // None currently.
 
     // State entry actions:
+    if(newState == State.Fired) {
+      StartCoroutine(FiredTimeoutCoroutine());
+    }
     if(newState == State.HitDamageTaker || newState == State.HitImpassable) {
       this.damageDealer.CanDealDamage = false;
 

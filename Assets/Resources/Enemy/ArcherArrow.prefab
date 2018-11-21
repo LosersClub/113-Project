@@ -130,6 +130,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   impassableHitColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  impassableHitDestroyDelay: 5
+  firedTimeout: 60
 --- !u!212 &212958730987121074
 SpriteRenderer:
   m_ObjectHideFlags: 1
