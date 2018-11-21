@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(DamageDealer))]
@@ -28,7 +29,7 @@ public class ArcherArrow : MonoBehaviour {
   private DamageDealer damageDealer;
 
   private State state = State.Init;
-  private Vector2 direction = new Vector2(1, 0);
+  private Vector2 direction = Vector2.zero;
 
   void Start () {
     this.rigidBody2D = this.GetComponent<Rigidbody2D>();
@@ -46,18 +47,20 @@ public class ArcherArrow : MonoBehaviour {
 
   void FixedUpdate() {
     if(this.state == State.Fired) {
+      Assert.AreNotEqual(Vector2.zero, this.direction);
       this.rigidBody2D.MovePosition(this.rigidBody2D.position + Time.deltaTime * speed * direction);
     }
   }
 
-  public void Fire() {
+  public void Fire(Vector2 direction) {
+    this.direction = direction.normalized;
     this.ChangeState(State.Fired);
   }
 
   private void onDamageHit(DamageDealer dealer, DamageTaker taker) {
     if(this.state == State.Fired) {
       this.ChangeState(State.HitDamageTaker);
-      // TODO: do something between hit and destroy states.
+      // TODO: do something (e.g. animation) between hit and destroy states.
       // For now, immediately change to destroy state:
       this.ChangeState(State.ToBeDestroyed);
     }
