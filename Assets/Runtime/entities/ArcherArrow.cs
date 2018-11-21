@@ -54,13 +54,15 @@ public class ArcherArrow : MonoBehaviour {
   }
 
   private void onDamageHit(DamageDealer dealer, DamageTaker taker) {
-    this.ChangeState(State.HitDamageTaker);
-    // TODO: do something between hit and destroy states.
-    // For now, immediately change to destroy state:
-    this.ChangeState(State.ToBeDestroyed);
-    // Can do something between destroy state and object destruction. For now, destroy object
-    // immediately:
-    Destroy(this.gameObject);
+    if(this.state == State.Fired) {
+      this.ChangeState(State.HitDamageTaker);
+      // TODO: do something between hit and destroy states.
+      // For now, immediately change to destroy state:
+      this.ChangeState(State.ToBeDestroyed);
+      // Can do something between destroy state and object destruction. For now, destroy object
+      // immediately:
+      Destroy(this.gameObject);
+    }
   }
 
   private void onNoDamageHit(DamageDealer dealer) {
