@@ -24,6 +24,8 @@ public class ArcherArrow : MonoBehaviour {
   private float speed = 1f;
   [SerializeField]
   private Color impassableHitColor = Color.gray;
+  [SerializeField]
+  private float impassableHitDestroyDelay = 5f;
 
   private Rigidbody2D rigidBody2D;
   private DamageDealer damageDealer;
@@ -72,6 +74,11 @@ public class ArcherArrow : MonoBehaviour {
     }
   }
 
+  private IEnumerator ImpassableHitDestroyCoroutine() {
+    yield return new WaitForSeconds(this.impassableHitDestroyDelay);
+    this.ChangeState(State.ToBeDestroyed);
+  }
+
   private void ChangeState(State newState) {
     if(!ArcherArrow.StateTransitions[this.state].Contains(newState)) {
       throw new ArgumentException(String.Format("Cannot transition from State {0} to State {1}",
@@ -84,6 +91,10 @@ public class ArcherArrow : MonoBehaviour {
     // State entry actions:
     if(newState == State.HitDamageTaker || newState == State.HitImpassable) {
       this.damageDealer.CanDealDamage = false;
+
+      if(newState == State.HitImpassable) {
+        StartCoroutine(ImpassableHitDestroyCoroutine());
+      }
     }
     else if(newState == State.ToBeDestroyed) {
       Destroy(this.gameObject);
