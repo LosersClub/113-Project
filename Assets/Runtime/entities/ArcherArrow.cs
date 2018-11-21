@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(DamageDealer))]
 public class ArcherArrow : MonoBehaviour {
 
   private enum State {Init, Fired, HitDamageTaker, HitImpassable, ToBeDestroyed};
@@ -28,6 +29,9 @@ public class ArcherArrow : MonoBehaviour {
 
   void Start () {
     this.rigidBody2D = this.GetComponent<Rigidbody2D>();
+
+    DamageDealer damageDealer = this.GetComponent<DamageDealer>();
+    damageDealer.OnDamageHit.AddListener(this.onDamageHit);
   }
 
   void Update () {
@@ -42,6 +46,16 @@ public class ArcherArrow : MonoBehaviour {
 
   public void Fire() {
     this.ChangeState(State.Fired);
+  }
+
+  private void onDamageHit(DamageDealer dealer, DamageTaker taker) {
+    this.ChangeState(State.HitDamageTaker);
+    // TODO: do something between hit and destroy states.
+    // For now, immediately change to destroy state:
+    this.ChangeState(State.ToBeDestroyed);
+    // Can do something between destroy state and object destruction. For now, destroy object
+    // immediately:
+    Destroy(this.gameObject);
   }
 
   private void ChangeState(State newState) {
