@@ -40,8 +40,8 @@ public class ArcherArrow : MonoBehaviour {
     this.rigidBody2D = this.GetComponent<Rigidbody2D>();
     this.damageDealer = this.GetComponent<DamageDealer>();
 
-    this.damageDealer.OnDamageHit.AddListener(this.onDamageHit);
-    this.damageDealer.OnNoDamageHit.AddListener(this.onNoDamageHit);
+    this.damageDealer.OnDamageHit.AddListener(this.OnDamageHit);
+    this.damageDealer.OnNoDamageHit.AddListener(this.OnNoDamageHit);
   }
 
   void Update () {
@@ -62,7 +62,7 @@ public class ArcherArrow : MonoBehaviour {
     this.ChangeState(State.Fired);
   }
 
-  private void onDamageHit(DamageDealer dealer, DamageTaker taker) {
+  private void OnDamageHit(DamageDealer dealer, DamageTaker taker) {
     if(this.state == State.Fired) {
       this.ChangeState(State.HitDamageTaker);
       // TODO: do something (e.g. animation) between hit and destroy states.
@@ -71,7 +71,7 @@ public class ArcherArrow : MonoBehaviour {
     }
   }
 
-  private void onNoDamageHit(DamageDealer dealer) {
+  private void OnNoDamageHit(DamageDealer dealer) {
     if(this.state == State.Fired) {
       this.ChangeState(State.HitImpassable);
     }
