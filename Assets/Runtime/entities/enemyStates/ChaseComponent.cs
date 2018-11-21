@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatrolComponent : MonoBehaviour {
+public class ChaseComponent : MonoBehaviour {
     private EnemyComponent enemy;
     private float flipTimer;
     private float flipCooldown
@@ -12,7 +12,6 @@ public class PatrolComponent : MonoBehaviour {
             return UnityEngine.Random.Range(.25f, 1);
         }
     }
-
 
     public Transform groundPoint;
     public Transform wallPoint;
@@ -46,7 +45,8 @@ public class PatrolComponent : MonoBehaviour {
         {
             //enemy.Flip();
         }
-        else Move(dir); 	
+        else if (enemy.canMove)
+            Move(dir); 	
 	}
 
     void Move(Vector2 direction)

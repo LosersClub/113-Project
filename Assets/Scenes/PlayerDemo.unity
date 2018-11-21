@@ -397,6 +397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 15225192}
   facingRight: 0
+  attacking: 0
 --- !u!114 &15225196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,7 +409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf0cfee04c6aaaf46a1088c5ccd9d5bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meleeRange: 1.5
+  meleeRange: 2
 --- !u!1 &48102667
 GameObject:
   m_ObjectHideFlags: 0
@@ -1354,6 +1355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 611213508}
   facingRight: 0
+  attacking: 0
 --- !u!1001 &627783778
 Prefab:
   m_ObjectHideFlags: 0
@@ -2303,6 +2305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
   facingRight: 0
+  attacking: 0
 --- !u!1 &1147554770
 GameObject:
   m_ObjectHideFlags: 0

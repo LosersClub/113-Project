@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyComponent : MonoBehaviour {
     public Animator anim;
-    public bool facingRight;
     public float deltaX
     {
         get
@@ -20,9 +19,13 @@ public class EnemyComponent : MonoBehaviour {
         }
     }
 
-    // Use this for initialization
+    // flags 
+    public bool facingRight;
+    public bool canMove;
+
     void Start () {
-        facingRight = true; 
+        facingRight = true;
+        canMove = true; 
 	}
 
     public Vector2 GetDirection()

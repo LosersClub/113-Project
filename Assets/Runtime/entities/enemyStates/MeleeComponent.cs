@@ -6,26 +6,27 @@ public class MeleeComponent : MonoBehaviour {
     private EnemyComponent enemy;
     private MeleeDamageDealer meleeAttack;
     private float meleeTimer;
-    private float meleeCooldown = 2;
+    private float meleeCooldown = 1.5f;
     private bool inMeleeRange
     {
         get
         {
-            return enemy.deltaX <= meleeRange && enemy.deltaY <= meleeRange/2;
+            return Mathf.Abs(enemy.deltaX) <= meleeRange && 
+                Mathf.Abs(enemy.deltaY) <= meleeRange/2;
         }
     }
 
-    public float meleeRange = 1.5f; 
+    public float meleeRange = 2f; 
 
     void Start () {
         enemy = GetComponent<EnemyComponent>();
+        meleeAttack = GetComponent<MeleeDamageDealer>();
     }
 
     void Update () {
         meleeTimer += Time.deltaTime; 
         if (inMeleeRange && meleeTimer >= meleeCooldown)
         {
-            Debug.Log("MEEEpH");
             attack(); 
             meleeTimer = 0; 
         }
@@ -33,6 +34,7 @@ public class MeleeComponent : MonoBehaviour {
 
     void attack()
     {
+        enemy.canMove = false; 
         enemy.anim.SetTrigger("attack");
         StartCoroutine(WaitForAnimation("Attack"));
 
@@ -47,5 +49,6 @@ public class MeleeComponent : MonoBehaviour {
             } while (!enemy.anim.GetCurrentAnimatorStateInfo(0).IsName(name));
 
         meleeAttack.HorizontalHit(enemy.facingRight);
+        enemy.canMove = true; 
     }
 }
