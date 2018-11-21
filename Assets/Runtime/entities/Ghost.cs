@@ -5,6 +5,7 @@ using UnityEngine.Assertions;
 
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class Ghost : MonoBehaviour {
 
   public float driftSpeedMultiplier = 2.0f;
