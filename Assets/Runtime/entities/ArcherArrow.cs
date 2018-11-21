@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class ArcherArrow : MonoBehaviour {
 
   private enum State {Init, Fired, HitDamageTaker, HitImpassable, ToBeDestroyed};
@@ -17,14 +18,30 @@ public class ArcherArrow : MonoBehaviour {
     {State.ToBeDestroyed, new HashSet<State>()}
   };
 
+  [SerializeField]
+  private float speed = 1f;
+
+  private Rigidbody2D rigidBody2D;
+
   private State state = State.Init;
+  private Vector2 direction = new Vector2(1, 0);
 
   void Start () {
-
+    this.rigidBody2D = this.GetComponent<Rigidbody2D>();
   }
 
   void Update () {
 
+  }
+
+  void FixedUpdate() {
+    if(this.state == State.Fired) {
+      this.rigidBody2D.MovePosition(this.rigidBody2D.position + Time.deltaTime * speed * direction);
+    }
+  }
+
+  public void Fire() {
+    this.ChangeState(State.Fired);
   }
 
   private void ChangeState(State newState) {
