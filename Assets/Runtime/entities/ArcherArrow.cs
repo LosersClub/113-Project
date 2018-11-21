@@ -60,9 +60,6 @@ public class ArcherArrow : MonoBehaviour {
       // TODO: do something between hit and destroy states.
       // For now, immediately change to destroy state:
       this.ChangeState(State.ToBeDestroyed);
-      // Can do something between destroy state and object destruction. For now, destroy object
-      // immediately:
-      Destroy(this.gameObject);
     }
   }
 
@@ -84,6 +81,9 @@ public class ArcherArrow : MonoBehaviour {
     // State entry actions:
     if(newState == State.HitDamageTaker || newState == State.HitImpassable) {
       this.damageDealer.CanDealDamage = false;
+    }
+    else if(newState == State.ToBeDestroyed) {
+      Destroy(this.gameObject);
     }
 
     this.state = newState;
