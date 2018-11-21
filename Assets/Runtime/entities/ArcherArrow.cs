@@ -25,16 +25,17 @@ public class ArcherArrow : MonoBehaviour {
   private Color impassableHitColor = Color.gray;
 
   private Rigidbody2D rigidBody2D;
+  private DamageDealer damageDealer;
 
   private State state = State.Init;
   private Vector2 direction = new Vector2(1, 0);
 
   void Start () {
     this.rigidBody2D = this.GetComponent<Rigidbody2D>();
+    this.damageDealer = this.GetComponent<DamageDealer>();
 
-    DamageDealer damageDealer = this.GetComponent<DamageDealer>();
-    damageDealer.OnDamageHit.AddListener(this.onDamageHit);
-    damageDealer.OnNoDamageHit.AddListener(this.onNoDamageHit);
+    this.damageDealer.OnDamageHit.AddListener(this.onDamageHit);
+    this.damageDealer.OnNoDamageHit.AddListener(this.onNoDamageHit);
   }
 
   void Update () {
@@ -75,6 +76,14 @@ public class ArcherArrow : MonoBehaviour {
     if(!ArcherArrow.StateTransitions[this.state].Contains(newState)) {
       throw new ArgumentException(String.Format("Cannot transition from State {0} to State {1}",
                                                 this.state, newState));
+    }
+
+    // State exit actions:
+    // None currently.
+
+    // State entry actions:
+    if(newState == State.HitDamageTaker || newState == State.HitImpassable) {
+      this.damageDealer.CanDealDamage = false;
     }
 
     this.state = newState;
