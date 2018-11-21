@@ -21,6 +21,8 @@ public class ArcherArrow : MonoBehaviour {
 
   [SerializeField]
   private float speed = 1f;
+  [SerializeField]
+  private Color impassableHitColor = Color.gray;
 
   private Rigidbody2D rigidBody2D;
 
@@ -32,10 +34,13 @@ public class ArcherArrow : MonoBehaviour {
 
     DamageDealer damageDealer = this.GetComponent<DamageDealer>();
     damageDealer.OnDamageHit.AddListener(this.onDamageHit);
+    damageDealer.OnNoDamageHit.AddListener(this.onNoDamageHit);
   }
 
   void Update () {
-
+    if(this.state == State.HitImpassable) {
+      this.GetComponent<SpriteRenderer>().color = this.impassableHitColor;
+    }
   }
 
   void FixedUpdate() {
@@ -56,6 +61,12 @@ public class ArcherArrow : MonoBehaviour {
     // Can do something between destroy state and object destruction. For now, destroy object
     // immediately:
     Destroy(this.gameObject);
+  }
+
+  private void onNoDamageHit(DamageDealer dealer) {
+    if(this.state == State.Fired) {
+      this.ChangeState(State.HitImpassable);
+    }
   }
 
   private void ChangeState(State newState) {

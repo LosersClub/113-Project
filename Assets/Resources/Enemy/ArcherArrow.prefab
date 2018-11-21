@@ -105,7 +105,7 @@ MonoBehaviour:
   ignoreInvulnerability: 0
   hittableLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 768
   OnDamageHit:
     m_PersistentCalls:
       m_Calls: []
@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3412d692f752ca24c8b69e87a291cc81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 1
 --- !u!212 &212958730987121074
 SpriteRenderer:
   m_ObjectHideFlags: 1
