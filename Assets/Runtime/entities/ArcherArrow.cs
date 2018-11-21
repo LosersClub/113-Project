@@ -59,6 +59,8 @@ public class ArcherArrow : MonoBehaviour {
 
   public void Fire(Vector2 direction) {
     this.direction = direction.normalized;
+    Vector3 directionUpwards = Vector3.Cross(new Vector3(this.direction.x, this.direction.y, 0), -Vector3.forward);
+    this.transform.rotation = Quaternion.LookRotation(Vector3.forward, directionUpwards);
     this.ChangeState(State.Fired);
   }
 
