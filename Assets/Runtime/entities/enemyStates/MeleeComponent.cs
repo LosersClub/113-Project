@@ -51,4 +51,5 @@ public class MeleeComponent : MonoBehaviour {
         meleeAttack.HorizontalHit(enemy.facingRight);
         enemy.canMove = true; 
     }
+
 }
