@@ -34,7 +34,9 @@ public class MeleeComponent : MonoBehaviour {
 
     void attack()
     {
-        enemy.canMove = false; 
+        if (enemy.inAction) return; 
+
+        enemy.inAction = true; 
         enemy.anim.SetTrigger("attack");
         StartCoroutine(WaitForAnimation("Attack"));
 
@@ -49,7 +51,7 @@ public class MeleeComponent : MonoBehaviour {
             } while (!enemy.anim.GetCurrentAnimatorStateInfo(0).IsName(name));
 
         meleeAttack.HorizontalHit(enemy.facingRight);
-        enemy.canMove = true; 
+        enemy.inAction = false; 
     }
 
 }

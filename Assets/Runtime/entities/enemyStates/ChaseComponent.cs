@@ -19,7 +19,7 @@ public class ChaseComponent : MonoBehaviour {
 	}
 	
 	void Update () {
-        if (!enemy.canMove) return; 
+        if (enemy.inAction) return; 
 
         flipTimer += Time.deltaTime;
         if (flipTimer >= flipCooldown)

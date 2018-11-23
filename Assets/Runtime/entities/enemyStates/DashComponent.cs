@@ -43,14 +43,17 @@ public class DashComponent : MonoBehaviour {
 
     void attack()
     {
-        enemy.canMove = false;
+        if (enemy.inAction) return; 
+
+        enemy.inAction = true;
         StartCoroutine(DashCoroutine()); 
     }
 
     IEnumerator DashCoroutine()
     {
+        enemy.anim.SetTrigger("dash");
         yield return new WaitForSeconds(this.dashPause);
-        enemy.anim.SetTrigger("attack");
+        
 
         dashing = true;
         float temp = cdd.Damage;
@@ -60,6 +63,6 @@ public class DashComponent : MonoBehaviour {
         dashing = false; 
 
         yield return new WaitForSeconds(this.dashPause);
-        enemy.canMove = true; 
+        enemy.inAction = false; 
     }
 }

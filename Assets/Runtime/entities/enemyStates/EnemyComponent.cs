@@ -21,7 +21,8 @@ public class EnemyComponent : MonoBehaviour {
 
     // flags 
     public bool facingRight;
-    public bool canMove;
+    // mutex allowing one action at a time 
+    public bool inAction; 
 
     // movement transforms 
     public Transform groundPoint;
@@ -30,7 +31,7 @@ public class EnemyComponent : MonoBehaviour {
 
     void Start () {
         facingRight = true;
-        canMove = true; 
+        inAction = false; 
 	}
 
     public Vector2 GetDirection()
