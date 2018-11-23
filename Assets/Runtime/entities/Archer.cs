@@ -28,6 +28,8 @@ public class Archer : MonoBehaviour {
   }
   
   void Update () {
+    this.FacePlayer();
+
     if(this.isFacingRight && this.spriteRenderer.flipX) {
       this.spriteRenderer.flipX = false;
     }
@@ -47,5 +49,9 @@ public class Archer : MonoBehaviour {
     GameObject arrow = Instantiate(arrowPrefab, this.transform.position, Quaternion.identity);
     Vector2 fireDirection = GameManager.Player.transform.position - this.transform.position;
     arrow.GetComponent<ArcherArrow>().Fire(fireDirection);
+  }
+
+  private void FacePlayer() {
+    this.isFacingRight = (GameManager.Player.transform.position.x > this.transform.position.x);
   }
 }
