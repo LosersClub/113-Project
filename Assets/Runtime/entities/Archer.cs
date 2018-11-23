@@ -10,19 +10,15 @@ public class Archer : MonoBehaviour {
   private GameObject arrowPrefab;
   [SerializeField]
   private float arrowFiringInterval = 4.0f;
-  [SerializeField]
-  private bool isInitiallyFacingRight = true;
 
   private SpriteRenderer spriteRenderer;
 
-  private bool isFacingRight;
+  private bool isFacingRight = true; // will be changed to face player on first Update()
 
   void Start () {
     Assert.IsNotNull(arrowPrefab);
 
     this.spriteRenderer = this.GetComponent<SpriteRenderer>();
-
-    this.isFacingRight = this.isInitiallyFacingRight;
 
     StartCoroutine(FireArrowsCoroutine());
   }
