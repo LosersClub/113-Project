@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyComponent : MonoBehaviour {
-    private MovementController controller; 
-    private float gravity = 80f;
+    private MovementController controller;
+    private Vector2 velocity = Vector2.zero;
 
     public Animator anim;
     public float deltaX
@@ -38,10 +38,10 @@ public class EnemyComponent : MonoBehaviour {
         inAction = false; 
 	}
 
-    void Update ()
+    void FixedUpdate()
     {
-        this.controller.Velocity.y -= gravity * Time.deltaTime;
-        this.controller.Move(this.controller.Velocity * Time.deltaTime);
+        velocity += Physics2D.gravity * Time.deltaTime;
+        this.controller.Move(this.velocity * Time.deltaTime);
     }
 
     public Vector2 GetDirection()
