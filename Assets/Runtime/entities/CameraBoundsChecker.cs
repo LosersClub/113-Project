@@ -34,6 +34,11 @@ public class CameraBoundsChecker : MonoBehaviour {
     return this.collider2DComponent.bounds.min.y > this.CameraUpperRight.y + buffer;
   }
 
+  public bool IsOutOfBounds(float buffer=0) {
+    return (this.IsPastLeft(buffer) || this.IsPastRight(buffer)
+            || this.IsPastBottom(buffer) || this.IsPastTop(buffer));
+  }
+
   private Vector2 CameraLowerLeft {
     get {
       return new Vector2(this.boundsCamera.transform.position.x - this.boundsCamera.orthographicSize * this.boundsCamera.aspect,
