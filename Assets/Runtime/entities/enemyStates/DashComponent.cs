@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DashComponent : MonoBehaviour {
     private EnemyComponent enemy;
-    private MeleeDamageDealer meleeAttack;
+    private ColliderDamageDealer cdd;
     private float dashTimer;
     private float dashCooldown = 3f;
     private bool inDashRange
@@ -26,7 +26,7 @@ public class DashComponent : MonoBehaviour {
 
     void Start () {
         enemy = GetComponent<EnemyComponent>();
-        meleeAttack = GetComponent<MeleeDamageDealer>();
+        cdd = GetComponent<ColliderDamageDealer>();
     }
 
     void Update () {
@@ -43,19 +43,21 @@ public class DashComponent : MonoBehaviour {
 
     void attack()
     {
-        enemy.canMove = false; 
+        enemy.canMove = false;
         StartCoroutine(DashCoroutine()); 
     }
 
     IEnumerator DashCoroutine()
     {
         yield return new WaitForSeconds(this.dashPause);
-        
         enemy.anim.SetTrigger("attack");
-        meleeAttack.HorizontalHit(enemy.facingRight);
+
         dashing = true;
+        float temp = cdd.Damage;
+        //cdd.Damage = temp * damageMultiplier; 
         yield return new WaitForSeconds(this.dashDistance / this.dashSpeed);
-        dashing = false;
+        //cdd.Damage = temp; 
+        dashing = false; 
 
         yield return new WaitForSeconds(this.dashPause);
         enemy.canMove = true; 
