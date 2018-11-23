@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(MovementController))]
 public class Archer : MonoBehaviour {
 
   [SerializeField]
@@ -12,13 +13,16 @@ public class Archer : MonoBehaviour {
   private float arrowFiringInterval = 4.0f;
 
   private SpriteRenderer spriteRenderer;
+  private MovementController movementController;
 
   private bool isFacingRight = true; // will be changed to face player on first Update()
+  private Vector2 velocity = Vector2.zero;
 
   void Start () {
     Assert.IsNotNull(arrowPrefab);
 
     this.spriteRenderer = this.GetComponent<SpriteRenderer>();
+    this.movementController = this.GetComponent<MovementController>();
 
     StartCoroutine(FireArrowsCoroutine());
   }
@@ -32,6 +36,11 @@ public class Archer : MonoBehaviour {
     else if(!this.isFacingRight && !this.spriteRenderer.flipX) {
       this.spriteRenderer.flipX = true;
     }
+  }
+
+  void FixedUpdate() {
+    this.velocity += Physics2D.gravity * Time.deltaTime;
+    this.movementController.Move(this.velocity * Time.deltaTime);
   }
 
   private IEnumerator FireArrowsCoroutine() {
