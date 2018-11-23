@@ -45,6 +45,7 @@ public class Archer : MonoBehaviour {
 
   private void FireArrow() {
     GameObject arrow = Instantiate(arrowPrefab, this.transform.position, Quaternion.identity);
-    arrow.GetComponent<ArcherArrow>().Fire(new Vector2(this.isFacingRight ? 1 : -1, 0));
+    Vector2 fireDirection = GameManager.Player.transform.position - this.transform.position;
+    arrow.GetComponent<ArcherArrow>().Fire(fireDirection);
   }
 }
