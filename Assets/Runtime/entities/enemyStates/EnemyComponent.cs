@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyComponent : MonoBehaviour {
+    private MovementController controller; 
+    private float gravity = 80f;
+
     public Animator anim;
     public float deltaX
     {
@@ -30,9 +33,16 @@ public class EnemyComponent : MonoBehaviour {
     public float margin = 1f; 
 
     void Start () {
+        controller = GetComponent<MovementController>(); 
         facingRight = true;
         inAction = false; 
 	}
+
+    void Update ()
+    {
+        this.controller.Velocity.y -= gravity * Time.deltaTime;
+        this.controller.Move(this.controller.Velocity * Time.deltaTime);
+    }
 
     public Vector2 GetDirection()
     {
