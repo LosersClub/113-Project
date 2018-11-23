@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(CameraBoundsChecker))]
 public class Ghost : MonoBehaviour {
 
   public float driftSpeedMultiplier = 2.0f;
@@ -25,7 +26,7 @@ public class Ghost : MonoBehaviour {
   private BoxCollider2D boxCollider2D;
   private Rigidbody2D rigidBody2D;
   private SpriteRenderer spriteRenderer;
-  private Camera cameraForBounds;
+  private CameraBoundsChecker cameraBoundsChecker;
 
   private Vector2 velocity = Vector2.zero; // will be changed on first FixedUpdate
   private bool facingRight;
@@ -100,9 +101,7 @@ public class Ghost : MonoBehaviour {
     this.boxCollider2D = this.GetComponent<BoxCollider2D>();
     this.rigidBody2D = this.GetComponent<Rigidbody2D>();
     this.spriteRenderer = this.GetComponent<SpriteRenderer>();
-    this.cameraForBounds = Camera.main;
-    Assert.IsNotNull(this.cameraForBounds);
-    Assert.IsTrue(this.cameraForBounds.orthographic);
+    this.cameraBoundsChecker = this.GetComponent<CameraBoundsChecker>();
 
     this.facingRight = initialFacingRight;
   }
@@ -250,17 +249,10 @@ public class Ghost : MonoBehaviour {
       }
     }
 
-    Vector2 cameraLowerLeft = new Vector2(this.cameraForBounds.transform.position.x - this.cameraForBounds.orthographicSize * this.cameraForBounds.aspect,
-                                          this.cameraForBounds.transform.position.y - this.cameraForBounds.orthographicSize);
-    Vector2 cameraUpperRight = new Vector2(this.cameraForBounds.transform.position.x + this.cameraForBounds.orthographicSize * this.cameraForBounds.aspect,
-                                            this.cameraForBounds.transform.position.y + this.cameraForBounds.orthographicSize);
-    bool isPastCameraLeft = this.boxCollider2D.bounds.max.x < cameraLowerLeft.x - this.cameraBoundsBuffer;
-    bool isPastCameraRight = this.boxCollider2D.bounds.min.x > cameraUpperRight.x + this.cameraBoundsBuffer;
-    bool isPastCameraBottom = this.boxCollider2D.bounds.max.y < cameraLowerLeft.y - this.cameraBoundsBuffer;
-    bool isPastCameraTop = this.boxCollider2D.bounds.min.y > cameraUpperRight.y + this.cameraBoundsBuffer;
-
-    return new MovementBoundaries(rightCastDistance, leftCastDistance, upCastDistance,
-                                  downCastDistance, isPastCameraLeft, isPastCameraRight,
-                                  isPastCameraBottom, isPastCameraTop);
+    return new MovementBoundaries(rightCastDistance, leftCastDistance, upCastDistance, downCastDistance,
+                                  this.cameraBoundsChecker.IsPastLeft(this.cameraBoundsBuffer),
+                                  this.cameraBoundsChecker.IsPastRight(this.cameraBoundsBuffer),
+                                  this.cameraBoundsChecker.IsPastBottom(this.cameraBoundsBuffer),
+                                  this.cameraBoundsChecker.IsPastTop(this.cameraBoundsBuffer));
   }
 }
