@@ -5,6 +5,7 @@ using UnityEngine.Assertions;
 
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(MovementController))]
+[RequireComponent(typeof(CameraBoundsChecker))]
 public class Archer : MonoBehaviour {
 
   [SerializeField]
@@ -14,6 +15,7 @@ public class Archer : MonoBehaviour {
 
   private SpriteRenderer spriteRenderer;
   private MovementController movementController;
+  private CameraBoundsChecker cameraBoundsChecker;
 
   private bool isFacingRight = true; // will be changed to face player on first Update()
   private Vector2 velocity = Vector2.zero;
@@ -23,6 +25,7 @@ public class Archer : MonoBehaviour {
 
     this.spriteRenderer = this.GetComponent<SpriteRenderer>();
     this.movementController = this.GetComponent<MovementController>();
+    this.cameraBoundsChecker = this.GetComponent<CameraBoundsChecker>();
 
     StartCoroutine(FireArrowsCoroutine());
   }
@@ -46,7 +49,9 @@ public class Archer : MonoBehaviour {
   private IEnumerator FireArrowsCoroutine() {
     while(true) {
       yield return new WaitForSeconds(this.arrowFiringInterval);
-      this.FireArrow();
+      if(!this.cameraBoundsChecker.IsOutOfBounds()) {
+        this.FireArrow();
+      }
     }
   }
 
