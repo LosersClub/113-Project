@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+/// <summary>
+/// Checks if the GameObject is out of bounds of the main Camera, using the GameObject's Collider2D
+/// component.
+/// </summary>
+/// <remarks>
+/// Methods optionally take a buffer argument. The buffer indicates how far past the exact edge of
+/// the camera bound the GameObject must be in order to be considered past that bound.
+/// </remarks>
+
 [RequireComponent(typeof(Collider2D))]
 public class CameraBoundsChecker : MonoBehaviour {
 
