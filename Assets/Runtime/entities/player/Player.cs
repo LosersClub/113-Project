@@ -90,6 +90,9 @@ public class Player : MonoBehaviour {
     public ParticleSystem slashHorizontal;
     public Vector2 horizontalSlashPosition;
     public ParticleSystem slashVertical;
+    public ParticleSystem dashTrail;
+    public Vector2 dashTrailPosition;
+    public ParticleSystem transformSmoke;
   }
 
   private MovementController controller;
@@ -236,9 +239,9 @@ public class Player : MonoBehaviour {
   private void HorizontalSlash(bool right) {
     var sheet = this.vfx.slashHorizontal.textureSheetAnimation;
     sheet.startFrame = alternator;
-    this.vfx.slashHorizontal.transform.localScale = new Vector3(right?1:-1, 1, 1);
+    this.vfx.slashHorizontal.transform.localScale = new Vector3(right ? 1 : -1, 1, 1);
     this.vfx.slashHorizontal.transform.localPosition = new Vector2(
-      (right?1:-1) * this.vfx.horizontalSlashPosition.x, this.vfx.horizontalSlashPosition.y);
+      (right ? 1 : -1) * this.vfx.horizontalSlashPosition.x, this.vfx.horizontalSlashPosition.y);
     this.vfx.slashHorizontal.Play();
   }
 
@@ -356,6 +359,20 @@ public class Player : MonoBehaviour {
   private void BlinkOnHit(DamageDealer dealer, DamageTaker taker) {
     GameManager.CameraShake.ShakeCamera(this.hitShakeDuration, this.hitShakeDistance);
     this.StartCoroutine(this.Blink(taker.InvulnerabilityDuration));
+  }
+
+  public void StartDashTrail() {
+    this.vfx.dashTrail.transform.localPosition = new Vector2(
+      (!this.sprite.flipX ? 1 : -1) * this.vfx.dashTrailPosition.x, this.vfx.dashTrailPosition.y);
+    this.vfx.dashTrail.Play();
+  }
+
+  public void StopDashTrail() {
+    this.vfx.dashTrail.Stop();
+  }
+
+  public void PlayTransformSmoke() {
+    this.vfx.transformSmoke.Play();
   }
 
   #region Input
