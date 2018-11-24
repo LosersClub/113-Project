@@ -63,7 +63,10 @@ public class EnemyComponent : MonoBehaviour {
 
     public void Move(float speed)
     {
-        int layerMask = 1 << 8;
+        int impassableMask = LayerMask.GetMask("Impassable");
+        int platformMask = LayerMask.GetMask("Platform");
+        int layerMask = impassableMask | platformMask;
+
         Vector2 dir = GetDirection();
         Debug.DrawRay(groundPoint.position, Vector2.down * margin);
         Debug.DrawRay(wallPoint.position, dir * margin);
