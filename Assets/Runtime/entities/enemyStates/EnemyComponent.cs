@@ -63,11 +63,12 @@ public class EnemyComponent : MonoBehaviour {
 
     public void Move(float speed)
     {
+        int layerMask = 1 << 8;
         Vector2 dir = GetDirection();
         Debug.DrawRay(groundPoint.position, Vector2.down * margin);
         Debug.DrawRay(wallPoint.position, dir * margin);
-        RaycastHit2D groundHit = Physics2D.Raycast(groundPoint.position, Vector2.down, margin);
-        RaycastHit2D wallHit = Physics2D.Raycast(wallPoint.position, dir, margin);
+        RaycastHit2D groundHit = Physics2D.Raycast(groundPoint.position, Vector2.down, margin, layerMask);
+        RaycastHit2D wallHit = Physics2D.Raycast(wallPoint.position, dir, margin, layerMask);
 
         if (groundHit == false)
         {

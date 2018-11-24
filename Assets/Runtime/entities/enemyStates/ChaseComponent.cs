@@ -9,7 +9,8 @@ public class ChaseComponent : MonoBehaviour {
     {
         get
         {
-            return UnityEngine.Random.Range(.25f, 1);
+            // randomized flip cooldown so enemies dont stack
+            return UnityEngine.Random.Range(.20f, 1);
         }
     }
     public float speed = 3f;
