@@ -9,21 +9,19 @@ public class ChaseComponent : MonoBehaviour {
     {
         get
         {
-            return UnityEngine.Random.Range(.25f, 1);
+            // randomized flip cooldown so enemies dont stack
+            return UnityEngine.Random.Range(.20f, 1);
         }
     }
-
-    public Transform groundPoint;
-    public Transform wallPoint;
-
     public float speed = 3f;
-    public float distance = 0.5f;
 
     void Start () {
         enemy = GetComponent<EnemyComponent>();
 	}
 	
 	void Update () {
+        if (enemy.inAction) return; 
+
         flipTimer += Time.deltaTime;
         if (flipTimer >= flipCooldown)
         {
@@ -32,26 +30,12 @@ public class ChaseComponent : MonoBehaviour {
         }
         Vector2 dir = enemy.GetDirection();
 
-        Debug.DrawRay(groundPoint.position, Vector2.down * distance);
-        Debug.DrawRay(wallPoint.position, dir * distance);
-        RaycastHit2D groundHit = Physics2D.Raycast(groundPoint.position, Vector2.down, distance);
-        RaycastHit2D wallHit = Physics2D.Raycast(wallPoint.position, dir, distance);
-
-        if (groundHit == false)
-        {
-            //enemy.Flip();
-        }
-        else if (wallHit == true && !wallHit.collider.CompareTag("Player"))
-        {
-            //enemy.Flip();
-        }
-        else if (enemy.canMove)
-            Move(dir); 	
+        enemy.Move(speed); 
 	}
 
-    void Move(Vector2 direction)
+    void Move(float speed)
     {
         Animator anim = enemy.anim;
-        transform.Translate(direction * speed * Time.deltaTime);
+        transform.Translate(enemy.GetDirection() * speed * Time.deltaTime);
     }
 }
