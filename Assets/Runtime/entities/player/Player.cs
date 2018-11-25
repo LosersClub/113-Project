@@ -93,6 +93,10 @@ public class Player : MonoBehaviour {
     public ParticleSystem dashTrail;
     public Vector2 dashTrailPosition;
     public ParticleSystem transformSmoke;
+    public ParticleSystem runTrail;
+    public ParticleSystem takeOffParticle;
+    public ParticleSystem landParticle;
+    public float landParticlePlayDistance;
   }
 
   private MovementController controller;
@@ -112,6 +116,8 @@ public class Player : MonoBehaviour {
   private bool canMelee = true;
   private bool canDash = true;
   private bool canShoot = true;
+  [HideInInspector]
+  public bool shouldPlayLandParticles = false;
 
   #region Animator Variables
   private readonly int horizontalSpeedParam = Animator.StringToHash("HorizontalSpeed");
@@ -373,6 +379,30 @@ public class Player : MonoBehaviour {
 
   public void PlayTransformSmoke() {
     this.vfx.transformSmoke.Play();
+  }
+
+  public void StartRunTrail() {
+    this.vfx.runTrail.Play();
+  }
+
+  public void StopRunTrail() {
+    this.vfx.runTrail.Stop();
+  }
+
+  public void PlayTakeOffParticles() {
+    this.vfx.takeOffParticle.Play();
+    this.shouldPlayLandParticles = true;
+  }
+
+  public void PlayLandParticles() {
+    Bounds bounds = this.collider.bounds;
+    Vector2 origin = new Vector2(bounds.center.x, bounds.min.y - this.controller.Inset);
+    Rays.DrawRay(origin, Vector2.down, this.vfx.landParticlePlayDistance, Color.blue);
+    if (this.shouldPlayLandParticles && this.controller.Velocity.y < 0 && 
+      Rays.IsHitting(origin, Vector2.down, this.vfx.landParticlePlayDistance, this.controller.Ground)) {
+      this.vfx.landParticle.Play();
+      this.shouldPlayLandParticles = false;
+    }
   }
 
   #region Input

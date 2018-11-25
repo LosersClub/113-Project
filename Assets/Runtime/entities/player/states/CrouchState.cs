@@ -3,10 +3,12 @@
 public class CrouchState : SceneLinkedState<Player> {
   public override void OnEnter(Animator animator, AnimatorStateInfo info, int layerIndex) {
     this.instance.PlayTransformSmoke();
+    this.instance.StartRunTrail();
     this.instance.SetCrouching();
   }
 
   public override void OnExit(Animator animator, AnimatorStateInfo info, int layerIndex) {
+    this.instance.StopRunTrail();
     this.instance.SetStanding();
     this.instance.PlayTransformSmoke();
   }
