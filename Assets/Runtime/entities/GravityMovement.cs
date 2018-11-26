@@ -17,7 +17,6 @@ public class GravityMovement : MonoBehaviour {
   
   void Update () {
     Vector2 newVelocity = this.movementController.Velocity + Physics2D.gravity * Time.deltaTime;
-    Debug.LogFormat("newVelocity = {0}", newVelocity);
     this.movementController.Move(newVelocity * Time.deltaTime);
   }
 }
