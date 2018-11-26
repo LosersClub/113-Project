@@ -18,7 +18,6 @@ public class Archer : MonoBehaviour {
   private CameraBoundsChecker cameraBoundsChecker;
 
   private bool isFacingRight = true; // will be changed to face player on first Update()
-  private Vector2 velocity = Vector2.zero;
 
   void Start () {
     Assert.IsNotNull(arrowPrefab);
@@ -42,8 +41,8 @@ public class Archer : MonoBehaviour {
   }
 
   void FixedUpdate() {
-    this.velocity += Physics2D.gravity * Time.deltaTime;
-    this.movementController.Move(this.velocity * Time.deltaTime);
+    Vector2 newVelocity = this.movementController.Velocity + Physics2D.gravity * Time.deltaTime;
+    this.movementController.Move(newVelocity * Time.deltaTime);
   }
 
   private IEnumerator FireArrowsCoroutine() {
