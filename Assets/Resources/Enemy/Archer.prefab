@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114697250482176126}
   - component: {fileID: 61252028430754732}
   - component: {fileID: 114001424023405518}
+  - component: {fileID: 114550294132635012}
   - component: {fileID: 114573990607367312}
   - component: {fileID: 114657517999638810}
   m_Layer: 12
@@ -120,6 +121,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: DamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &114550294132635012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1477329908656438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4ceaa0c2e1db464d8da1c5b06efb67a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114573990607367312
 MonoBehaviour:
   m_ObjectHideFlags: 1
