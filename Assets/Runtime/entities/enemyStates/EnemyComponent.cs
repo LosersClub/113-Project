@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyComponent : MonoBehaviour {
     private MovementController controller;
-    private Vector2 velocity = Vector2.zero;
 
     public Animator anim;
     public float deltaX
@@ -38,7 +37,7 @@ public class EnemyComponent : MonoBehaviour {
         inAction = false; 
 	}
 
-    void FixedUpdate()
+    void Update()
     {
         Vector2 newVelocity = this.controller.Velocity + Physics2D.gravity * Time.deltaTime;
         this.controller.Move(newVelocity * Time.deltaTime);
