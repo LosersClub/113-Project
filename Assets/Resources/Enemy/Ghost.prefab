@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212247195072144678}
   - component: {fileID: 95406199091956486}
   - component: {fileID: 61385327114695246}
-  - component: {fileID: 50342019112284238}
+  - component: {fileID: 114390414929304634}
   - component: {fileID: 114265826865628712}
   - component: {fileID: 114927376027492674}
   - component: {fileID: 114254618202873032}
@@ -48,26 +48,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50342019112284238
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1615813376150664}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &61385327114695246
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -149,6 +129,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf9836ca911cbc4b92f3d6f73e2547f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114390414929304634
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1615813376150664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdbfb268b6c1ad84abab3a78b83e0346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Velocity: {x: 0, y: 0}
+  RayData:
+    horizontalRays: 8
+    verticalRays: 4
+    rayInset: 0.02
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  platformMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &114415157786287182
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -204,15 +206,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16045ece43d05f04dbc1baf1284c7778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  driftSpeedMultiplier: 2
+  driftSpeedMultiplier: 0.05
   barrierDetectionDistance: 1
   barrierMinDistance: 0.1
-  barrierSlowdownXMultiplier: 0.1
-  barrierSlowdownYMultiplier: 1
-  driftWaveAmplitude: 5
+  barrierSlowdownXMultiplier: 0.0025
+  barrierSlowdownYMultiplier: 0.015
+  driftWaveAmplitude: 0.075
   driftWaveFrequency: 0.25
   driftWaveYShiftMultiplier: 0.1
-  cameraBoundsBuffer: -0.2
+  cameraBoundsBuffer: -0.5
   barrierLayerMask:
     serializedVersion: 2
     m_Bits: 256

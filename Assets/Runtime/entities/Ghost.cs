@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 [RequireComponent(typeof(BoxCollider2D))]
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(MovementController))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(CameraBoundsChecker))]
 public class Ghost : MonoBehaviour {
@@ -24,7 +24,7 @@ public class Ghost : MonoBehaviour {
   private const float BarrierDetectionWidth = 0.05f;
 
   private BoxCollider2D boxCollider2D;
-  private Rigidbody2D rigidBody2D;
+  private MovementController movementController;
   private SpriteRenderer spriteRenderer;
   private CameraBoundsChecker cameraBoundsChecker;
 
@@ -99,7 +99,7 @@ public class Ghost : MonoBehaviour {
     Assert.IsTrue(this.barrierMinDistance < this.barrierDetectionDistance);
 
     this.boxCollider2D = this.GetComponent<BoxCollider2D>();
-    this.rigidBody2D = this.GetComponent<Rigidbody2D>();
+    this.movementController = this.GetComponent<MovementController>();
     this.spriteRenderer = this.GetComponent<SpriteRenderer>();
     this.cameraBoundsChecker = this.GetComponent<CameraBoundsChecker>();
 
@@ -113,9 +113,7 @@ public class Ghost : MonoBehaviour {
     else if(!this.facingRight && !this.spriteRenderer.flipX) {
       this.spriteRenderer.flipX = true;
     }
-  }
-
-  void FixedUpdate() {
+    
     MovementBoundaries moveBoundaries = this.CalculateMovementBoundaries();
     this.UpdateVelocityX(moveBoundaries);
     this.UpdateVelocityY(moveBoundaries);
@@ -127,8 +125,7 @@ public class Ghost : MonoBehaviour {
       this.facingRight = false;
     }
     // If velocity.x == 0, don't change direction.
-
-    this.rigidBody2D.MovePosition(this.rigidBody2D.position + this.velocity * Time.deltaTime);
+    this.movementController.Move(this.velocity);
   }
 
   private void UpdateVelocityX(MovementBoundaries moveBoundaries) {
