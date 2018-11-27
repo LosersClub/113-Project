@@ -20,9 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4704863649604420}
   - component: {fileID: 212443481306616432}
+  - component: {fileID: 61252028430754732}
+  - component: {fileID: 114199511392812054}
   - component: {fileID: 114477131701335636}
   - component: {fileID: 114697250482176126}
-  - component: {fileID: 61252028430754732}
   - component: {fileID: 114001424023405518}
   - component: {fileID: 114573990607367312}
   - component: {fileID: 114657517999638810}
@@ -93,6 +94,34 @@ MonoBehaviour:
   platformMask:
     serializedVersion: 2
     m_Bits: 1024
+--- !u!114 &114199511392812054
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1477329908656438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8b45bed6a98924fa5d62a6a2154729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  disableDamageAfterHit: 0
+  ignoreInvulnerability: 0
+  hittableLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  OnDamageHit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: DamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnNoDamageHit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: NonDamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  UseBaseCollider: 1
+  damageCollider: {fileID: 0}
 --- !u!114 &114477131701335636
 MonoBehaviour:
   m_ObjectHideFlags: 1
