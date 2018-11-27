@@ -12,6 +12,8 @@ public class Archer : MonoBehaviour {
   private GameObject arrowPrefab;
   [SerializeField]
   private float arrowFiringInterval = 4.0f;
+  [SerializeField]
+  private float arrowYOffset = 0.5f;
 
   private SpriteRenderer spriteRenderer;
   private MovementController movementController;
@@ -55,7 +57,8 @@ public class Archer : MonoBehaviour {
   }
 
   private void FireArrow() {
-    GameObject arrow = Instantiate(arrowPrefab, this.transform.position, Quaternion.identity);
+    Vector3 arrowPosition = this.transform.position + new Vector3(0, this.arrowYOffset, 0);
+    GameObject arrow = Instantiate(arrowPrefab, arrowPosition, Quaternion.identity);
     Vector2 fireDirection = GameManager.Player.transform.position - this.transform.position;
     arrow.GetComponent<ArcherArrow>().Fire(fireDirection);
   }
