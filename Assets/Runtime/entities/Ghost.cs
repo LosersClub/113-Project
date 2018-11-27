@@ -125,7 +125,8 @@ public class Ghost : MonoBehaviour {
       this.facingRight = false;
     }
     // If velocity.x == 0, don't change direction.
-    this.movementController.Move(this.velocity);
+
+    this.movementController.Move(this.velocity * Time.deltaTime);
   }
 
   private void UpdateVelocityX(MovementBoundaries moveBoundaries) {
