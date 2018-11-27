@@ -2020,7 +2020,6 @@ GameObject:
   - component: {fileID: 1515772642}
   - component: {fileID: 1515772641}
   - component: {fileID: 1515772640}
-  - component: {fileID: 1515772639}
   - component: {fileID: 1515772638}
   - component: {fileID: 1515772637}
   - component: {fileID: 1515772636}
@@ -2199,17 +2198,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: DamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &1515772639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1515772630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4ceaa0c2e1db464d8da1c5b06efb67a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1515772640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2652,7 +2640,6 @@ GameObject:
   - component: {fileID: 1837665262}
   - component: {fileID: 1837665261}
   - component: {fileID: 1837665260}
-  - component: {fileID: 1837665259}
   - component: {fileID: 1837665258}
   - component: {fileID: 1837665257}
   - component: {fileID: 1837665256}
@@ -2831,17 +2818,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: DamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &1837665259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1837665250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4ceaa0c2e1db464d8da1c5b06efb67a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1837665260
 MonoBehaviour:
   m_ObjectHideFlags: 0

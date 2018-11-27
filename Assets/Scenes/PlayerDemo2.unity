@@ -839,7 +839,6 @@ GameObject:
   - component: {fileID: 481712881}
   - component: {fileID: 481712880}
   - component: {fileID: 481712879}
-  - component: {fileID: 481712878}
   - component: {fileID: 481712877}
   - component: {fileID: 481712876}
   - component: {fileID: 481712875}
@@ -1018,17 +1017,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: DamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &481712878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 481712869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4ceaa0c2e1db464d8da1c5b06efb67a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &481712879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1167,7 +1155,6 @@ GameObject:
   - component: {fileID: 611213508}
   - component: {fileID: 611213512}
   - component: {fileID: 611213511}
-  - component: {fileID: 611213521}
   - component: {fileID: 611213515}
   - component: {fileID: 611213514}
   - component: {fileID: 611213517}
@@ -1472,17 +1459,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleeRange: 2
---- !u!114 &611213521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 611213507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4ceaa0c2e1db464d8da1c5b06efb67a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &627783778
 Prefab:
   m_ObjectHideFlags: 0

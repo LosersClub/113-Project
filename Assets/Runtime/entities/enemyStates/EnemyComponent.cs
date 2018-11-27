@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(GravityMovement))]
 public class EnemyComponent : MonoBehaviour {
+    private MovementController controller;
     private Vector2 velocity = Vector2.zero;
 
     public Animator anim;
@@ -33,9 +33,16 @@ public class EnemyComponent : MonoBehaviour {
     public float margin = 1f; 
 
     void Start () {
+        controller = GetComponent<MovementController>(); 
         facingRight = true;
         inAction = false; 
 	}
+
+    void FixedUpdate()
+    {
+        Vector2 newVelocity = this.controller.Velocity + Physics2D.gravity * Time.deltaTime;
+        this.controller.Move(newVelocity * Time.deltaTime);
+    }
 
     public Vector2 GetDirection()
     {
