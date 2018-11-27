@@ -24,8 +24,6 @@ public class ArcherArrow : MonoBehaviour {
   [SerializeField]
   private float speed = 1f;
   [SerializeField]
-  private Color impassableHitColor = Color.gray;
-  [SerializeField]
   private float impassableHitDestroyDelay = 5f;
   [SerializeField]
   private float firedTimeout = 60f;
@@ -45,9 +43,7 @@ public class ArcherArrow : MonoBehaviour {
   }
 
   void Update () {
-    if(this.state == State.HitImpassable) {
-      this.GetComponent<SpriteRenderer>().color = this.impassableHitColor;
-    }
+
   }
 
   void FixedUpdate() {
