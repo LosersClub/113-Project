@@ -46,14 +46,25 @@ public class DashComponent : MonoBehaviour {
         if (enemy.inAction) return; 
 
         enemy.inAction = true;
-        StartCoroutine(DashCoroutine()); 
+        enemy.anim.SetTrigger("charge");
+        StartCoroutine(WaitForAnimation("Charge")); 
+    }
+
+    IEnumerator WaitForAnimation(string name)
+    {
+        if (enemy.anim)
+            do
+            {
+                yield return null;
+            } while (!enemy.anim.GetCurrentAnimatorStateInfo(0).IsName(name));
+
+        StartCoroutine(DashCoroutine());
     }
 
     IEnumerator DashCoroutine()
     {
-        enemy.anim.SetTrigger("dash");
-        yield return new WaitForSeconds(this.dashPause);
-        
+        //enemy.anim.SetTrigger("dash");
+        yield return new WaitForSeconds(this.dashPause);    
 
         dashing = true;
         float temp = cdd.Damage;
