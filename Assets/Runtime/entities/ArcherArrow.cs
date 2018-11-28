@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(MovementController))]
 [RequireComponent(typeof(DamageDealer))]
 public class ArcherArrow : MonoBehaviour {
 
@@ -28,14 +28,14 @@ public class ArcherArrow : MonoBehaviour {
   [SerializeField]
   private float firedTimeout = 60f;
 
-  private Rigidbody2D rigidBody2D;
+  private MovementController movementController;
   private DamageDealer damageDealer;
 
   private State state = State.Init;
   private Vector2 direction = Vector2.zero;
 
   void Start () {
-    this.rigidBody2D = this.GetComponent<Rigidbody2D>();
+    this.movementController = this.GetComponent<MovementController>();
     this.damageDealer = this.GetComponent<DamageDealer>();
 
     this.damageDealer.OnDamageHit.AddListener(this.OnDamageHit);
@@ -43,13 +43,9 @@ public class ArcherArrow : MonoBehaviour {
   }
 
   void Update () {
-
-  }
-
-  void FixedUpdate() {
     if(this.state == State.Fired) {
       Assert.AreNotEqual(Vector2.zero, this.direction);
-      this.rigidBody2D.MovePosition(this.rigidBody2D.position + Time.deltaTime * speed * direction);
+      this.movementController.Move(Time.deltaTime * speed * direction);
     }
   }
 

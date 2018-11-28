@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4973455002857592}
   - component: {fileID: 212958730987121074}
   - component: {fileID: 61243535546054566}
-  - component: {fileID: 50740077155596692}
+  - component: {fileID: 114425048549700744}
   - component: {fileID: 114687795451804120}
   - component: {fileID: 114865268377340054}
   m_Layer: 0
@@ -75,26 +75,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50740077155596692
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1995327165405730}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &61243535546054566
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -120,6 +100,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.3125}
   m_EdgeRadius: 0
+--- !u!114 &114425048549700744
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1995327165405730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdbfb268b6c1ad84abab3a78b83e0346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Velocity: {x: 0, y: 0}
+  RayData:
+    horizontalRays: 8
+    verticalRays: 4
+    rayInset: 0.02
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  platformMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &114687795451804120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -160,7 +162,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 8
-  impassableHitColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   impassableHitDestroyDelay: 5
   firedTimeout: 60
 --- !u!198 &198793541677604132
