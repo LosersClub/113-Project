@@ -41,9 +41,7 @@ public class Archer : MonoBehaviour {
     else if(!this.isFacingRight && !this.spriteRenderer.flipX) {
       this.spriteRenderer.flipX = true;
     }
-  }
 
-  void FixedUpdate() {
     Vector2 newVelocity = this.movementController.Velocity + Physics2D.gravity * Time.deltaTime;
     this.movementController.Move(newVelocity * Time.deltaTime);
   }
