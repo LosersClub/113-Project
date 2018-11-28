@@ -47,7 +47,7 @@ public class DashComponent : MonoBehaviour {
 
         enemy.inAction = true;
         enemy.anim.SetTrigger("charge");
-        StartCoroutine(WaitForAnimation("Charge")); 
+        StartCoroutine(WaitForAnimation("Dash")); 
     }
 
     IEnumerator WaitForAnimation(string name)

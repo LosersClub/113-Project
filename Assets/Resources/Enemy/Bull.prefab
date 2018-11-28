@@ -101,7 +101,7 @@ Transform:
   m_GameObject: {fileID: 1262980004849132}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -12.14, y: 2.72, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4486201146921964}
   - {fileID: 4579346540584610}
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dashRange: 6
-  dashPause: 0.25
+  dashPause: 0
   dashSpeed: 15
   dashDistance: 8
   damageMultiplier: 1
@@ -232,7 +232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 5
-  invulnerabilityDuration: 1
+  invulnerabilityDuration: 0.5
   disableOnDeath: 1
   OnGainHealth:
     m_PersistentCalls:
