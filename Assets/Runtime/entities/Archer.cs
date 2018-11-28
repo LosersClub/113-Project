@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(MovementController))]
 [RequireComponent(typeof(CameraBoundsChecker))]
+[RequireComponent(typeof(Animator))]
 public class Archer : MonoBehaviour {
 
   [SerializeField]
@@ -18,6 +19,7 @@ public class Archer : MonoBehaviour {
   private SpriteRenderer spriteRenderer;
   private MovementController movementController;
   private CameraBoundsChecker cameraBoundsChecker;
+  private Animator animator;
 
   private bool isFacingRight = true; // will be changed to face player on first Update()
 
@@ -27,8 +29,7 @@ public class Archer : MonoBehaviour {
     this.spriteRenderer = this.GetComponent<SpriteRenderer>();
     this.movementController = this.GetComponent<MovementController>();
     this.cameraBoundsChecker = this.GetComponent<CameraBoundsChecker>();
-
-    StartCoroutine(FireArrowsCoroutine());
+    this.animator = this.GetComponent<Animator>();
   }
   
   void Update () {
@@ -47,12 +48,23 @@ public class Archer : MonoBehaviour {
     this.movementController.Move(newVelocity * Time.deltaTime);
   }
 
-  private IEnumerator FireArrowsCoroutine() {
-    while(true) {
-      yield return new WaitForSeconds(this.arrowFiringInterval);
-      if(!this.cameraBoundsChecker.IsOutOfBounds()) {
-        this.FireArrow();
-      }
+  public void OnAnimatorStateEnter(AnimatorStateInfo stateInfo) {
+    if(stateInfo.IsName("Idle")) {
+      StartCoroutine(WaitThenFireOnceCoroutine());
+    }
+    else if(stateInfo.IsName("Fire")) {
+      this.FireArrow();
+    }
+  }
+
+  private IEnumerator WaitThenFireOnceCoroutine() {
+    yield return new WaitForSeconds(this.arrowFiringInterval);
+    if(this.cameraBoundsChecker.IsOutOfBounds()) {
+      StartCoroutine(WaitThenFireOnceCoroutine());
+    }
+    else {
+      this.animator.SetTrigger("Fire Tell");
+      // Arrow prefab is fired later, when animator state changes to Fire.
     }
   }
 
