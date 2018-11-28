@@ -193,7 +193,7 @@ MonoBehaviour:
   arrowPrefab: {fileID: 1995327165405730, guid: 3eb2a8a224d727244a2d0e9f5e3a8432,
     type: 2}
   arrowFiringInterval: 4
-  arrowYOffset: 0.5
+  arrowOffset: {x: 1, y: 0.5}
 --- !u!114 &114697250482176126
 MonoBehaviour:
   m_ObjectHideFlags: 1
