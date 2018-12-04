@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(MovementController))]
 public class EnemyComponent : MonoBehaviour {
     private MovementController controller;
-    private SpriteRenderer spriteRenderer; 
 
     [SerializeField]
     private Animator anim;
@@ -53,7 +51,6 @@ public class EnemyComponent : MonoBehaviour {
 
     void Start () {
         controller = GetComponent<MovementController>();
-        spriteRenderer = GetComponent<SpriteRenderer>(); 
         facingRight = true;
         inAction = false; 
 	}
