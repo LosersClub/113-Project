@@ -39,6 +39,7 @@ public class EnemyComponent : MonoBehaviour {
         }
     }
     // mutex allowing one action at a time 
+    [System.NonSerialized]
     public bool inAction; 
 
     // movement transforms 
