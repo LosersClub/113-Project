@@ -11,8 +11,8 @@ public class MeleeComponent : MonoBehaviour {
     {
         get
         {
-            return Mathf.Abs(enemy.deltaX) <= meleeRange && 
-                Mathf.Abs(enemy.deltaY) <= meleeRange/2;
+            return Mathf.Abs(enemy.PlayerDeltaX) <= meleeRange &&
+                Mathf.Abs(enemy.PlayerDeltaY) <= meleeRange/2;
         }
     }
 

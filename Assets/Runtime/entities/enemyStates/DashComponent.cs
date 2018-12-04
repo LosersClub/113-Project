@@ -11,8 +11,8 @@ public class DashComponent : MonoBehaviour {
     {
         get
         {
-            return Mathf.Abs(enemy.deltaX) <= dashRange && 
-                Mathf.Abs(enemy.deltaY) <= dashRange/2;
+            return Mathf.Abs(enemy.PlayerDeltaX) <= dashRange &&
+                Mathf.Abs(enemy.PlayerDeltaY) <= dashRange/2;
         }
     }
 

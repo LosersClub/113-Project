@@ -9,14 +9,14 @@ public class EnemyComponent : MonoBehaviour {
     private SpriteRenderer spriteRenderer; 
 
     public Animator anim;
-    public float deltaX
+    public float PlayerDeltaX
     {
         get
         {
             return GameManager.Player.transform.position.x - transform.position.x; 
         }
     }
-    public float deltaY
+    public float PlayerDeltaY
     {
         get
         {
@@ -55,7 +55,7 @@ public class EnemyComponent : MonoBehaviour {
 
     public void LookAtTarget()
     {
-        if (deltaX < 0 && facingRight || deltaX > 0 && !facingRight) Flip();
+        if (PlayerDeltaX < 0 && facingRight || PlayerDeltaX > 0 && !facingRight) Flip();
     }
 
     public void Flip()
