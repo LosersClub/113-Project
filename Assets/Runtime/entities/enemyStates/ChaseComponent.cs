@@ -21,21 +21,15 @@ public class ChaseComponent : MonoBehaviour {
 	
 	void Update () {
         if (enemy.inAction) return; 
-
+        
         flipTimer += Time.deltaTime;
         if (flipTimer >= flipCooldown)
         {
             enemy.LookAtTarget();
             flipTimer = 0; 
         }
-        Vector2 dir = enemy.GetDirection();
+        int dir = enemy.facingRight ? 1 : -1;
 
         enemy.Move(speed); 
-	}
-
-    void Move(float speed)
-    {
-        Animator anim = enemy.anim;
-        transform.Translate(enemy.GetDirection() * speed * Time.deltaTime);
     }
 }

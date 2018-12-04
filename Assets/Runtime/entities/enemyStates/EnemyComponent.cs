@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyComponent : MonoBehaviour {
     private MovementController controller;
+    private SpriteRenderer spriteRenderer; 
 
     public Animator anim;
     public float deltaX
@@ -22,6 +23,7 @@ public class EnemyComponent : MonoBehaviour {
     }
 
     // flags 
+    public bool grounded = true;
     public bool facingRight;
     // mutex allowing one action at a time 
     public bool inAction; 
@@ -32,7 +34,8 @@ public class EnemyComponent : MonoBehaviour {
     public float margin = 1f; 
 
     void Start () {
-        controller = GetComponent<MovementController>(); 
+        controller = GetComponent<MovementController>();
+        spriteRenderer = GetComponent<SpriteRenderer>(); 
         facingRight = true;
         inAction = false; 
 	}
@@ -57,6 +60,7 @@ public class EnemyComponent : MonoBehaviour {
     public void Flip()
     {
         facingRight = !facingRight;
+
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
     }
 
@@ -74,14 +78,20 @@ public class EnemyComponent : MonoBehaviour {
 
         if (groundHit == false)
         {
-            //Debug.Log("no ground");
+            setVelocityX(0);
         }
         else if (wallHit == true && !wallHit.collider.CompareTag("Player"))
         {
-            //Debug.Log("wall");
+            setVelocityX(0);
         }
         else
-            transform.Translate(GetDirection() * speed * Time.deltaTime);
+        {
+            setVelocityX(speed * (facingRight ? 1: -1)); 
+        }
     }
 
+    public void setVelocityX(float speed)
+    {
+        this.controller.Velocity.x = speed; 
+    }
 }

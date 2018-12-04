@@ -6,7 +6,7 @@ public class DashComponent : MonoBehaviour {
     private EnemyComponent enemy;
     private ColliderDamageDealer cdd;
     private float dashTimer;
-    private float dashCooldown = 3f;
+    private float dashCooldown = 4f;
     private bool inDashRange
     {
         get
@@ -30,8 +30,7 @@ public class DashComponent : MonoBehaviour {
     }
 
     void Update () {
-        if (dashing)
-            enemy.Move(dashSpeed); 
+        if (dashing) enemy.Move(dashSpeed); 
 
         dashTimer += Time.deltaTime; 
         if (inDashRange && dashTimer >= dashCooldown)
@@ -46,6 +45,7 @@ public class DashComponent : MonoBehaviour {
         if (enemy.inAction) return; 
 
         enemy.inAction = true;
+        enemy.Move(0);
         enemy.anim.SetTrigger("charge");
         StartCoroutine(WaitForAnimation("Dash")); 
     }
@@ -66,12 +66,12 @@ public class DashComponent : MonoBehaviour {
         //enemy.anim.SetTrigger("dash");
         yield return new WaitForSeconds(this.dashPause);    
 
-        dashing = true;
+        dashing = true;        
         float temp = cdd.Damage;
         //cdd.Damage = temp * damageMultiplier; 
         yield return new WaitForSeconds(this.dashDistance / this.dashSpeed);
         //cdd.Damage = temp; 
-        dashing = false; 
+        dashing = false;
 
         yield return new WaitForSeconds(this.dashPause);
         enemy.inAction = false; 
