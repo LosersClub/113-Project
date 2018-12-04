@@ -25,7 +25,6 @@ public class EnemyComponent : MonoBehaviour {
     }
 
     // flags 
-    public bool grounded = true;
     public bool facingRight;
     // mutex allowing one action at a time 
     public bool inAction; 
