@@ -8,7 +8,16 @@ public class EnemyComponent : MonoBehaviour {
     private MovementController controller;
     private SpriteRenderer spriteRenderer; 
 
-    public Animator anim;
+    [SerializeField]
+    private Animator anim;
+
+    // Convenience property for other components:
+    public Animator Anim {
+        get {
+            return this.anim;
+        }
+    }
+
     public float PlayerDeltaX
     {
         get
@@ -25,14 +34,22 @@ public class EnemyComponent : MonoBehaviour {
     }
 
     // flags 
-    public bool facingRight;
+    private bool facingRight;
+    public bool FacingRight {
+        get {
+            return this.facingRight;
+        }
+    }
     // mutex allowing one action at a time 
     public bool inAction; 
 
     // movement transforms 
-    public Transform groundPoint;
-    public Transform wallPoint;
-    public float margin = 1f; 
+    [SerializeField]
+    private Transform groundPoint;
+    [SerializeField]
+    private Transform wallPoint;
+    [SerializeField]
+    private float margin = 1f;
 
     void Start () {
         controller = GetComponent<MovementController>();
@@ -91,7 +108,7 @@ public class EnemyComponent : MonoBehaviour {
         }
     }
 
-    public void setVelocityX(float speed)
+    private void setVelocityX(float speed)
     {
         this.controller.Velocity.x = speed; 
     }
