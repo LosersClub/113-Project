@@ -82,9 +82,13 @@ public class EnemyComponent : MonoBehaviour {
     {
         facingRight = !facingRight;
 
+        // Changes scale so that groundPoint and wallPoint also face correct direction:
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
     }
 
+    /// <summary>
+    /// Sets speed to argument EXCEPT when in midair or would collide with wall.
+    /// </summary>
     public void SetSpeed(float speed)
     {
         int impassableMask = LayerMask.GetMask("Impassable");
