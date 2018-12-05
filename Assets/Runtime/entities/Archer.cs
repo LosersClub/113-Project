@@ -20,6 +20,7 @@ public class Archer : MonoBehaviour {
   private Animator animator;
 
   private bool isFacingRight = true; // will be changed to face player on first Update()
+  private bool inAction = false;
 
   void Start () {
     Assert.IsNotNull(arrowPrefab);
@@ -38,7 +39,11 @@ public class Archer : MonoBehaviour {
 
   public void OnAnimatorStateEnter(AnimatorStateInfo stateInfo) {
     if(stateInfo.IsName("Idle")) {
+      this.inAction = false;
       StartCoroutine(WaitThenFireOnceCoroutine());
+    }
+    else if(stateInfo.IsName("Fire Tell")) {
+      this.inAction = true;
     }
     else if(stateInfo.IsName("Fire")) {
       this.FireArrow();
