@@ -14,7 +14,8 @@ public class ChaseComponent : MonoBehaviour {
             return UnityEngine.Random.Range(.20f, 1);
         }
     }
-    public float speed = 3f;
+    [SerializeField]
+    private float speed = 3f;
 
     void Start () {
         enemy = GetComponent<EnemyComponent>();
