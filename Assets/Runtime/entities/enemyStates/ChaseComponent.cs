@@ -30,7 +30,6 @@ public class ChaseComponent : MonoBehaviour {
             enemy.LookAtTarget();
             flipTimer = 0; 
         }
-        int dir = enemy.FacingRight ? 1 : -1;
 
         enemy.Move(speed); 
     }
