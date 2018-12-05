@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(MovementController))]
 [RequireComponent(typeof(CameraBoundsChecker))]
 [RequireComponent(typeof(Animator))]
@@ -16,7 +15,6 @@ public class Archer : MonoBehaviour {
   [SerializeField]
   private Vector2 arrowOffset = new Vector2(0.25f, 0.5f);
 
-  private SpriteRenderer spriteRenderer;
   private MovementController movementController;
   private CameraBoundsChecker cameraBoundsChecker;
   private Animator animator;
@@ -26,7 +24,6 @@ public class Archer : MonoBehaviour {
   void Start () {
     Assert.IsNotNull(arrowPrefab);
 
-    this.spriteRenderer = this.GetComponent<SpriteRenderer>();
     this.movementController = this.GetComponent<MovementController>();
     this.cameraBoundsChecker = this.GetComponent<CameraBoundsChecker>();
     this.animator = this.GetComponent<Animator>();
@@ -34,13 +31,6 @@ public class Archer : MonoBehaviour {
   
   void Update () {
     this.FacePlayer();
-
-    if(this.isFacingRight && this.spriteRenderer.flipX) {
-      this.spriteRenderer.flipX = false;
-    }
-    else if(!this.isFacingRight && !this.spriteRenderer.flipX) {
-      this.spriteRenderer.flipX = true;
-    }
 
     Vector2 newVelocity = this.movementController.Velocity + Physics2D.gravity * Time.deltaTime;
     this.movementController.Move(newVelocity * Time.deltaTime);
@@ -74,6 +64,12 @@ public class Archer : MonoBehaviour {
   }
 
   private void FacePlayer() {
-    this.isFacingRight = (GameManager.Player.transform.position.x > this.transform.position.x);
+    bool newFacingRight = GameManager.Player.transform.position.x > this.transform.position.x;
+
+    if(newFacingRight != this.isFacingRight) {
+      this.transform.localScale = new Vector3(this.transform.localScale.x * -1, this.transform.localScale.y, this.transform.localScale.z);
+    }
+
+    this.isFacingRight = newFacingRight;
   }
 }
