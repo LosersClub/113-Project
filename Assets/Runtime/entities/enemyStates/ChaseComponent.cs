@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyComponent))]
 public class ChaseComponent : MonoBehaviour {
     private EnemyComponent enemy;
     private float flipTimer;
