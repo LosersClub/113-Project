@@ -28,7 +28,10 @@ public class ChaseComponent : MonoBehaviour {
 	void Update () {
         if (enemy.inAction) return; 
 
-        if(enemy.PlayerDistance > stopDistance) {
+        if(this.WithinStopDistance()) {
+            enemy.SetSpeed(0);
+        }
+        else {
             flipTimer += Time.deltaTime;
             if (flipTimer >= flipCooldown) {
                 enemy.LookAtTarget();
@@ -37,8 +40,9 @@ public class ChaseComponent : MonoBehaviour {
 
             enemy.SetSpeed(speed);
         }
-        else {
-            enemy.SetSpeed(0);
-        }
+    }
+
+    public bool WithinStopDistance() {
+        return this.enemy.PlayerDistance <= stopDistance;
     }
 }
