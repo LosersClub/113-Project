@@ -42,13 +42,14 @@ public class Archer : MonoBehaviour {
   }
 
   private IEnumerator WaitThenFireOnceCoroutine() {
-    yield return new WaitForSeconds(this.arrowFiringInterval);
-    if(this.archerFireChecker.CanFire()) {
-      this.enemyComponent.Anim.SetTrigger("Fire Tell");
-      // Arrow prefab is fired later, when animator state changes to Fire.
-    }
-    else {
-      StartCoroutine(WaitThenFireOnceCoroutine());
+    bool fired = false;
+    while(!fired) {
+      yield return new WaitForSeconds(this.arrowFiringInterval);
+      if(this.archerFireChecker.CanFire()) {
+        this.enemyComponent.Anim.SetTrigger("Fire Tell");
+        // Arrow prefab is fired later, when animator state changes to Fire.
+        fired = true;
+      }
     }
   }
 
