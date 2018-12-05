@@ -30,6 +30,11 @@ public class EnemyComponent : MonoBehaviour {
             return GameManager.Player.transform.position.y - transform.position.y;
         }
     }
+    public float PlayerDistance {
+        get {
+            return (GameManager.Player.transform.position - transform.position).magnitude;
+        }
+    }
 
     // flags 
     private bool facingRight;
