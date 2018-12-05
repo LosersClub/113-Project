@@ -4,24 +4,28 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 [RequireComponent(typeof(EnemyComponent))]
-[RequireComponent(typeof(ArcherStationaryController))]
 public class Archer : MonoBehaviour {
 
   [SerializeField]
   private GameObject arrowPrefab;
+  [SerializeField]
+  private Component archerFireCheckerComponent; // a component that implements IArcherFireChecker
   [SerializeField]
   private float arrowFiringInterval = 4.0f;
   [SerializeField]
   private Vector2 arrowOffset = new Vector2(0.25f, 0.5f);
 
   private EnemyComponent enemyComponent;
-  private ArcherStationaryController archerStationaryController;
+  private IArcherFireChecker archerFireChecker;
 
   void Start () {
-    Assert.IsNotNull(arrowPrefab);
+    Assert.IsNotNull(this.arrowPrefab);
+    Assert.IsNotNull(this.archerFireCheckerComponent);
 
     this.enemyComponent = this.GetComponent<EnemyComponent>();
-    this.archerStationaryController = this.GetComponent<ArcherStationaryController>();
+    this.archerFireChecker = this.archerFireCheckerComponent as IArcherFireChecker;
+    // Will be null if archerFireCheckerComponent does not implement IArcherFireChecker:
+    Assert.IsNotNull(this.archerFireChecker);
   }
 
   public void OnAnimatorStateEnter(AnimatorStateInfo stateInfo) {
@@ -39,7 +43,7 @@ public class Archer : MonoBehaviour {
 
   private IEnumerator WaitThenFireOnceCoroutine() {
     yield return new WaitForSeconds(this.arrowFiringInterval);
-    if(this.archerStationaryController.InFiringRange()) {
+    if(this.archerFireChecker.CanFire()) {
       this.enemyComponent.Anim.SetTrigger("Fire Tell");
       // Arrow prefab is fired later, when animator state changes to Fire.
     }

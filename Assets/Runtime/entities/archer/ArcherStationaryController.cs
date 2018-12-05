@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CameraBoundsChecker))]
 [RequireComponent(typeof(EnemyComponent))]
-public class ArcherStationaryController : MonoBehaviour {
+public class ArcherStationaryController : MonoBehaviour, IArcherFireChecker {
 
   private CameraBoundsChecker cameraBoundsChecker;
   private EnemyComponent enemyComponent;
@@ -18,7 +18,7 @@ public class ArcherStationaryController : MonoBehaviour {
     this.enemyComponent.LookAtTarget();
   }
 
-  public bool InFiringRange() {
+  public bool CanFire() {
     return !this.cameraBoundsChecker.IsOutOfBounds();
   }
 }
