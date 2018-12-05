@@ -30,7 +30,7 @@ public class DashComponent : MonoBehaviour {
     }
 
     void Update () {
-        if (dashing) enemy.Move(dashSpeed); 
+        if (dashing) enemy.SetSpeed(dashSpeed);
 
         dashTimer += Time.deltaTime; 
         if (inDashRange && dashTimer >= dashCooldown)
@@ -45,7 +45,7 @@ public class DashComponent : MonoBehaviour {
         if (enemy.inAction) return; 
 
         enemy.inAction = true;
-        enemy.Move(0);
+        enemy.SetSpeed(0);
         enemy.Anim.SetTrigger("charge");
         StartCoroutine(WaitForAnimation("Dash")); 
     }

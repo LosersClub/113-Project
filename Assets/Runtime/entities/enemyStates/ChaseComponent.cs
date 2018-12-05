@@ -31,6 +31,6 @@ public class ChaseComponent : MonoBehaviour {
             flipTimer = 0; 
         }
 
-        enemy.Move(speed); 
+        enemy.SetSpeed(speed);
     }
 }

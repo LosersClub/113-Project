@@ -85,7 +85,7 @@ public class EnemyComponent : MonoBehaviour {
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
     }
 
-    public void Move(float speed)
+    public void SetSpeed(float speed)
     {
         int impassableMask = LayerMask.GetMask("Impassable");
         int platformMask = LayerMask.GetMask("Platform");

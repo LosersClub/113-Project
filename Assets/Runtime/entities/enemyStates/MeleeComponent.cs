@@ -37,7 +37,7 @@ public class MeleeComponent : MonoBehaviour {
         if (enemy.inAction) return; 
 
         enemy.inAction = true;
-        enemy.Move(0); 
+        enemy.SetSpeed(0);
         enemy.Anim.SetTrigger("attack");
         StartCoroutine(WaitForAnimation("Attack"));
 
