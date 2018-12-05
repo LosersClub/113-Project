@@ -56,8 +56,9 @@ GameObject:
   - component: {fileID: 114477131701335636}
   - component: {fileID: 114697250482176126}
   - component: {fileID: 114001424023405518}
-  - component: {fileID: 114573990607367312}
   - component: {fileID: 114706516697976336}
+  - component: {fileID: 114573990607367312}
+  - component: {fileID: 114486077479708550}
   - component: {fileID: 114657517999638810}
   m_Layer: 12
   m_Name: Archer
@@ -227,6 +228,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: DamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &114486077479708550
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1477329908656438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 164c93e9ab7310d45918584f2fecb087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114573990607367312
 MonoBehaviour:
   m_ObjectHideFlags: 1

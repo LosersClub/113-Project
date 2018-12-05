@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-[RequireComponent(typeof(CameraBoundsChecker))]
 [RequireComponent(typeof(EnemyComponent))]
+[RequireComponent(typeof(ArcherStationaryController))]
 public class Archer : MonoBehaviour {
 
   [SerializeField]
@@ -14,18 +14,14 @@ public class Archer : MonoBehaviour {
   [SerializeField]
   private Vector2 arrowOffset = new Vector2(0.25f, 0.5f);
 
-  private CameraBoundsChecker cameraBoundsChecker;
   private EnemyComponent enemyComponent;
+  private ArcherStationaryController archerStationaryController;
 
   void Start () {
     Assert.IsNotNull(arrowPrefab);
 
-    this.cameraBoundsChecker = this.GetComponent<CameraBoundsChecker>();
     this.enemyComponent = this.GetComponent<EnemyComponent>();
-  }
-  
-  void Update () {
-    this.enemyComponent.LookAtTarget();
+    this.archerStationaryController = this.GetComponent<ArcherStationaryController>();
   }
 
   public void OnAnimatorStateEnter(AnimatorStateInfo stateInfo) {
@@ -43,12 +39,12 @@ public class Archer : MonoBehaviour {
 
   private IEnumerator WaitThenFireOnceCoroutine() {
     yield return new WaitForSeconds(this.arrowFiringInterval);
-    if(this.cameraBoundsChecker.IsOutOfBounds()) {
-      StartCoroutine(WaitThenFireOnceCoroutine());
-    }
-    else {
+    if(this.archerStationaryController.InFiringRange()) {
       this.enemyComponent.Anim.SetTrigger("Fire Tell");
       // Arrow prefab is fired later, when animator state changes to Fire.
+    }
+    else {
+      StartCoroutine(WaitThenFireOnceCoroutine());
     }
   }
 
