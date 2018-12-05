@@ -17,20 +17,28 @@ public class ChaseComponent : MonoBehaviour {
     [SerializeField]
     private float speed = 3f;
 
+    // Stop chasing if within this distance of player. If 0, always chase:
+    [SerializeField]
+    private float stopDistance = 0f;
+
     void Start () {
         enemy = GetComponent<EnemyComponent>();
 	}
 	
 	void Update () {
         if (enemy.inAction) return; 
-        
-        flipTimer += Time.deltaTime;
-        if (flipTimer >= flipCooldown)
-        {
-            enemy.LookAtTarget();
-            flipTimer = 0; 
-        }
 
-        enemy.SetSpeed(speed);
+        if(enemy.PlayerDistance > stopDistance) {
+            flipTimer += Time.deltaTime;
+            if (flipTimer >= flipCooldown) {
+                enemy.LookAtTarget();
+                flipTimer = 0;
+            }
+
+            enemy.SetSpeed(speed);
+        }
+        else {
+            enemy.SetSpeed(0);
+        }
     }
 }
