@@ -97,21 +97,24 @@ public class EnemyComponent : MonoBehaviour {
 
         Vector2 dir = GetDirection();
         Debug.DrawRay(groundPoint.position, Vector2.down * margin);
-        Debug.DrawRay(wallPoint.position, dir * margin);
+        //Debug.DrawRay(wallPoint.position, dir * margin);
         RaycastHit2D groundHit = Physics2D.Raycast(groundPoint.position, Vector2.down, margin, layerMask);
-        RaycastHit2D wallHit = Physics2D.Raycast(wallPoint.position, dir, margin, layerMask);
+        //RaycastHit2D wallHit = Physics2D.Raycast(wallPoint.position, dir, margin, layerMask);
 
         if (groundHit == false)
         {
+            Debug.Log("no ground"); 
             setVelocityX(0);
         }
+        /*
         else if (wallHit == true && !wallHit.collider.CompareTag("Player"))
         {
             setVelocityX(0);
         }
+        */
         else
         {
-            setVelocityX(speed * (facingRight ? 1: -1)); 
+            setVelocityX(speed * (facingRight ? 1: -1));
         }
     }
 
