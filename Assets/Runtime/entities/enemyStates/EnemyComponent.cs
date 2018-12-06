@@ -37,6 +37,7 @@ public class EnemyComponent : MonoBehaviour {
     }
 
     // flags 
+    public bool grounded = true; 
     private bool facingRight;
     public bool FacingRight {
         get {
@@ -63,7 +64,9 @@ public class EnemyComponent : MonoBehaviour {
 
     void Update()
     {
-        Vector2 newVelocity = this.controller.Velocity + Physics2D.gravity * Time.deltaTime;
+        Vector2 newVelocity = grounded ? 
+            this.controller.Velocity + Physics2D.gravity * Time.deltaTime :
+            this.controller.Velocity;
         this.controller.Move(newVelocity * Time.deltaTime);
     }
 
@@ -104,7 +107,7 @@ public class EnemyComponent : MonoBehaviour {
         if (groundHit == false)
         {
             Debug.Log("no ground"); 
-            setVelocityX(0);
+            SetVelocityX(0);
         }
         /*
         else if (wallHit == true && !wallHit.collider.CompareTag("Player"))
@@ -114,12 +117,17 @@ public class EnemyComponent : MonoBehaviour {
         */
         else
         {
-            setVelocityX(speed * (facingRight ? 1: -1));
+            SetVelocityX(speed * (facingRight ? 1: -1));
         }
     }
 
-    private void setVelocityX(float speed)
+    public void SetVelocityX(float speed)
     {
         this.controller.Velocity.x = speed; 
+    }
+
+    public void SetVelocityY(float speed)
+    {
+        this.controller.Velocity.y = speed;
     }
 }

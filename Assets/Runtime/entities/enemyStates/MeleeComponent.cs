@@ -12,7 +12,7 @@ public class MeleeComponent : MonoBehaviour {
         get
         {
             return Mathf.Abs(enemy.PlayerDeltaX) <= meleeRange &&
-                Mathf.Abs(enemy.PlayerDeltaY) <= meleeRange/2;
+                Mathf.Abs(enemy.PlayerDeltaY) <= meleeRange;
         }
     }
 
