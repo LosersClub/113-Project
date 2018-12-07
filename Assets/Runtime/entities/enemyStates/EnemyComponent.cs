@@ -106,7 +106,6 @@ public class EnemyComponent : MonoBehaviour {
 
         if (groundHit == false)
         {
-            Debug.Log("no ground"); 
             SetVelocityX(0);
         }
         /*
