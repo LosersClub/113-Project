@@ -26,9 +26,7 @@ public class ChaseComponent : MonoBehaviour {
 	}
 	
 	void Update () {
-        if (enemy.inAction) return; 
-
-        if(this.WithinStopDistance()) {
+        if (enemy.inAction || this.WithinStopDistance()) {
             enemy.SetSpeed(0);
         }
         else {
