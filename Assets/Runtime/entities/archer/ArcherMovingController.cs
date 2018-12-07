@@ -15,7 +15,9 @@ public class ArcherMovingController : MonoBehaviour, IArcherFireChecker {
   }
   
   void Update () {
-    this.enemyComponent.LookAtTarget();
+    if(this.enemyComponent.inAction) {
+      this.enemyComponent.LookAtTarget();
+    }
   }
 
   public bool CanFire() {
