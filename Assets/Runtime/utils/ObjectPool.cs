@@ -1,39 +1,24 @@
 ﻿using UnityEngine;
-using System;
-
-public class MonoObjectPool<I> : MonoBehaviour where I : PoolItem<I>, new() {
-  public GameObject prefab;
-  public int capacity;
-  public bool fill = true;
-
-  private ObjectPool<I> pool;
-
-  private void Start() {
-    this.pool = new ObjectPool<I>(this.prefab, this.capacity, this.fill);
-    this.pool.OnCreate += SetParent;
-  }
-
-  private void SetParent(I item) {
-    item.instance.transform.SetParent(transform);
-  }
-}
 
 public class ObjectPool<I> where I : PoolItem<I>, new() {
   private const int DEFAULT_CAPACITY = 10;
   private readonly GameObject prefab;
+  private readonly Transform parent;
   private readonly int capacity;
   public delegate void CreateEvent(I item);
 
   private int size = 0;
   private I last = null;
   private I inactive = null;
+  private I head = null;
 
-  public ObjectPool(GameObject prefab, bool fill = false) : this(prefab, DEFAULT_CAPACITY) { }
-  public ObjectPool(GameObject prefab, int capacity, bool fill = false) {
+  public ObjectPool(GameObject prefab, bool fill = false, Transform parent = null) : this(prefab, DEFAULT_CAPACITY, fill, parent) { }
+  public ObjectPool(GameObject prefab, int capacity, bool fill = false, Transform parent = null) {
     this.prefab = prefab;
     this.capacity = capacity;
+    this.parent = parent;
 
-    this.inactive = this.last = this.AddNode(this.CreateItem());
+    this.head = this.inactive = this.last = this.CreateItem();
     this.size = 1;
     if (fill) {
       for (int i = 1; i < this.capacity; i++) {
@@ -50,6 +35,7 @@ public class ObjectPool<I> where I : PoolItem<I>, new() {
   #endregion
 
   private I AddNode(I node) {
+    node.prev = this.last;
     return this.last = this.last.next = node;
   }
 
@@ -62,8 +48,10 @@ public class ObjectPool<I> where I : PoolItem<I>, new() {
     size++;
     I item = new I();
     item.instance = GameObject.Instantiate(this.prefab);
+    item.instance.transform.parent = this.parent;
     item.pool = this;
     if (this.OnCreate != null) {
+      Debug.Log("Called");
       this.OnCreate(item);
     }
     item.SetReferences();
@@ -74,7 +62,7 @@ public class ObjectPool<I> where I : PoolItem<I>, new() {
   public I Pop() {
     I item = null;
     if (this.inactive == null) {
-      item = this.CreateItem();
+      item = this.AddNode(this.CreateItem());
     } else {
       item = this.inactive;
       this.inactive = (I)this.inactive.next;
@@ -85,15 +73,32 @@ public class ObjectPool<I> where I : PoolItem<I>, new() {
 
   public void Return(I item) {
     item.Sleep();
-    this.AddNode(item).next = null;
+    if (item.prev != null) {
+      item.prev.next = item.next;
+    }
+    if (item.next != null) {
+      item.next.prev = item.prev;
+    }
+    if (item == head) {
+      head = item.next;
+    }
+    item.prev = this.AddNode(item).next = null;
     if (this.inactive == null) {
       this.inactive = this.last;
+    }
+  }
+
+  public void ReturnAll() {
+    I next = null;
+    for (I node = this.head; node != null && node != inactive; node = next) {
+      next = node.next;
+      Return(node);
     }
   }
 }
 
 public abstract class PoolItem<I> where I : PoolItem<I>, new() {
-  public I next;
+  public I prev, next;
   public ObjectPool<I> pool;
   public GameObject instance;
 
@@ -102,6 +107,6 @@ public abstract class PoolItem<I> where I : PoolItem<I>, new() {
   public abstract void WakeUp();
 
   public virtual void Return() {
-
+    this.pool.Return((I)this);
   }
 }
