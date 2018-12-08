@@ -1,85 +1,43 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
 
-	public float damping = 4f; 
-	public Animator transitionAnim; 
-	
-	
-	private BoxCollider2D cameraBox; 
-	private Transform player; 
-	private BoxCollider2D currentBoundary; 
-	private bool transitioning = false; 
-	
+  public float damping = 4f;
+  [Range(0.5f, 1f)]
+  public float moveDist = 0.75f;
+  [Range(0f, 1f)]
+  public float offset = 0.5f;
 
-	// Use this for initialization
-	void Start () {
-		cameraBox = GetComponent<BoxCollider2D>();
-		player = GameManager.Player.transform; 
-		currentBoundary = GameObject.Find("Boundary").GetComponent<BoxCollider2D>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		AspectRatioBoxChange(); 
-		FollowPlayer(); 
-	}
-	
-	void AspectRatioBoxChange() {
-		// Debug.Log(Camera.main.aspect); 
-		// 16:10 
-		if (Camera.main.aspect >= (1.575f) && Camera.main.aspect < 1.7f) {
-			cameraBox.size = new Vector2 (25.5f, 16f);
-		}
-		// 16:9 
-		else if (Camera.main.aspect >= (1.7f) && Camera.main.aspect < 1.8f) {
-			cameraBox.size = new Vector2 (28.5f, 16f);
-		} 
-		// 5:4
-		else if (Camera.main.aspect >= (1.25f) && Camera.main.aspect < 1.3f) {
-			cameraBox.size = new Vector2 (20f, 16f);
-		}
-		// 4:3 
-		else if (Camera.main.aspect >= (1.3f) && Camera.main.aspect < 1.4f) {
-			cameraBox.size = new Vector2 (21.25f, 16f);
-		}
-		// 3:2
-		else if (Camera.main.aspect >= (1.5f) && Camera.main.aspect < 1.6f) {
-			cameraBox.size = new Vector2 (24f, 16f);
-		}
-		
-		// change else if to if?? 
-	}
-	
-	void FollowPlayer() {
-		//  exit function if no active boundary  
-		if (!GameObject.Find("Boundary") || transitioning) return; 
-		
-		BoxCollider2D newBoundary = GameObject.Find("Boundary").GetComponent<BoxCollider2D>();
-		Vector3 newPosition = new Vector3 (	Mathf.Clamp(player.position.x, newBoundary.bounds.min.x + cameraBox.size.x / 2, newBoundary.bounds.max.x - cameraBox.size.x / 2),
-									Mathf.Clamp(player.position.y, newBoundary.bounds.min.y + cameraBox.size.y / 2, newBoundary.bounds.max.y - cameraBox.size.y / 2),
-									transform.position.z); 
+  private Transform player;
+  private LevelManager levelManager;
+  private Vector2 cameraSize;
 
-		// when player steps into new boundary 
-		if (newBoundary != currentBoundary) { 
-			transitioning = true; 
-			transitionAnim.SetTrigger("exit"); 
-			StartCoroutine(WaitForAnimation(newPosition)); 
-		}
-		else transform.position = Vector3.Lerp(transform.position, newPosition, damping * Time.deltaTime); 
-		currentBoundary = newBoundary; 
-	}
-	
-	IEnumerator WaitForAnimation(Vector3 newPosition)
-    {	
-		if(transitionAnim) 
-			do { 
-				yield return null; 
-			} while (!transitionAnim.GetCurrentAnimatorStateInfo(0).IsName("fade_in")); 
+  private void Start() {
+    this.cameraSize = new Vector2(Camera.main.aspect * Camera.main.orthographicSize * 2,
+        Camera.main.orthographicSize * 2);
+    player = GameManager.Player.transform;
+    this.levelManager = GameManager.LevelManager;
+  }
 
-		transform.position = newPosition; 
-		transitioning = false; 		
-    }
+  private void Update() {
+    this.FollowPlayer();
+  }
+
+  private void FollowPlayer() {
+    float leftDist = 1f - moveDist;
+    Vector3 newPosition = new Vector3(
+      Mathf.Clamp(this.player.position.x, this.cameraSize.x * leftDist - this.offset,
+          this.levelManager.Active.Width - this.cameraSize.x * leftDist - this.offset),
+      Mathf.Clamp(this.player.position.y, this.cameraSize.y * leftDist - this.offset,
+          this.levelManager.Active.Height - this.cameraSize.y * leftDist - this.offset),
+      this.transform.position.z);
+
+    Vector3 point = Camera.main.WorldToViewportPoint(newPosition);
+    Vector3 left = Camera.main.ViewportToWorldPoint(new Vector3(leftDist, leftDist, point.z));
+    Vector3 right = Camera.main.ViewportToWorldPoint(new Vector3(moveDist, moveDist, point.z));
+    this.transform.position += new Vector3(
+        point.x <= leftDist ? newPosition.x - left.x : point.x >= moveDist ? newPosition.x - right.x : 0f,
+        point.y <= leftDist ? newPosition.y - left.y : point.y >= moveDist ? newPosition.y - right.y : 0f,
+        point.z);
+  }
 }
