@@ -8,6 +8,8 @@ public class GameManager : SingletonMonoBehavior<GameManager> {
   [SerializeField]
   private Player player;
   private CameraShake cameraShake;
+  private LoadingScreen loadingScreen;
+  private LevelManager levelManager;
 
   // protected constructor to enforce use of singleton instance:
   protected GameManager() {}
@@ -19,6 +21,10 @@ public class GameManager : SingletonMonoBehavior<GameManager> {
       Bindings.Initialize();
     }
     this.cameraShake = this.GetComponent<CameraShake>();
+    this.loadingScreen = Camera.main.GetComponent<LoadingScreen>();
+    this.levelManager = this.GetComponent<LevelManager>();
+
+    Debug.Log(2 * Camera.main.orthographicSize + " " + Camera.main.aspect * Camera.main.orthographicSize * 2);
   }
 
   private void Update() {
@@ -50,6 +56,18 @@ public class GameManager : SingletonMonoBehavior<GameManager> {
   public static CameraShake CameraShake {
     get {
       return GameManager.Instance.cameraShake;
+    }
+  }
+
+  public static LoadingScreen LoadingScreen {
+    get {
+      return GameManager.Instance.loadingScreen;
+    }
+  }
+
+  public static LevelManager LevelManager {
+    get {
+      return GameManager.Instance.levelManager;
     }
   }
   #endregion
