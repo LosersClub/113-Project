@@ -11,8 +11,8 @@ public class MeleeComponent : MonoBehaviour {
     {
         get
         {
-            return Mathf.Abs(enemy.deltaX) <= meleeRange && 
-                Mathf.Abs(enemy.deltaY) <= meleeRange/2;
+            return Mathf.Abs(enemy.PlayerDeltaX) <= meleeRange &&
+                Mathf.Abs(enemy.PlayerDeltaY) <= meleeRange;
         }
     }
 
@@ -36,21 +36,22 @@ public class MeleeComponent : MonoBehaviour {
     {
         if (enemy.inAction) return; 
 
-        enemy.inAction = true; 
-        enemy.anim.SetTrigger("attack");
+        enemy.inAction = true;
+        enemy.SetSpeed(0);
+        enemy.Anim.SetTrigger("attack");
         StartCoroutine(WaitForAnimation("Attack"));
 
     }
 
     IEnumerator WaitForAnimation(string name)
     {
-        if (enemy.anim)
+        if (enemy.Anim)
             do
             {
                 yield return null;
-            } while (!enemy.anim.GetCurrentAnimatorStateInfo(0).IsName(name));
+            } while (!enemy.Anim.GetCurrentAnimatorStateInfo(0).IsName(name));
 
-        meleeAttack.HorizontalHit(enemy.facingRight);
+        meleeAttack.HorizontalHit(enemy.FacingRight);
         enemy.inAction = false; 
     }
 

@@ -6,13 +6,13 @@ public class DashComponent : MonoBehaviour {
     private EnemyComponent enemy;
     private ColliderDamageDealer cdd;
     private float dashTimer;
-    private float dashCooldown = 3f;
+    private float dashCooldown = 4f;
     private bool inDashRange
     {
         get
         {
-            return Mathf.Abs(enemy.deltaX) <= dashRange && 
-                Mathf.Abs(enemy.deltaY) <= dashRange/2;
+            return Mathf.Abs(enemy.PlayerDeltaX) <= dashRange &&
+                Mathf.Abs(enemy.PlayerDeltaY) <= dashRange/2;
         }
     }
 
@@ -30,8 +30,7 @@ public class DashComponent : MonoBehaviour {
     }
 
     void Update () {
-        if (dashing)
-            enemy.Move(dashSpeed); 
+        if (dashing) enemy.SetSpeed(dashSpeed);
 
         dashTimer += Time.deltaTime; 
         if (inDashRange && dashTimer >= dashCooldown)
@@ -46,32 +45,33 @@ public class DashComponent : MonoBehaviour {
         if (enemy.inAction) return; 
 
         enemy.inAction = true;
-        enemy.anim.SetTrigger("charge");
+        enemy.SetSpeed(0);
+        enemy.Anim.SetTrigger("charge");
         StartCoroutine(WaitForAnimation("Dash")); 
     }
 
     IEnumerator WaitForAnimation(string name)
     {
-        if (enemy.anim)
+        if (enemy.Anim)
             do
             {
                 yield return null;
-            } while (!enemy.anim.GetCurrentAnimatorStateInfo(0).IsName(name));
+            } while (!enemy.Anim.GetCurrentAnimatorStateInfo(0).IsName(name));
 
         StartCoroutine(DashCoroutine());
     }
 
     IEnumerator DashCoroutine()
     {
-        //enemy.anim.SetTrigger("dash");
+        //enemy.Anim.SetTrigger("dash");
         yield return new WaitForSeconds(this.dashPause);    
 
-        dashing = true;
+        dashing = true;        
         float temp = cdd.Damage;
         //cdd.Damage = temp * damageMultiplier; 
         yield return new WaitForSeconds(this.dashDistance / this.dashSpeed);
         //cdd.Damage = temp; 
-        dashing = false; 
+        dashing = false;
 
         yield return new WaitForSeconds(this.dashPause);
         enemy.inAction = false; 

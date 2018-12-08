@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyComponent))]
 public class ChaseComponent : MonoBehaviour {
     private EnemyComponent enemy;
     private float flipTimer;
@@ -13,29 +14,33 @@ public class ChaseComponent : MonoBehaviour {
             return UnityEngine.Random.Range(.20f, 1);
         }
     }
-    public float speed = 3f;
+    [SerializeField]
+    private float speed = 3f;
+
+    // Stop chasing if within this distance of player. If 0, always chase:
+    [SerializeField]
+    private float stopDistance = 0f;
 
     void Start () {
         enemy = GetComponent<EnemyComponent>();
 	}
 	
 	void Update () {
-        if (enemy.inAction) return; 
-
-        flipTimer += Time.deltaTime;
-        if (flipTimer >= flipCooldown)
-        {
-            enemy.LookAtTarget();
-            flipTimer = 0; 
+        if (enemy.inAction || this.WithinStopDistance()) {
+            enemy.SetSpeed(0);
         }
-        Vector2 dir = enemy.GetDirection();
+        else {
+            flipTimer += Time.deltaTime;
+            if (flipTimer >= flipCooldown) {
+                enemy.LookAtTarget();
+                flipTimer = 0;
+            }
 
-        enemy.Move(speed); 
-	}
+            enemy.SetSpeed(speed);
+        }
+    }
 
-    void Move(float speed)
-    {
-        Animator anim = enemy.anim;
-        transform.Translate(enemy.GetDirection() * speed * Time.deltaTime);
+    public bool WithinStopDistance() {
+        return this.enemy.PlayerDistance <= stopDistance;
     }
 }

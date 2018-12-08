@@ -2,44 +2,71 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MovementController))]
 public class EnemyComponent : MonoBehaviour {
     private MovementController controller;
 
-    public Animator anim;
-    public float deltaX
+    [SerializeField]
+    private Animator anim;
+
+    // Convenience property for other components:
+    public Animator Anim {
+        get {
+            return this.anim;
+        }
+    }
+
+    public float PlayerDeltaX
     {
         get
         {
             return GameManager.Player.transform.position.x - transform.position.x; 
         }
     }
-    public float deltaY
+    public float PlayerDeltaY
     {
         get
         {
             return GameManager.Player.transform.position.y - transform.position.y;
         }
     }
+    public float PlayerDistance {
+        get {
+            return (GameManager.Player.transform.position - transform.position).magnitude;
+        }
+    }
 
     // flags 
-    public bool facingRight;
+    public bool grounded = true; 
+    private bool facingRight;
+    public bool FacingRight {
+        get {
+            return this.facingRight;
+        }
+    }
     // mutex allowing one action at a time 
+    [System.NonSerialized]
     public bool inAction; 
 
     // movement transforms 
-    public Transform groundPoint;
-    public Transform wallPoint;
-    public float margin = 1f; 
+    [SerializeField]
+    private Transform groundPoint;
+    [SerializeField]
+    private Transform wallPoint;
+    [SerializeField]
+    private float margin = 1f;
 
     void Start () {
-        controller = GetComponent<MovementController>(); 
+        controller = GetComponent<MovementController>();
         facingRight = true;
         inAction = false; 
 	}
 
     void Update()
     {
-        Vector2 newVelocity = this.controller.Velocity + Physics2D.gravity * Time.deltaTime;
+        Vector2 newVelocity = grounded ? 
+            this.controller.Velocity + Physics2D.gravity * Time.deltaTime :
+            this.controller.Velocity;
         this.controller.Move(newVelocity * Time.deltaTime);
     }
 
@@ -51,16 +78,21 @@ public class EnemyComponent : MonoBehaviour {
 
     public void LookAtTarget()
     {
-        if (deltaX < 0 && facingRight || deltaX > 0 && !facingRight) Flip();
+        if (PlayerDeltaX < 0 && facingRight || PlayerDeltaX > 0 && !facingRight) Flip();
     }
 
     public void Flip()
     {
         facingRight = !facingRight;
+
+        // Changes scale so that groundPoint and wallPoint also face correct direction:
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
     }
 
-    public void Move(float speed)
+    /// <summary>
+    /// Sets speed to argument EXCEPT when in midair or would collide with wall.
+    /// </summary>
+    public void SetSpeed(float speed)
     {
         int impassableMask = LayerMask.GetMask("Impassable");
         int platformMask = LayerMask.GetMask("Platform");
@@ -68,20 +100,33 @@ public class EnemyComponent : MonoBehaviour {
 
         Vector2 dir = GetDirection();
         Debug.DrawRay(groundPoint.position, Vector2.down * margin);
-        Debug.DrawRay(wallPoint.position, dir * margin);
+        //Debug.DrawRay(wallPoint.position, dir * margin);
         RaycastHit2D groundHit = Physics2D.Raycast(groundPoint.position, Vector2.down, margin, layerMask);
-        RaycastHit2D wallHit = Physics2D.Raycast(wallPoint.position, dir, margin, layerMask);
+        //RaycastHit2D wallHit = Physics2D.Raycast(wallPoint.position, dir, margin, layerMask);
 
         if (groundHit == false)
         {
-            //Debug.Log("no ground");
+            SetVelocityX(0);
         }
+        /*
         else if (wallHit == true && !wallHit.collider.CompareTag("Player"))
         {
-            //Debug.Log("wall");
+            setVelocityX(0);
         }
+        */
         else
-            transform.Translate(GetDirection() * speed * Time.deltaTime);
+        {
+            SetVelocityX(speed * (facingRight ? 1: -1));
+        }
     }
 
+    public void SetVelocityX(float speed)
+    {
+        this.controller.Velocity.x = speed; 
+    }
+
+    public void SetVelocityY(float speed)
+    {
+        this.controller.Velocity.y = speed;
+    }
 }
