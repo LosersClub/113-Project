@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 61039669546219428}
   - component: {fileID: 114243188050786274}
   - component: {fileID: 114036807930343372}
+  - component: {fileID: 114693453455313180}
   m_Layer: 12
   m_Name: Chalice
   m_TagString: Untagged
@@ -111,6 +112,34 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: DamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &114693453455313180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1057642611051618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8b45bed6a98924fa5d62a6a2154729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  disableDamageAfterHit: 0
+  ignoreInvulnerability: 0
+  hittableLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  OnDamageHit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: DamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnNoDamageHit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: NonDamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  UseBaseCollider: 1
+  damageCollider: {fileID: 0}
 --- !u!212 &212405891212774962
 SpriteRenderer:
   m_ObjectHideFlags: 1
