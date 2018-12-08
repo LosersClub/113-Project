@@ -107,7 +107,7 @@ public class Player : MonoBehaviour {
   private Animator animator;
 
   private float jumpTimer = 0f;
-  private Vector2 movement = Vector2.zero;
+  public Vector2 movement = Vector2.zero;
   private bool jumping = false;
   private bool meleeHeld = false;
   private bool shootHeld = false;
@@ -118,6 +118,7 @@ public class Player : MonoBehaviour {
   private bool canShoot = true;
   [HideInInspector]
   public bool shouldPlayLandParticles = false;
+  private bool inputDisabled = true;
 
   #region Animator Variables
   private readonly int horizontalSpeedParam = Animator.StringToHash("HorizontalSpeed");
@@ -128,6 +129,7 @@ public class Player : MonoBehaviour {
   private readonly int dashingParam = Animator.StringToHash("Dashing");
   private readonly int meleeParam = Animator.StringToHash("Melee");
   private readonly int alternatorParam = Animator.StringToHash("Alternator");
+  private readonly int locomotionParam = Animator.StringToHash("Locomotion");
 
   private readonly int eyeColorId = Shader.PropertyToID("_OutputColor");
   #endregion
@@ -356,6 +358,20 @@ public class Player : MonoBehaviour {
     this.canDash = true;
   }
 
+  public IEnumerator EnterRoom(float dist, float pause) {
+    this.inputDisabled = true;
+    this.controller.Velocity = Vector2.zero;
+    float duration = dist / this.runSpeed;
+    this.animator.Play(this.locomotionParam);
+    while (duration > 0) {
+      duration -= Time.deltaTime;
+      this.movement.x = 1;
+      yield return null;
+    }
+    yield return new WaitForSeconds(pause);
+    this.inputDisabled = false;
+  }
+
   private void BounceOnDownHit(DamageDealer dealer, DamageTaker taker) {
     if (((MeleeDamageDealer)dealer).HitDirection == Vector2.down) {
       this.controller.Velocity.y = Mathf.Sqrt(2f * this.meleeBounceHeight * this.gravity);
@@ -399,7 +415,7 @@ public class Player : MonoBehaviour {
     Vector2 origin = new Vector2(bounds.center.x, bounds.min.y - this.controller.Inset);
     Rays.DrawRay(origin, Vector2.down, this.vfx.landParticlePlayDistance, Color.blue);
     if (this.shouldPlayLandParticles && this.controller.Velocity.y < 0 && 
-      Rays.IsHitting(origin, Vector2.down, this.vfx.landParticlePlayDistance, this.controller.Ground)) {
+      Rays.IsHitting(origin, Vector2.down, this.vfx.landParticlePlayDistance, this.controller.GroundOrPlatform)) {
       this.vfx.landParticle.Play();
       this.shouldPlayLandParticles = false;
     }
@@ -407,6 +423,10 @@ public class Player : MonoBehaviour {
 
   #region Input
   public void Move(float x, float y) {
+    if (inputDisabled) {
+      return;
+    }
+
     if (Mathf.Abs(x) > 0.3f) {
       this.movement.x += x;
     }
@@ -420,18 +440,30 @@ public class Player : MonoBehaviour {
   }
 
   public void Shoot() {
+    if (inputDisabled) {
+      return;
+    }
     this.shootHeld = true;
   }
 
   public void Jump() {
+    if (inputDisabled) {
+      return;
+    }
     this.jumping = true;
   }
 
   public void Melee() {
+    if (inputDisabled) {
+      return;
+    }
     this.meleeHeld = true;
   }
 
   public void Dash() {
+    if (inputDisabled) {
+      return;
+    }
     this.dashHeld = true;
   }
   #endregion
