@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114243188050786274}
   - component: {fileID: 114036807930343372}
   - component: {fileID: 114693453455313180}
+  - component: {fileID: 114557549837785508}
   m_Layer: 12
   m_Name: Chalice
   m_TagString: Untagged
@@ -112,6 +113,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: DamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &114557549837785508
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1057642611051618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b7afb02b4380c14fae228868e0f30f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114693453455313180
 MonoBehaviour:
   m_ObjectHideFlags: 1
