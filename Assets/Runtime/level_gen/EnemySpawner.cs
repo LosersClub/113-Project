@@ -48,27 +48,23 @@ public class EnemySpawner {
       Vector2 location = Vector2.zero;
       if (Random.value <= 0.85f) {
         Chunk spawnChunk = room.Chunks[Random.Range(0, room.Chunks.Count)];
-        bool checkedAll = false;
-        while (!checkedAll) {
-          checkedAll = true;
-          foreach (Chunk c in room.Chunks) {
-            if (System.Object.ReferenceEquals(c, spawnChunk)) {
-              continue;
-            }
+        foreach (Chunk c in room.Chunks) {
+          if (c.Equals(spawnChunk)) {
+            continue;
+          }
 
-            if ((spawnChunk.start.x > c.start.x && spawnChunk.start.x < c.end.x) ||
-                 (spawnChunk.end.x < c.end.x && spawnChunk.end.x > c.start.x)) {
-              if ((c.end.y > spawnChunk.start.y && c.end.y - spawnChunk.start.y <= 1) ||
-                  (spawnChunk.start.y > c.end.y && c.start.y > spawnChunk.start.y)) {
-                spawnChunk = c;
-                checkedAll = false;
-                break;
-              }
+          if ((c.start.x >= spawnChunk.start.x && c.start.x <= spawnChunk.end.x) ||
+               (c.end.x <= spawnChunk.end.x && c.end.x >= spawnChunk.start.x)) {
+            Debug.Log("Happened");
+            if ((c.end.y >= spawnChunk.start.y && c.end.y - spawnChunk.start.y <= 1) ||
+                (spawnChunk.start.y >= c.end.y && c.start.y >= spawnChunk.start.y)) {
+              spawnChunk = c;
+              break;
             }
           }
         }
         location = new Vector2(Random.Range(spawnChunk.start.x, spawnChunk.end.x + 1),
-            spawnChunk.start.y + e.pool.prefab.GetComponent<SpriteRenderer>().bounds.extents.y + 0.5f);
+            spawnChunk.start.y + Mathf.Abs(e.pool.prefab.GetComponent<SpriteRenderer>().bounds.extents.y) + 0.5f);
 
       } else if (room.Platforms.Count > 0) {
         Platform spawnPlatform = room.Platforms[Random.Range(0, room.Platforms.Count)];
@@ -76,10 +72,6 @@ public class EnemySpawner {
             spawnPlatform.start.y + e.pool.prefab.GetComponent<SpriteRenderer>().bounds.extents.y + 0.5f);
       }
       difficulty -= e.difficulty;
-      // TODO: Need to find root cause rather than hack solution
-      if (location.y < 2f) {
-        location.y = 5f;
-      }
       spawns.Enqueue(new EnemySpawn(e, location));
     }
     this.level.StartCoroutine(this.CheckDifficulty(spawns, this.activeDifficultyRange.Random()));
