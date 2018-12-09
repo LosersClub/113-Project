@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 /// <summary>
@@ -10,6 +11,7 @@ public class ParticleDamageDealer : DamageDealer {
   private ParticleSystem particleSystemComponent;
 
   private Collider2D lastHit;
+  private bool alreadyHit = false;
 
   public override Collider2D LastHit {
     get {
@@ -33,11 +35,18 @@ public class ParticleDamageDealer : DamageDealer {
   }
 
   void OnParticleCollision(GameObject other) {
-    if (!this.CanDealDamage) {
+    if (!this.CanDealDamage || this.alreadyHit) {
       return;
     }
 
     this.lastHit = other.GetComponent<Collider2D>();
     this.PerformHit(this.lastHit.GetComponent<DamageTaker>());
+    this.alreadyHit = true;
+    StartCoroutine(EnableHitOnStopCoroutine());
+  }
+
+  private IEnumerator EnableHitOnStopCoroutine() {
+    yield return new WaitUntil(() => !this.particleSystemComponent.isPlaying);
+    this.alreadyHit = false;
   }
 }
