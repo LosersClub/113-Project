@@ -26,6 +26,10 @@ public class FlashOnHit : MonoBehaviour {
     this.taker.OnTakeDamage.AddListener(this.Flash);
   }
 
+  private void OnEnable() {
+    this.material.SetFloat(flashAmountId, 0f);
+  }
+
   private void Flash(DamageDealer dealer, DamageTaker taker) {
     this.material.SetFloat(flashAmountId, this.maxFlashAmount);
     this.material.SetColor(flashColorId, this.flashColor);
