@@ -342,8 +342,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravity: 80
   runSpeed: 8
-  crouchModifier: 0.8
-  meleeModifier: 0.2
+  crouchModifier: 1
+  meleeModifier: 1
   groundDamping: 40
   airDamping: 20
   minJumpHeight: 1
