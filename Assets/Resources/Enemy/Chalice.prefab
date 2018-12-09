@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 198243905705494350}
   - component: {fileID: 199490651684996578}
   - component: {fileID: 114404711367931892}
+  - component: {fileID: 114713785267675218}
   m_Layer: 0
   m_Name: BeamEmitter
   m_TagString: Untagged
@@ -196,6 +197,32 @@ MonoBehaviour:
       PublicKeyToken=null
   UseBaseCollider: 1
   damageCollider: {fileID: 0}
+--- !u!114 &114713785267675218
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1821265816652694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ac2ca544c69555498f50eb8367546de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  disableDamageAfterHit: 0
+  ignoreInvulnerability: 0
+  hittableLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  OnDamageHit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: DamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnNoDamageHit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: NonDamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!198 &198243905705494350
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -3596,10 +3623,10 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 3
-    type: 0
-    collisionMode: 0
+    type: 1
+    collisionMode: 1
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
     multiplyColliderForceByParticleSpeed: 0
@@ -3666,7 +3693,7 @@ ParticleSystem:
     m_Bounce:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -3770,15 +3797,15 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     minKillSpeed: 0
-    maxKillSpeed: 10000
+    maxKillSpeed: 0
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 1
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -3789,7 +3816,7 @@ ParticleSystem:
     collisionShape3: {fileID: 0}
     collisionShape4: {fileID: 0}
     collisionShape5: {fileID: 0}
-    inside: 1
+    inside: 2
     outside: 0
     enter: 0
     exit: 0
