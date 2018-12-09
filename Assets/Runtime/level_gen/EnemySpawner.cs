@@ -7,8 +7,6 @@ using Random = UnityEngine.Random;
 [Serializable]
 public class EnemySpawner {
   [MinMax(1, 100)]
-  public MinMax enemiesRange = new MinMax(3, 10);
-  [MinMax(1, 100)]
   public MinMax difficultyRange = new MinMax(5, 10);
   [MinMax(1, 100)]
   public MinMax activeDifficultyRange = new MinMax(3, 5);

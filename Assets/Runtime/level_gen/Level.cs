@@ -68,9 +68,9 @@ public abstract class Level : MonoBehaviour  {
   }
 
   private IEnumerator EnterRoom() {
+    yield return this.StartCoroutine(this.LoadingScreen.FadeOut());
     this.Player.transform.position = new Vector3(this.transform.position.x - 2, this.transform.position.y + 2.5f);
     this.Player.gameObject.SetActive(true);
-    yield return this.StartCoroutine(this.LoadingScreen.FadeOut());
     yield return this.StartCoroutine(this.Player.EnterRoom(this.playerWalkDistance, this.playerPause));
     this.LevelManager.LeftWall.SetActive(true);
 
@@ -84,9 +84,9 @@ public abstract class Level : MonoBehaviour  {
     while (this.Player.transform.position.x < this.transform.position.x + this.ActiveRoom.Width) {
       yield return null;
     }
+    this.Player.gameObject.SetActive(false);
     yield return this.StartCoroutine(this.LoadingScreen.FadeIn());
     yield return new WaitForSeconds(this.pauseDuration);  
-    this.Player.gameObject.SetActive(false);
     this.UnloadRoom(this.ActiveRoom);
     this.active++;
     if (this.active < this.rooms.Length) {

@@ -155,14 +155,30 @@ public class Player : MonoBehaviour {
     for (int i = 0; i < 32; i++) {
       Physics2D.IgnoreLayerCollision(this.gameObject.layer, i);
     }
+
+    this.meleeAttack.OnDamageHit.AddListener(this.BounceOnDownHit);
+    this.damageTaker.OnTakeDamage.AddListener(this.BlinkOnHit);
   }
 
   private void Start() {
     SceneLinkedState<Player>.Initialize(this.animator, this);
     this.SetStanding();
     this.SetEyeColor(this.eyeColors.original);
-    this.meleeAttack.OnDamageHit.AddListener(this.BounceOnDownHit);
-    this.damageTaker.OnTakeDamage.AddListener(this.BlinkOnHit);
+  }
+
+  private void OnEnable() {
+    this.jumpTimer = 0f;
+    this.movement = Vector2.zero;
+    this.jumping = false;
+    this.meleeHeld = false;
+    this.shootHeld = false;
+    this.alternator = 0;
+    this.dashHeld = false;
+    this.canMelee = true;
+    this.canDash = true;
+    this.canShoot = true;
+    this.shouldPlayLandParticles = false;
+    this.controller.Velocity = Vector2.zero;
   }
 
   private void Update() {
