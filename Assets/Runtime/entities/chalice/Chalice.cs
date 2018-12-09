@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class Chalice : MonoBehaviour {
 
   [SerializeField]
   private GameObject beamEmitterObject;
 
+  private SpriteRenderer spriteRendererComponent;
+
   private BeamEmitter beamEmitterComponent;
 
   void Start () {
     Assert.IsNotNull(this.beamEmitterObject);
+
+    this.spriteRendererComponent = this.GetComponent<SpriteRenderer>();
 
     this.beamEmitterComponent = this.beamEmitterObject.GetComponent<BeamEmitter>();
     Assert.IsNotNull(this.beamEmitterComponent);
@@ -20,7 +25,11 @@ public class Chalice : MonoBehaviour {
   }
 
   void Update () {
-    if(!this.beamEmitterComponent.IsFiring) {
+    if(this.beamEmitterComponent.IsFiring) {
+      this.spriteRendererComponent.color = Color.blue;
+    }
+    else {
+      this.spriteRendererComponent.color = Color.white;
       this.AimAtPlayer();
     }
   }
