@@ -54,7 +54,7 @@ public class ObjectPool<I> where I : PoolItem<I>, new() {
       Debug.Log("Called");
       this.OnCreate(item);
     }
-    item.SetReferences();
+    item.SetReferences(this);
     item.Sleep();
     return item;
   }
@@ -102,11 +102,72 @@ public abstract class PoolItem<I> where I : PoolItem<I>, new() {
   public ObjectPool<I> pool;
   public GameObject instance;
 
-  public abstract void SetReferences();
+  public abstract void SetReferences(ObjectPool<I> pool);
   public abstract void Sleep();
   public abstract void WakeUp();
 
   public virtual void Return() {
     this.pool.Return((I)this);
+  }
+}
+
+public class GenericItem : PoolItem<GenericItem> {
+  public override void SetReferences(ObjectPool<GenericItem> pool) {
+    this.instance.AddComponent<PoolTracker>().Set(this);
+  }
+
+  public override void Sleep() {
+    this.instance.SetActive(false);
+  }
+
+  public override void WakeUp() {
+    this.instance.SetActive(true);
+  }
+}
+
+[System.Serializable]
+public class GenericPool : MonoPool<GenericItem> { }
+
+[System.Serializable]
+public class MonoPool<T> where T : PoolItem<T>, new() {
+  public GameObject prefab;
+  public int capacity;
+
+  private ObjectPool<T> pool;
+
+  public void Init(GameObject parent) {
+    this.pool = new ObjectPool<T>(this.prefab, this.capacity,
+        parent: parent.transform, fill: true);
+  }
+
+  public void Return(T item) {
+    this.pool.Return(item);
+  }
+
+  public T Pop() {
+    return this.pool.Pop();
+  }
+
+  public T Pop(Vector3 location) {
+    T item = this.pool.Pop();
+    item.instance.transform.localPosition = location;
+    return item;
+  }
+
+  public void ReturnAll() {
+    this.pool.ReturnAll();
+  }
+}
+
+public class PoolTracker : MonoBehaviour {
+  private GenericItem instance;
+
+  public PoolTracker Set(GenericItem instance) {
+    this.instance = instance;
+    return this;
+  }
+
+  public void Return() {
+    this.instance.Return();
   }
 }

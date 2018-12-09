@@ -46,8 +46,8 @@ public class Room {
   public int Width { get { return this.width; } }
   public int Height { get { return this.height; } }
   public ICollection<Tile> Tiles { get { return this.tiles.Values; } }
-  public ICollection<Chunk> Chunks { get { return this.chunks.AsReadOnly(); } }
-  public ICollection<Platform> Platforms { get { return this.platforms.AsReadOnly(); } }
+  public List<Chunk> Chunks { get { return this.chunks; } }
+  public List<Platform> Platforms { get { return this.platforms; } }
 }
 
 public struct Tile {
