@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 4947102536131786}
   - component: {fileID: 198243905705494350}
   - component: {fileID: 199490651684996578}
+  - component: {fileID: 114404711367931892}
   m_Layer: 0
   m_Name: BeamEmitter
   m_TagString: Untagged
@@ -62,7 +63,7 @@ Transform:
   - {fileID: 4947102536131786}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 38.872}
 --- !u!4 &4947102536131786
 Transform:
   m_ObjectHideFlags: 1
@@ -144,6 +145,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: DamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &114404711367931892
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1821265816652694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfedfe9eab88b0245b30c6a66144f963, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114557549837785508
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -155,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b7afb02b4380c14fae228868e0f30f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beamEmitterObject: {fileID: 1821265816652694}
 --- !u!114 &114693453455313180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -195,7 +208,7 @@ ParticleSystem:
   stopAction: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
