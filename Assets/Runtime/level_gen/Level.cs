@@ -1,15 +1,8 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections;
 using Random = UnityEngine.Random;
 
 public abstract class Level : MonoBehaviour  {
-
-  //[MinMax(28, 500)]
-  //public MinMax roomWdith = new MinMax(28, 100);
-  //[MinMax(16, 200)]
-  //public MinMax roomHeight = new MinMax(16, 50);
-
   [Header("Generation Settings")]
   public bool randomSeed = true;
   [ConditionalHide("randomSeed", inverse: true)]
@@ -73,8 +66,15 @@ public abstract class Level : MonoBehaviour  {
     this.Player.gameObject.SetActive(true);
     yield return this.StartCoroutine(this.Player.EnterRoom(this.playerWalkDistance, this.playerPause));
     this.LevelManager.LeftWall.SetActive(true);
-
-    this.enemySpawner.StartRoom(this.ActiveRoom);
+    if (!(this.ActiveRoom is MonoRoom) || ((MonoRoom)this.ActiveRoom).UseSpawner) {
+      this.enemySpawner.StartRoom(this.ActiveRoom); // TODO: Do not call if this is a manual room
+    }
+    if (this.ActiveRoom is MonoRoom) {
+      ((MonoRoom)this.ActiveRoom).StartRoom();
+      if (!((MonoRoom)this.ActiveRoom).UseBlockers) {
+        this.StartCoroutine(this.ExitRoom());
+      }
+    }
     // TODO: Level Blockers Coroutine (start player enter at same time?)
   }
 

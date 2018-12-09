@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public struct Platform {
   public Vector2 start;
   public int size;

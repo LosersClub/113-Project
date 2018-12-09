@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 
 public class Room {
@@ -25,6 +24,10 @@ public class Room {
 
   public bool TileAt(int x, int y) {
     return this.tiles.ContainsKey(Hash(x, y));
+  }
+
+  public Chunk AddGround() {
+    return this.AddChunk(new Chunk(new Vector2Int(0, 1), new Vector2Int(this.width - 1, 0)));
   }
 
   public Chunk AddChunk(Chunk chunk) {

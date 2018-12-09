@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using System;
 
+[System.Serializable]
 public struct Chunk {
   public Vector2Int start;
   public Vector2Int end;
