@@ -46,8 +46,6 @@ public class AirChaseComponent : MonoBehaviour {
                 velocityX = 0;
             }
 
-            Debug.Log(velocityX + ',' + velocityY); 
-
             enemy.SetVelocityX(velocityX);
             enemy.SetVelocityY(velocityY);
         }
