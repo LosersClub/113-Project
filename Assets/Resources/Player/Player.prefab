@@ -353,6 +353,7 @@ MonoBehaviour:
   dashCooldown: 1
   dashPause: 0.01
   bulletSpawner: {fileID: 114953059818769142}
+  maxAmmo: 5
   rangedEyeDuration: 0.5
   meleeBounceHeight: 1
   meleeDirectionZone: 0.7
@@ -381,6 +382,7 @@ MonoBehaviour:
   numBlinks: 5
   hitShakeDuration: 0.2
   hitShakeDistance: 0.2
+  currentAmount: 5
   movement: {x: 0, y: 0}
   shouldPlayLandParticles: 0
 --- !u!114 &114093224024557302

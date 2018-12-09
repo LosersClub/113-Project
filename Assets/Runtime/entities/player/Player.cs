@@ -44,6 +44,8 @@ public class Player : MonoBehaviour {
   [SerializeField]
   private PlayerBulletSpawner bulletSpawner;
   [SerializeField]
+  private float maxAmmo = 5f;
+  [SerializeField]
   private float rangedEyeDuration = 0.5f;
   [SerializeField]
   private float meleeBounceHeight = 2f;
@@ -107,6 +109,8 @@ public class Player : MonoBehaviour {
   private Animator animator;
 
   private float jumpTimer = 0f;
+  [SerializeField, ReadOnly]
+  private float currentAmount = 5f;
   public Vector2 movement = Vector2.zero;
   private bool jumping = false;
   private bool meleeHeld = false;
@@ -157,6 +161,7 @@ public class Player : MonoBehaviour {
     }
 
     this.meleeAttack.OnDamageHit.AddListener(this.BounceOnDownHit);
+    this.meleeAttack.OnDamageHit.AddListener(this.RegenRanged);
     this.damageTaker.OnTakeDamage.AddListener(this.BlinkOnHit);
   }
 
@@ -322,8 +327,9 @@ public class Player : MonoBehaviour {
   }
 
   public void CheckForRanged() {
-    if (this.shootHeld && this.canShoot && !this.damageTaker.Invulnerable) {
+    if (this.shootHeld && this.canShoot && !this.damageTaker.Invulnerable && this.currentAmount >= 1f) {
       this.canShoot = false;
+      this.currentAmount -= 1f;
       this.bulletSpawner.SpawnBullet();
       this.StartCoroutine(this.RangeEyeCoroutine());
     }
@@ -392,6 +398,24 @@ public class Player : MonoBehaviour {
     if (((MeleeDamageDealer)dealer).HitDirection == Vector2.down) {
       this.controller.Velocity.y = Mathf.Sqrt(2f * this.meleeBounceHeight * this.gravity);
     }
+  }
+
+  private bool canRegen = true;
+  private void RegenRanged(DamageDealer dealer, DamageTaker taker) {
+    if (!canRegen) {
+      return;
+    }
+    this.currentAmount += 0.5f;
+    if (this.currentAmount > this.maxAmmo) {
+      this.currentAmount = this.maxAmmo;
+    }
+    this.canRegen = false;
+    this.StartCoroutine(this.regenTimer());
+  }
+
+  private IEnumerator regenTimer() {
+    yield return new WaitForSeconds(0.5f);
+    this.canRegen = true;
   }
 
   private void BlinkOnHit(DamageDealer dealer, DamageTaker taker) {
