@@ -41,24 +41,48 @@ public class EnemySpawner {
   public void StartRoom(Room room) {
     this.enemyCount = 0;
     this.roomDifficulty = 0;
-    int difficulty = RandomFromRange(this.difficultyRange);
+    int difficulty = this.difficultyRange.Random();
     Queue<EnemySpawn> spawns = new Queue<EnemySpawn>();
     while (difficulty > 0) {
       Enemy e = enemies[Random.Range(0, this.enemies.Length)];
       Vector2 location = Vector2.zero;
       if (Random.value <= 0.85f) {
         Chunk spawnChunk = room.Chunks[Random.Range(0, room.Chunks.Count)];
+        bool checkedAll = false;
+        while (!checkedAll) {
+          checkedAll = true;
+          foreach (Chunk c in room.Chunks) {
+            if (System.Object.ReferenceEquals(c, spawnChunk)) {
+              continue;
+            }
+
+            if ((spawnChunk.start.x > c.start.x && spawnChunk.start.x < c.end.x) ||
+                 (spawnChunk.end.x < c.end.x && spawnChunk.end.x > c.start.x)) {
+              if ((c.end.y > spawnChunk.start.y && c.end.y - spawnChunk.start.y <= 1) ||
+                  (spawnChunk.start.y > c.end.y && c.start.y > spawnChunk.start.y)) {
+                spawnChunk = c;
+                checkedAll = false;
+                break;
+              }
+            }
+          }
+        }
         location = new Vector2(Random.Range(spawnChunk.start.x, spawnChunk.end.x + 1),
             spawnChunk.start.y + e.pool.prefab.GetComponent<SpriteRenderer>().bounds.extents.y + 0.5f);
-      } else {
+
+      } else if (room.Platforms.Count > 0) {
         Platform spawnPlatform = room.Platforms[Random.Range(0, room.Platforms.Count)];
         location = new Vector2(Random.Range(spawnPlatform.start.x, spawnPlatform.size + 1),
             spawnPlatform.start.y + e.pool.prefab.GetComponent<SpriteRenderer>().bounds.extents.y + 0.5f);
       }
       difficulty -= e.difficulty;
+      // TODO: Need to find root cause rather than hack solution
+      if (location.y < 2f) {
+        location.y = 5f;
+      }
       spawns.Enqueue(new EnemySpawn(e, location));
     }
-    this.level.StartCoroutine(this.CheckDifficulty(spawns, RandomFromRange(this.activeDifficultyRange)));
+    this.level.StartCoroutine(this.CheckDifficulty(spawns, this.activeDifficultyRange.Random()));
   }
 
   public void SpawnEnemy(EnemySpawn spawn) {
@@ -89,7 +113,6 @@ public class EnemySpawner {
   }
 
   private void SpawnEnemies(Queue<EnemySpawn> spawns, int target) {
-    Debug.Log(target);
     if (target <= 0) {
       return;
     }
@@ -112,6 +135,7 @@ public class EnemySpawner {
     EnemyPoolItem item = enemy.pool.Pop(location);
     DamageTaker taker = item.instance.GetComponent<DamageTaker>();
     item.instance.GetComponent<EnemyTracker>().difficulty = enemy.difficulty;
+    item.instance.GetComponent<EnemyTracker>().parent = this;
     taker.OnDie.AddListener(this.OnEnemyDie);
   }
 
@@ -121,10 +145,6 @@ public class EnemySpawner {
     this.roomDifficulty -= tracker.difficulty;
     this.enemyCount--;
     tracker.Return();
-  }
-
-  public static int RandomFromRange(MinMax range) {
-    return Random.Range(range.min, range.max + 1);
   }
 
   public struct EnemySpawn {
@@ -165,12 +185,19 @@ public class EnemySpawner {
   public class EnemyTracker : MonoBehaviour {
     private EnemyPoolItem item;
     public int difficulty;
+    public EnemySpawner parent;
 
     public EnemyTracker Set(EnemyPoolItem item) {
       this.item = item;
       return this;
     }
-    
+
+    private void Update() {
+      if (this.transform.position.y < 0) {
+        this.parent.OnEnemyDie(null, this.GetComponent<DamageTaker>());
+      }
+    }
+
     public void Return() {
       item.Return();
     }

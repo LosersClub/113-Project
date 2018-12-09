@@ -9,4 +9,8 @@ public struct MinMax {
     this.min = min;
     this.max = max;
   }
+
+  public int Random() {
+    return UnityEngine.Random.Range(this.min, this.max + 1);
+  }
 }
