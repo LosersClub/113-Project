@@ -96,4 +96,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abdef0dccc62aac41a050c8451009a8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounty: {fileID: 0}
+  bounty: {fileID: 1432649950582064, guid: eafee2d36be073f4e915953cc019f172, type: 2}
