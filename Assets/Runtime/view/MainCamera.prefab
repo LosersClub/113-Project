@@ -21,9 +21,8 @@ GameObject:
   - component: {fileID: 4279221368195140}
   - component: {fileID: 20851014824111550}
   - component: {fileID: 81265854140080140}
-  - component: {fileID: 61622920398571234}
   - component: {fileID: 114894343537153194}
-  - component: {fileID: 95274127200510034}
+  - component: {fileID: 114544448746559554}
   m_Layer: 2
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -38,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1787177620814242}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.76, y: 8.36, z: -10}
+  m_LocalPosition: {x: 13.5, y: 7.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,31 +83,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!61 &61622920398571234
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1787177620814242}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!81 &81265854140080140
 AudioListener:
   m_ObjectHideFlags: 1
@@ -116,24 +90,19 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1787177620814242}
   m_Enabled: 1
---- !u!95 &95274127200510034
-Animator:
-  serializedVersion: 3
+--- !u!114 &114544448746559554
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1787177620814242}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9e0ac2dbb9b02724ab1980297587c27b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b66c94c208af2345885d0c047c63971, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transition: {fileID: 2100000, guid: 7624d611bd330e44b80ef65275598a16, type: 2}
+  cutoffDuration: 1
 --- !u!114 &114894343537153194
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -145,5 +114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d8337ae7613c4d4cb0623ae28ff40cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damping: 4
-  transitionAnim: {fileID: 0}
+  damping: 0.15
+  moveDist: 0.625
+  offset: 0.5
