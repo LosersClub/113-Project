@@ -22,18 +22,38 @@ public class Bounty : MonoBehaviour {
   public ParticleSystem slash;
   public Vector2 scythePosition;
   public GameObject scythe;
+  public GameObject spike;
+  public float spikeSpacing = 4.5f;
 
+  public float burrowSpeed = 5f;
+  public float burrowOutSpeed = 10f;
+  public float burrowDuration = 3.5f;
+
+  public int burrowCooldown = 3;
+  public int seedsCooldown = 3;
+  public float burrowProb = 0.50f;
+  public float seedsProb = 0.25f;
+
+  public BoxCollider2D hitbox;
+  
   private MovementController movement;
   private MeleeDamageDealer meleeDealer;
   private Animator animator;
   private SpriteRenderer sprite;
   private Player player;
+  private GameObject spikeManager;
 
   private bool active = true; // TODO: false
+  private bool inGround = false;
+  private int curBurrowCooldown = 0;
+  private int curSeedsCooldown = 0;
   private int meleeCount = 0;
 
   #region Animator Variables
   private readonly int meleeParam = Animator.StringToHash("melee");
+  private readonly int seedsParam = Animator.StringToHash("seeds");
+  private readonly int burrowParam = Animator.StringToHash("burrow");
+  private readonly int endBurrowParam = Animator.StringToHash("endBurrow");
   private readonly int dashParam = Animator.StringToHash("dashFinished");
   private readonly int endThrowParam = Animator.StringToHash("endThrow");
   private readonly int killParam = Animator.StringToHash("kill");
@@ -46,14 +66,27 @@ public class Bounty : MonoBehaviour {
     this.meleeDealer = this.GetComponent<MeleeDamageDealer>();
     this.sprite = this.GetComponent<SpriteRenderer>();
     this.animator = this.GetComponent<Animator>();
+    this.hitbox = this.GetComponent<BoxCollider2D>();
     this.player = GameManager.Player;
+
+    this.spikeManager = new GameObject("Spike Manager");
+    this.spikeManager.transform.position = Vector3.zero;
+
+    for (int i = 0; i < 35/this.spikeSpacing; i++) {
+      GameObject newSpike = Instantiate(this.spike);
+      newSpike.transform.SetParent(this.spikeManager.transform);
+      newSpike.transform.position = new Vector2(2.5f + i * this.spikeSpacing, 1.5f);
+      newSpike.SetActive(false);
+    }
   }
 
   // TODO: Coroutine to active when player is within range
 
   private void Update() {
-    this.movement.Velocity.y -= this.gravity * Time.deltaTime;
-    this.movement.Move(this.movement.Velocity * Time.deltaTime);
+    if (!inGround) {
+      this.movement.Velocity.y -= this.gravity * Time.deltaTime;
+      this.movement.Move(this.movement.Velocity * Time.deltaTime);
+    }
   }
 
   public void UpdateFacing() {
@@ -67,6 +100,12 @@ public class Bounty : MonoBehaviour {
 
   public void Dash() {
     this.StartCoroutine(this.DashCoroutine());
+  }
+
+  public void Seeds() {
+    foreach (Transform child in this.spikeManager.transform) {
+      child.gameObject.SetActive(true);
+    }
   }
 
   public Action MeleeDirection() {
@@ -134,11 +173,77 @@ public class Bounty : MonoBehaviour {
     this.animator.SetTrigger(this.dashParam);
   }
 
-  public void DetermineNextAction() {
-    if (!active) {
-      return;
-    }
+  public void BurrowMove() {
+    this.StartCoroutine(this.BurrowCoroutine());
+  }
 
-    this.animator.SetTrigger(this.meleeParam);
+  public void BurrowOut() {
+    this.StartCoroutine(this.BurrowOutCoroutine());
+  }
+
+  private IEnumerator BurrowOutCoroutine() {
+    this.inGround = true;
+    this.hitbox.enabled = true;
+    this.transform.position = new Vector2(this.transform.position.x, -1.5f);
+    float timer = 4 / this.burrowOutSpeed;
+    while (timer > 0) {
+      timer -= Time.deltaTime;
+      this.transform.Translate(new Vector3(0, burrowOutSpeed * Time.deltaTime), Space.World);
+      yield return null;
+    }
+    this.inGround = false;
+  }
+
+  private IEnumerator BurrowCoroutine() {
+    float timer = this.burrowDuration;
+    while (timer > 0) {
+      timer -= Time.deltaTime;
+      float target = this.player.transform.position.x - this.transform.position.x;
+      target /= Mathf.Abs(target);
+      this.movement.Velocity.x = Mathf.Lerp(this.movement.Velocity.x, this.burrowSpeed * target, 1f * Time.deltaTime);
+      yield return null;
+    }
+    this.movement.Velocity.x = 0;
+    yield return new WaitForSeconds(0.2f);
+    this.animator.SetTrigger(this.endBurrowParam);
+  }
+
+  private IEnumerator NextAction() {
+    while (!active) {
+      yield return null;
+    }
+    yield return new WaitForSeconds(0.5f);
+    bool action = false;
+    while (!action) {
+      //yield return new WaitForSeconds(1f);
+      if (this.curBurrowCooldown == 0 && Random.value <= this.burrowProb) {
+        this.animator.SetTrigger(this.burrowParam);
+        this.meleeCount = 0;
+        this.curBurrowCooldown = this.burrowCooldown;
+        action = true;
+      } else if (this.curSeedsCooldown == 0 && Random.value <= this.seedsProb) {
+        this.animator.SetTrigger(this.seedsParam);
+        this.meleeCount = 0;
+        this.curSeedsCooldown = this.seedsCooldown;
+        action = true;
+      } else if (this.meleeCount < 3) {
+        this.animator.SetTrigger(this.meleeParam);
+        this.meleeCount++;
+        action = true;
+      }
+    }
+  }
+
+  public void DetermineNextAction() {
+    this.StartCoroutine(this.NextAction());
+  }
+
+  public void ReduceCooldowns() {
+    if (this.curBurrowCooldown > 0) {
+      this.curBurrowCooldown--;
+    }
+    if (this.curSeedsCooldown > 0) {
+      this.curSeedsCooldown--;
+    }
   }
 }
