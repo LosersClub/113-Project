@@ -107,6 +107,7 @@ public class Player : MonoBehaviour {
   private new BoxCollider2D collider;
   private SpriteRenderer sprite;
   private Animator animator;
+  private PlayerUI ui;
 
   private float jumpTimer = 0f;
   [SerializeField, ReadOnly]
@@ -155,6 +156,7 @@ public class Player : MonoBehaviour {
     this.animator = this.GetComponent<Animator>();
     this.meleeAttack = this.GetComponent<MeleeDamageDealer>();
     this.damageTaker = this.GetComponent<DamageTaker>();
+    this.ui = this.GetComponent<PlayerUI>();
 
     for (int i = 0; i < 32; i++) {
       Physics2D.IgnoreLayerCollision(this.gameObject.layer, i);
@@ -330,6 +332,7 @@ public class Player : MonoBehaviour {
     if (this.shootHeld && this.canShoot && !this.damageTaker.Invulnerable && this.currentAmount >= 1f) {
       this.canShoot = false;
       this.currentAmount -= 1f;
+      this.ui.ReduceAmmo();
       this.bulletSpawner.SpawnBullet();
       this.StartCoroutine(this.RangeEyeCoroutine());
     }
@@ -380,6 +383,14 @@ public class Player : MonoBehaviour {
     this.canDash = true;
   }
 
+  public void DisableInput() {
+    this.inputDisabled = true;
+  }
+  
+  public void EnableInput() {
+    this.inputDisabled = false;
+  }
+
   public IEnumerator EnterRoom(float dist, float pause) {
     this.inputDisabled = true;
     this.controller.Velocity = Vector2.zero;
@@ -408,6 +419,9 @@ public class Player : MonoBehaviour {
     this.currentAmount += 0.5f;
     if (this.currentAmount > this.maxAmmo) {
       this.currentAmount = this.maxAmmo;
+    }
+    if (this.currentAmount == Math.Floor(currentAmount)) {
+      this.ui.GainAmmo();
     }
     this.canRegen = false;
     this.StartCoroutine(this.regenTimer());

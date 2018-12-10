@@ -17,13 +17,15 @@ public class PauseMenu : MonoBehaviour {
 
     public void Resume()
     {
+        GameManager.Player.EnableInput();
         pauseMenuPanel.SetActive(false);
         Time.timeScale = 1;
-        GameIsPaused = false; 
+        GameIsPaused = false;
     }
 
     public void Pause()
     {
+        GameManager.Player.DisableInput();
         pauseMenuPanel.SetActive(true);
         Time.timeScale = 0;
         GameIsPaused = true;

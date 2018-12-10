@@ -61,6 +61,7 @@ GameObject:
   - component: {fileID: 114164611923285664}
   - component: {fileID: 114093224024557302}
   - component: {fileID: 114462971227544208}
+  - component: {fileID: 114401279283187534}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -199,7 +200,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1324011129139602}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.65, y: 4.7, z: 0}
+  m_LocalPosition: {x: -4.58, y: 14.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4722119800863316}
@@ -432,7 +433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 5
+  maxHealth: 10
   invulnerabilityDuration: 1
   disableOnDeath: 0
   OnGainHealth:
@@ -447,6 +448,37 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: DamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &114401279283187534
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1324011129139602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2be6aa78845430c49b79f82e93da31cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hearts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ammo:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  heartSprite: {fileID: 21300000, guid: 226860dfaf31f5b4680176cf535255d8, type: 3}
+  emptyAmmoSprite: {fileID: 21300000, guid: a263d2a1d4ddab341bfeec944b9eb122, type: 3}
+  fullAmmoSprite: {fileID: 21300000, guid: 30cefc5184f53c54790396420b71f6fe, type: 3}
 --- !u!114 &114462971227544208
 MonoBehaviour:
   m_ObjectHideFlags: 1
