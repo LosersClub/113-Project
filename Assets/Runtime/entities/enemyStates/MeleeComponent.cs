@@ -6,7 +6,7 @@ public class MeleeComponent : MonoBehaviour {
     private EnemyComponent enemy;
     private MeleeDamageDealer meleeAttack;
     private float meleeTimer;
-    private float meleeCooldown = 1.5f;
+
     private bool inMeleeRange
     {
         get
@@ -16,7 +16,8 @@ public class MeleeComponent : MonoBehaviour {
         }
     }
 
-    public float meleeRange = 2f; 
+    public float meleeRange = 2f;
+    public float meleeCooldown = 3f;
 
     void Start () {
         enemy = GetComponent<EnemyComponent>();
@@ -37,21 +38,27 @@ public class MeleeComponent : MonoBehaviour {
         if (enemy.inAction) return; 
 
         enemy.inAction = true;
-        enemy.SetSpeed(0);
+        enemy.SetVelocityX(0);
+        enemy.SetVelocityY(0); 
         enemy.Anim.SetTrigger("attack");
-        StartCoroutine(WaitForAnimation("Attack"));
+        StartCoroutine(WaitForAnimations("Attack", "Run"));
 
     }
 
-    IEnumerator WaitForAnimation(string name)
+    IEnumerator WaitForAnimations(string action, string idle)
     {
         if (enemy.Anim)
             do
             {
                 yield return null;
-            } while (!enemy.Anim.GetCurrentAnimatorStateInfo(0).IsName(name));
-
+            } while (!enemy.Anim.GetCurrentAnimatorStateInfo(0).IsName(action));
         meleeAttack.HorizontalHit(enemy.FacingRight);
+
+        if (enemy.Anim)
+            do
+            {
+                yield return null;
+            } while (!enemy.Anim.GetCurrentAnimatorStateInfo(0).IsName(idle));
         enemy.inAction = false; 
     }
 
