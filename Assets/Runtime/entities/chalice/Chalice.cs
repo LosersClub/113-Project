@@ -33,6 +33,7 @@ public class Chalice : MonoBehaviour {
 
   private SpriteRenderer spriteRendererComponent;
   private MovementController movementController;
+  private Animator animatorComponent;
 
   private BeamEmitter beamEmitterComponent;
   private State state = State.Init;
@@ -43,6 +44,7 @@ public class Chalice : MonoBehaviour {
 
     this.spriteRendererComponent = this.GetComponent<SpriteRenderer>();
     this.movementController = this.GetComponent<MovementController>();
+    this.animatorComponent = this.GetComponent<Animator>();
 
     this.beamEmitterComponent = this.beamEmitterObject.GetComponent<BeamEmitter>();
     Assert.IsNotNull(this.beamEmitterComponent);
@@ -101,7 +103,10 @@ public class Chalice : MonoBehaviour {
 
   private IEnumerator AimThenFireCoroutine() {
     this.AimAtPlayer();
-    yield return new WaitForSeconds(1);
+    Debug.Log(this.animatorComponent.GetCurrentAnimatorStateInfo(0).IsName("Default"));
+    this.animatorComponent.SetTrigger("Fire Tell");
+    yield return new WaitUntil(() => this.animatorComponent.GetCurrentAnimatorStateInfo(0).IsName("Fire Tell"));
+    yield return new WaitUntil(() => this.animatorComponent.GetCurrentAnimatorStateInfo(0).IsName("Default"));
     this.ChangeState(State.Fire);
   }
 
