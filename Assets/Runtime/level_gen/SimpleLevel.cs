@@ -32,11 +32,16 @@ public class SimpleLevel : Level {
         continue;
       }
 
+      bool custom = false;
       foreach (CustomRoom cr in this.customRooms) {
         if (cr.index == i) {
           rooms[i] = cr.room.Get();
-          continue;
+          custom = true;
+          break;
         }
+      }
+      if (custom) {
+        continue;
       }
 
       //rooms[i] = generator.Generate();
