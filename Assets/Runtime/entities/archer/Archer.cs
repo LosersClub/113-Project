@@ -18,7 +18,7 @@ public class Archer : MonoBehaviour {
   private EnemyComponent enemyComponent;
   private IArcherFireChecker archerFireChecker;
 
-  void Start () {
+  void Awake() {
     Assert.IsNotNull(this.arrowPrefab);
     Assert.IsNotNull(this.archerFireCheckerComponent);
 

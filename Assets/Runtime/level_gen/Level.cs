@@ -71,6 +71,7 @@ public abstract class Level : MonoBehaviour  {
     }
 
     yield return this.StartCoroutine(this.Player.EnterRoom(this.playerWalkDistance, this.playerPause));
+    Camera.main.GetComponent<CameraFollow>().enabled = true;
     this.LevelManager.LeftWall.SetActive(true);
     if (!(this.ActiveRoom is MonoRoom) || ((MonoRoom)this.ActiveRoom).UseSpawner) {
       this.enemySpawner.StartRoom(this.ActiveRoom);
@@ -95,7 +96,9 @@ public abstract class Level : MonoBehaviour  {
     }
     this.Player.gameObject.SetActive(false);
     yield return this.StartCoroutine(this.LoadingScreen.FadeIn());
-    yield return new WaitForSeconds(this.pauseDuration);  
+    Camera.main.transform.position = new Vector3(13.5f, 7.5f, -10f);
+    Camera.main.GetComponent<CameraFollow>().enabled = false;
+    yield return new WaitForSeconds(this.pauseDuration);
     this.UnloadRoom(this.ActiveRoom);
     this.active++;
     if (this.active < this.rooms.Length) {
