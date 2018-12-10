@@ -14,6 +14,7 @@ public abstract class Level : MonoBehaviour  {
   public float pauseDuration = 0.5f;
   public float playerPause = 0.25f;
   public float playerWalkDistance = 4f;
+  public GameObject background;
 
   #region Properties
   public Player Player { get; private set; }

@@ -454,6 +454,7 @@ MonoBehaviour:
   pauseDuration: 0
   playerPause: 0.25
   playerWalkDistance: 4
+  background: {fileID: 0}
   active: 0
   roomCount: 8
   generator:
@@ -519,8 +520,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 29, y: 16}
-  spawnEnemies: 0
-  useBlockers: 0
+  spawnEnemies: 1
+  useBlockers: 1
   baseGround: 1
   chunks:
   - start: {x: 18, y: 2}
@@ -571,8 +572,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 28, y: 16}
-  spawnEnemies: 0
-  useBlockers: 0
+  spawnEnemies: 1
+  useBlockers: 1
   baseGround: 1
   chunks:
   - start: {x: 5, y: 2}
@@ -621,8 +622,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 36, y: 18}
-  spawnEnemies: 0
-  useBlockers: 0
+  spawnEnemies: 1
+  useBlockers: 1
   baseGround: 1
   chunks:
   - start: {x: 4, y: 9}
@@ -667,8 +668,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 32, y: 22}
-  spawnEnemies: 0
-  useBlockers: 0
+  spawnEnemies: 1
+  useBlockers: 1
   baseGround: 1
   chunks:
   - start: {x: 10, y: 2}
@@ -719,8 +720,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 35, y: 20}
-  spawnEnemies: 0
-  useBlockers: 0
+  spawnEnemies: 1
+  useBlockers: 1
   baseGround: 1
   chunks:
   - start: {x: 13, y: 12}
@@ -773,8 +774,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 34, y: 20}
-  spawnEnemies: 0
-  useBlockers: 0
+  spawnEnemies: 1
+  useBlockers: 1
   baseGround: 1
   chunks:
   - start: {x: 4, y: 2}
@@ -823,8 +824,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 34, y: 24}
-  spawnEnemies: 0
-  useBlockers: 0
+  spawnEnemies: 1
+  useBlockers: 1
   baseGround: 1
   chunks:
   - start: {x: 6, y: 2}
@@ -877,8 +878,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 34, y: 20}
-  spawnEnemies: 0
-  useBlockers: 0
+  spawnEnemies: 1
+  useBlockers: 1
   baseGround: 1
   chunks:
   - start: {x: 9, y: 2}
@@ -967,8 +968,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 30, y: 18}
-  spawnEnemies: 0
-  useBlockers: 0
+  spawnEnemies: 1
+  useBlockers: 1
   baseGround: 1
   chunks:
   - start: {x: 8, y: 2}
@@ -1023,8 +1024,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 32, y: 20}
-  spawnEnemies: 0
-  useBlockers: 0
+  spawnEnemies: 1
+  useBlockers: 1
   baseGround: 1
   chunks:
   - start: {x: 3, y: 11}
@@ -1071,8 +1072,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 36, y: 21}
-  spawnEnemies: 0
-  useBlockers: 0
+  spawnEnemies: 1
+  useBlockers: 1
   baseGround: 1
   chunks:
   - start: {x: 3, y: 13}
