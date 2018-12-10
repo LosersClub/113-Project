@@ -69,7 +69,7 @@ public class Chalice : MonoBehaviour {
   private void AimAtPlayer() {
     Vector2 direction = GameManager.Player.transform.position - this.transform.position;
     direction.Normalize();
-    Vector3 directionUpwards = Vector3.Cross(new Vector3(direction.x, direction.y, 0), -Vector3.forward);
+    Vector3 directionUpwards = new Vector3(direction.x, direction.y, 0);
     this.transform.rotation = Quaternion.LookRotation(Vector3.forward, directionUpwards);
   }
 
