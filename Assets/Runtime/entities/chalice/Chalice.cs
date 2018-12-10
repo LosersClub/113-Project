@@ -113,6 +113,7 @@ public class Chalice : MonoBehaviour {
   }
 
   private IEnumerator MoveWaitCoroutine() {
+    this.transform.rotation = Quaternion.identity;
     yield return new WaitForSeconds(1);
     if(this.InFiringRange()) {
       this.ChangeState(State.FireTell);
