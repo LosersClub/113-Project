@@ -688,6 +688,7 @@ GameObject:
   - component: {fileID: 1356092346}
   - component: {fileID: 1356092345}
   - component: {fileID: 1356092349}
+  - component: {fileID: 1356092350}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -787,6 +788,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5740be830fb6f5444b6ddd8d35ca84e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  track: {fileID: 8300000, guid: 3c349a2f56a380f4d92019c3b1ee3013, type: 3}
+--- !u!114 &1356092350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1356092344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2f2b18bda6cde54281bb2a176269cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlaying: 0
+  menuTrack: {fileID: 8300000, guid: 3c349a2f56a380f4d92019c3b1ee3013, type: 3}
+  templeTrack: {fileID: 8300000, guid: 3e9630035b3ec394cbbe0be9e181f8c5, type: 3}
+  farmlandTrack: {fileID: 8300000, guid: 2ea60f0d2783d7a4ab9839b4386e8fca, type: 3}
+  fadeDuration: 5
+  startDelay: 0
+  maxVolume: 1
+  fade: 1
 --- !u!1 &1653403650
 GameObject:
   m_ObjectHideFlags: 0

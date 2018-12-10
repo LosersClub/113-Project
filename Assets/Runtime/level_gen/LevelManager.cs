@@ -81,6 +81,7 @@ public class LevelManager : MonoBehaviour {
     this.Active.gameObject.SetActive(true);
     this.Active.background.SetActive(true);
     this.Active.Enable();
+    GameManager.AudioManager.PlayMusic(this.Active.track, fadeDuration: 5);
   }
 
   public void SetWalls(int width, int maxHeight) {
