@@ -378,6 +378,8 @@ MonoBehaviour:
     runTrail: {fileID: 198133451386036926}
     takeOffParticle: {fileID: 198294485531957490}
     landParticle: {fileID: 198750404938730486}
+    deathPrefab: {fileID: 1304228120411586, guid: 823462762f73b9e4c9347d1e097748c1,
+      type: 2}
     landParticlePlayDistance: 0.05
   standRoom: 0.75
   numBlinks: 5

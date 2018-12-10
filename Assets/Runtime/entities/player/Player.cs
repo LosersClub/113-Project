@@ -98,6 +98,7 @@ public class Player : MonoBehaviour {
     public ParticleSystem runTrail;
     public ParticleSystem takeOffParticle;
     public ParticleSystem landParticle;
+    public GameObject deathPrefab;
     public float landParticlePlayDistance;
   }
 
@@ -165,6 +166,7 @@ public class Player : MonoBehaviour {
     this.meleeAttack.OnDamageHit.AddListener(this.BounceOnDownHit);
     this.meleeAttack.OnDamageHit.AddListener(this.RegenRanged);
     this.damageTaker.OnTakeDamage.AddListener(this.BlinkOnHit);
+    this.damageTaker.OnDie.AddListener(this.OnPlayerDie);
   }
 
   private void Start() {
@@ -209,6 +211,29 @@ public class Player : MonoBehaviour {
     this.meleeHeld = false;
     this.dashHeld = false;
     this.shootHeld = false;
+  }
+
+  public void OnPlayerDie(DamageDealer dealer, DamageTaker taker) {
+    this.DisableInput();
+    this.sprite.enabled = false;
+    this.GetComponent<FlashOnHit>().enabled = false;
+    this.gameObject.SetActive(false);
+    GameObject death = Instantiate(this.vfx.deathPrefab);
+    death.transform.position = this.transform.position;
+    GameManager.LevelManager.StartCoroutine(this.Death(death));
+  }
+
+  private IEnumerator Death(GameObject death) {
+    yield return GameManager.LevelManager.StartCoroutine(death.GetComponent<Dissolve>().DoDissolve(10f));
+    Destroy(death);
+    yield return new WaitForSeconds(0.2f);
+    yield return GameManager.LevelManager.StartCoroutine(GameManager.LoadingScreen.FadeIn());
+    this.sprite.enabled = true;
+    this.GetComponent<FlashOnHit>().enabled = true;
+    this.damageTaker.GainHealth(100000);
+    this.currentAmount = this.maxAmmo;
+    this.ui.ResetUI();
+    GameManager.LevelManager.RestartLevel();
   }
 
   public void UpdateFacing() {

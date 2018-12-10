@@ -74,6 +74,14 @@ public class LevelManager : MonoBehaviour {
     this.StartLevel();
   }
 
+  public void RestartLevel() {
+    this.LeftTrinity.SetActive(false);
+    this.RightTrinity.SetActive(false);
+    this.Active.background.SetActive(false);
+    Destroy(this.Active.gameObject);
+    this.StartLevel();
+  }
+
   public void StartLevel() {
     this.Active = Instantiate<Level>(this.levels[this.activeLevel]);
     this.Active.transform.SetParent(this.levelManager.transform);

@@ -24,6 +24,17 @@ public class PlayerUI : MonoBehaviour {
     }
   }
 
+  public void ResetUI() {
+    for (int i = 0; i < this.hearts.Length; i++) {
+      this.hearts[i].enabled = true;
+    }
+    for (int i = 0; i < this.ammo.Length; i++) {
+      this.ammo[i].sprite = fullAmmoSprite;
+    }
+    this.numAmmo = ammo.Length;
+    this.numHearts = hearts.Length;
+  }
+
   public void ReduceAmmo() {
     if (this.numAmmo == 0) {
       return;
