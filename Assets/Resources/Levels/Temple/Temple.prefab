@@ -1,0 +1,1113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1033622801267792}
+  m_IsPrefabAsset: 1
+--- !u!1 &1033622801267792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4144949951918044}
+  - component: {fileID: 114237577160140542}
+  m_Layer: 0
+  m_Name: Temple
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!1 &1137156358001436
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4784063384342880}
+  - component: {fileID: 114501449573340260}
+  m_Layer: 0
+  m_Name: Room7
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1149954275423624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4068709941637222}
+  - component: {fileID: 114763890786440606}
+  m_Layer: 0
+  m_Name: Room9
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1168156213413256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4351502373465980}
+  - component: {fileID: 114690803000099090}
+  m_Layer: 0
+  m_Name: Room11
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1190844311350230
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4427632783238692}
+  - component: {fileID: 114789494476769628}
+  m_Layer: 0
+  m_Name: Room0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1281290794624662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4595023113463542}
+  - component: {fileID: 114791220181573862}
+  m_Layer: 0
+  m_Name: Room2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1414173803308018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4913416850205596}
+  - component: {fileID: 114910447751039182}
+  m_Layer: 0
+  m_Name: Room6
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1433751795520744
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4437472473524798}
+  - component: {fileID: 114479047061856074}
+  m_Layer: 0
+  m_Name: Room8
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1471164347363348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4214019782306234}
+  - component: {fileID: 114255979666906624}
+  m_Layer: 0
+  m_Name: Room4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1601389598956866
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4608185249495186}
+  - component: {fileID: 114904169961394580}
+  m_Layer: 0
+  m_Name: Room5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1676334287836894
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4859643685214148}
+  - component: {fileID: 114487141449000630}
+  m_Layer: 0
+  m_Name: Room3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1850306890426772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4743293126115980}
+  - component: {fileID: 114443991407434116}
+  m_Layer: 0
+  m_Name: Room10
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1955101298303902
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4906328726425084}
+  - component: {fileID: 114499934591104920}
+  m_Layer: 0
+  m_Name: Room1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4068709941637222
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1149954275423624}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.516652, y: -14.052967, z: -0.734375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4144949951918044}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4144949951918044
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1033622801267792}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4427632783238692}
+  - {fileID: 4906328726425084}
+  - {fileID: 4595023113463542}
+  - {fileID: 4859643685214148}
+  - {fileID: 4214019782306234}
+  - {fileID: 4608185249495186}
+  - {fileID: 4913416850205596}
+  - {fileID: 4784063384342880}
+  - {fileID: 4437472473524798}
+  - {fileID: 4068709941637222}
+  - {fileID: 4743293126115980}
+  - {fileID: 4351502373465980}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4214019782306234
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1471164347363348}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.516652, y: -14.052967, z: -0.734375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4144949951918044}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4351502373465980
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1168156213413256}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.516652, y: -14.052967, z: -0.734375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4144949951918044}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4427632783238692
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1190844311350230}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.516652, y: -14.052967, z: -0.734375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4144949951918044}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4437472473524798
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1433751795520744}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.516652, y: -14.052967, z: -0.734375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4144949951918044}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4595023113463542
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1281290794624662}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.516652, y: -14.052967, z: -0.734375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4144949951918044}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4608185249495186
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1601389598956866}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.516652, y: -14.052967, z: -0.734375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4144949951918044}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4743293126115980
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1850306890426772}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.516652, y: -14.052967, z: -0.734375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4144949951918044}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4784063384342880
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1137156358001436}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.516652, y: -14.052967, z: -0.734375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4144949951918044}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4859643685214148
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1676334287836894}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.516652, y: -14.052967, z: -0.734375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4144949951918044}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4906328726425084
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1955101298303902}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.516652, y: -14.052967, z: -0.734375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4144949951918044}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4913416850205596
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1414173803308018}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.516652, y: -14.052967, z: -0.734375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4144949951918044}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114237577160140542
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1033622801267792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a685f8663538fe438569afbf7c66257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomSeed: 1
+  seed: 42
+  enemySpawner:
+    difficultyRange:
+      min: 1
+      max: 20
+    activeDifficultyRange:
+      min: 3
+      max: 10
+    enemies:
+    - pool:
+        prefab: {fileID: 1615813376150664, guid: 8dfc8fec18eb4944aa100fff30bb10b6,
+          type: 2}
+        capacity: 10
+      silhouette: {fileID: 21300000, guid: 70b192c914f222c489fabf482dcc018b, type: 3}
+      difficulty: 1
+    - pool:
+        prefab: {fileID: 1007549336081736, guid: 7f234d7e0cdef604bb378f87bdbfc8b2,
+          type: 2}
+        capacity: 5
+      silhouette: {fileID: 21300000, guid: ec9cf47e39c3def4781311d3987b4af3, type: 3}
+      difficulty: 2
+    - pool:
+        prefab: {fileID: 1477329908656438, guid: a70c12ada9f0e774d9fccfcf8a447e6a,
+          type: 2}
+        capacity: 5
+      silhouette: {fileID: 21300000, guid: ff807325a308fdf4cbe87c12ef09e994, type: 3}
+      difficulty: 1
+    - pool:
+        prefab: {fileID: 1477329908656438, guid: 66a88fb68148922458a39efa2707d30d,
+          type: 2}
+        capacity: 5
+      silhouette: {fileID: 21300000, guid: ff807325a308fdf4cbe87c12ef09e994, type: 3}
+      difficulty: 2
+    difficultyCheckRate: 10
+    portalCapacity: 10
+    silhouettePrefab: {fileID: 1926774527543080, guid: ca52ef2ad09cdbd44b202006b1ba67c6,
+      type: 2}
+    portalPrefab: {fileID: 1523706710370702, guid: 204af6322e6cd0b49bb58ebaf896f364,
+      type: 2}
+  pauseDuration: 0
+  playerPause: 0.25
+  playerWalkDistance: 4
+  active: 0
+  roomCount: 8
+  generator:
+    probs:
+      symmetric: 1
+      groundBumps: 0.8
+      groundHeight: 0.5
+      groundWidth: 0.8
+    widthRange:
+      min: 28
+      max: 28
+    heighRange:
+      min: 16
+      max: 50
+    maxBumps: 5
+    minGroundWidth: 5
+    maxGroundHeight: 4
+    groundHeight: 2
+    islandClearance: 4
+  manualLastRoom: 0
+  lastRoom: {fileID: 0}
+  customRooms:
+  - index: 0
+    room: {fileID: 114789494476769628}
+  - index: 1
+    room: {fileID: 114499934591104920}
+  - index: 2
+    room: {fileID: 114791220181573862}
+  - index: 3
+    room: {fileID: 114487141449000630}
+  - index: 4
+    room: {fileID: 114255979666906624}
+  - index: 5
+    room: {fileID: 114904169961394580}
+  - index: 6
+    room: {fileID: 114910447751039182}
+  - index: 7
+    room: {fileID: 114501449573340260}
+  ground:
+    prefab: {fileID: 1153983038594936, guid: 39230a225acda114c91fd29f0dc43045, type: 2}
+    capacity: 50
+  groundFiller:
+    prefab: {fileID: 1553193166654892, guid: ef5c88ebf08565540aa29829143059df, type: 2}
+    capacity: 150
+  leftPlatform:
+    prefab: {fileID: 1800561690725900, guid: b4156c69b2c96a443b1c15e7d3d2847f, type: 2}
+    capacity: 10
+  mainPlatform:
+    prefab: {fileID: 1800561690725900, guid: b4156c69b2c96a443b1c15e7d3d2847f, type: 2}
+    capacity: 50
+  rightPlaform:
+    prefab: {fileID: 1800561690725900, guid: b4156c69b2c96a443b1c15e7d3d2847f, type: 2}
+    capacity: 10
+--- !u!114 &114255979666906624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1471164347363348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d48a2bb80517ad241ab6525ad9cb21d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 29, y: 16}
+  spawnEnemies: 0
+  useBlockers: 0
+  baseGround: 1
+  chunks:
+  - start: {x: 18, y: 2}
+    end: {x: 25, y: 2}
+  - start: {x: 11, y: 13}
+    end: {x: 25, y: 13}
+  - start: {x: 12, y: 12}
+    end: {x: 25, y: 12}
+  platforms:
+  - start: {x: 2, y: 7}
+    size: 4
+  - start: {x: 4, y: 6.5}
+    size: 5
+  - start: {x: 15, y: 7}
+    size: 7
+  - start: {x: 4, y: 11}
+    size: 4
+  events:
+    generate:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    render:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    startRoom:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    unload:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+--- !u!114 &114443991407434116
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1850306890426772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d48a2bb80517ad241ab6525ad9cb21d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 28, y: 16}
+  spawnEnemies: 0
+  useBlockers: 0
+  baseGround: 1
+  chunks:
+  - start: {x: 5, y: 2}
+    end: {x: 21, y: 2}
+  - start: {x: 20, y: 9}
+    end: {x: 24, y: 8}
+  - start: {x: 21, y: 7}
+    end: {x: 24, y: 7}
+  platforms:
+  - start: {x: 4, y: 7}
+    size: 5
+  - start: {x: 11, y: 10}
+    size: 5
+  - start: {x: 19, y: 13}
+    size: 5
+  events:
+    generate:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    render:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    startRoom:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    unload:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+--- !u!114 &114479047061856074
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1433751795520744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d48a2bb80517ad241ab6525ad9cb21d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 36, y: 18}
+  spawnEnemies: 0
+  useBlockers: 0
+  baseGround: 1
+  chunks:
+  - start: {x: 4, y: 9}
+    end: {x: 7, y: 8}
+  - start: {x: 20, y: 11}
+    end: {x: 30, y: 10}
+  platforms:
+  - start: {x: 5, y: 14}
+    size: 8
+  - start: {x: 11, y: 6}
+    size: 13
+  events:
+    generate:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    render:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    startRoom:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    unload:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+--- !u!114 &114487141449000630
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1676334287836894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d48a2bb80517ad241ab6525ad9cb21d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 32, y: 22}
+  spawnEnemies: 0
+  useBlockers: 0
+  baseGround: 1
+  chunks:
+  - start: {x: 10, y: 2}
+    end: {x: 23, y: 2}
+  - start: {x: 10, y: 3}
+    end: {x: 18, y: 3}
+  - start: {x: 5, y: 12}
+    end: {x: 10, y: 10}
+  - start: {x: 20, y: 14}
+    end: {x: 26, y: 14}
+  - start: {x: 21, y: 13}
+    end: {x: 25, y: 13}
+  platforms:
+  - start: {x: 14, y: 8}
+    size: 7
+  - start: {x: 10, y: 16}
+    size: 5
+  events:
+    generate:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    render:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    startRoom:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    unload:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+--- !u!114 &114499934591104920
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1955101298303902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d48a2bb80517ad241ab6525ad9cb21d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 35, y: 20}
+  spawnEnemies: 0
+  useBlockers: 0
+  baseGround: 1
+  chunks:
+  - start: {x: 13, y: 12}
+    end: {x: 20, y: 11}
+  - start: {x: 14, y: 10}
+    end: {x: 19, y: 10}
+  - start: {x: 15, y: 9}
+    end: {x: 18, y: 9}
+  platforms:
+  - start: {x: 5, y: 6}
+    size: 8
+  - start: {x: 24, y: 6}
+    size: 8
+  - start: {x: 8, y: 10}
+    size: 3
+  - start: {x: 23, y: 10}
+    size: 3
+  - start: {x: 9, y: 17}
+    size: 12
+  events:
+    generate:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    render:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    startRoom:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    unload:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+--- !u!114 &114501449573340260
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1137156358001436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d48a2bb80517ad241ab6525ad9cb21d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 34, y: 20}
+  spawnEnemies: 0
+  useBlockers: 0
+  baseGround: 1
+  chunks:
+  - start: {x: 4, y: 2}
+    end: {x: 22, y: 2}
+  - start: {x: 8, y: 3}
+    end: {x: 18, y: 3}
+  - start: {x: 3, y: 15}
+    end: {x: 15, y: 13}
+  platforms:
+  - start: {x: 19, y: 13}
+    size: 3
+  - start: {x: 27, y: 10}
+    size: 2
+  - start: {x: 13, y: 7}
+    size: 11
+  events:
+    generate:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    render:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    startRoom:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    unload:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+--- !u!114 &114690803000099090
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1168156213413256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d48a2bb80517ad241ab6525ad9cb21d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 34, y: 24}
+  spawnEnemies: 0
+  useBlockers: 0
+  baseGround: 1
+  chunks:
+  - start: {x: 6, y: 2}
+    end: {x: 27, y: 2}
+  - start: {x: 10, y: 3}
+    end: {x: 22, y: 3}
+  - start: {x: 12, y: 4}
+    end: {x: 22, y: 4}
+  - start: {x: 4, y: 15}
+    end: {x: 15, y: 14}
+  - start: {x: 4, y: 16}
+    end: {x: 11, y: 16}
+  - start: {x: 25, y: 12}
+    end: {x: 31, y: 11}
+  platforms:
+  - start: {x: 11, y: 9}
+    size: 6
+  - start: {x: 25, y: 19}
+    size: 6
+  events:
+    generate:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    render:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    startRoom:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    unload:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+--- !u!114 &114763890786440606
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1149954275423624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d48a2bb80517ad241ab6525ad9cb21d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 34, y: 20}
+  spawnEnemies: 0
+  useBlockers: 0
+  baseGround: 1
+  chunks:
+  - start: {x: 9, y: 2}
+    end: {x: 27, y: 2}
+  - start: {x: 16, y: 3}
+    end: {x: 24, y: 3}
+  - start: {x: 3, y: 13}
+    end: {x: 10, y: 12}
+  - start: {x: 3, y: 14}
+    end: {x: 8, y: 14}
+  - start: {x: 26, y: 11}
+    end: {x: 31, y: 8}
+  platforms:
+  - start: {x: 11, y: 8}
+    size: 3
+  - start: {x: 16, y: 12}
+    size: 5
+  events:
+    generate:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    render:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    startRoom:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    unload:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+--- !u!114 &114789494476769628
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1190844311350230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d48a2bb80517ad241ab6525ad9cb21d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 28, y: 16}
+  spawnEnemies: 0
+  useBlockers: 0
+  baseGround: 1
+  chunks: []
+  platforms: []
+  events:
+    generate:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    render:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    startRoom:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    unload:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+--- !u!114 &114791220181573862
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1281290794624662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d48a2bb80517ad241ab6525ad9cb21d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 30, y: 18}
+  spawnEnemies: 0
+  useBlockers: 0
+  baseGround: 1
+  chunks:
+  - start: {x: 8, y: 2}
+    end: {x: 26, y: 2}
+  - start: {x: 10, y: 3}
+    end: {x: 18, y: 3}
+  - start: {x: 2, y: 14}
+    end: {x: 11, y: 14}
+  - start: {x: 2, y: 13}
+    end: {x: 9, y: 13}
+  - start: {x: 2, y: 12}
+    end: {x: 8, y: 12}
+  - start: {x: 4, y: 11}
+    end: {x: 7, y: 11}
+  platforms:
+  - start: {x: 9, y: 7}
+    size: 8
+  - start: {x: 22, y: 11}
+    size: 8
+  - start: {x: 14, y: 13}
+    size: 6
+  events:
+    generate:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    render:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    startRoom:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    unload:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+--- !u!114 &114904169961394580
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1601389598956866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d48a2bb80517ad241ab6525ad9cb21d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 32, y: 20}
+  spawnEnemies: 0
+  useBlockers: 0
+  baseGround: 1
+  chunks:
+  - start: {x: 3, y: 11}
+    end: {x: 8, y: 10}
+  - start: {x: 3, y: 12}
+    end: {x: 9, y: 12}
+  - start: {x: 3, y: 13}
+    end: {x: 10, y: 13}
+  platforms:
+  - start: {x: 8, y: 5}
+    size: 15
+  - start: {x: 17, y: 9}
+    size: 10
+  events:
+    generate:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    render:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    startRoom:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    unload:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+--- !u!114 &114910447751039182
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1414173803308018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d48a2bb80517ad241ab6525ad9cb21d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 36, y: 21}
+  spawnEnemies: 0
+  useBlockers: 0
+  baseGround: 1
+  chunks:
+  - start: {x: 3, y: 13}
+    end: {x: 7, y: 12}
+  - start: {x: 4, y: 11}
+    end: {x: 6, y: 11}
+  - start: {x: 27, y: 9}
+    end: {x: 33, y: 9}
+  - start: {x: 28, y: 8}
+    end: {x: 33, y: 8}
+  platforms:
+  - start: {x: 13, y: 6}
+    size: 15
+  - start: {x: 13, y: 10}
+    size: 15
+  - start: {x: 13, y: 14}
+    size: 15
+  events:
+    generate:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    render:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    startRoom:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    unload:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
