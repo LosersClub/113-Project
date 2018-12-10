@@ -193,7 +193,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beamEmitterObject: {fileID: 1821265816652694}
   firingRange: 4
-  moveDistance: 1
+  moveSpeed: 8
+  moveDistance: 4
 --- !u!114 &114693453455313180
 MonoBehaviour:
   m_ObjectHideFlags: 1
