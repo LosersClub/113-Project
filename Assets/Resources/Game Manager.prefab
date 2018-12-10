@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 114153993286441110}
   - component: {fileID: 114586526983692032}
   - component: {fileID: 114945764251583844}
+  - component: {fileID: 114125141482587976}
+  - component: {fileID: 114407520446632886}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -42,6 +44,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114125141482587976
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1559519611898216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47a09f2a3a5e512469ec0804c519c44a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levels:
+  - {fileID: 0}
+  - {fileID: 0}
+  trinityPrefab: {fileID: 1017155998553704, guid: 3ccc1198462cd2146883d2269c35129f,
+    type: 2}
+  damagerPrefab: {fileID: 1959358329437930, guid: 68b195c89e2a61849932662c9972e9ee,
+    type: 2}
 --- !u!114 &114153993286441110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -54,6 +74,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+--- !u!114 &114407520446632886
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1559519611898216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b66c94c208af2345885d0c047c63971, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transition: {fileID: 2100000, guid: 7624d611bd330e44b80ef65275598a16, type: 2}
+  cutoffDuration: 1
 --- !u!114 &114586526983692032
 MonoBehaviour:
   m_ObjectHideFlags: 1
