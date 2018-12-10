@@ -22,6 +22,10 @@ public class Chalice : MonoBehaviour {
 
   [SerializeField]
   private GameObject beamEmitterObject;
+  [SerializeField]
+  private float firingRange = 4f;
+  [SerializeField]
+  private float moveSpeed = 1f;
 
   private SpriteRenderer spriteRendererComponent;
 
@@ -40,7 +44,7 @@ public class Chalice : MonoBehaviour {
   }
 
   void Update () {
-    if(this.state == State.Wait) {
+    if(this.state == State.Wait || this.state == State.Move) {
       this.spriteRendererComponent.color = Color.white;
       this.AimAtPlayer();
     }
@@ -70,7 +74,10 @@ public class Chalice : MonoBehaviour {
 
     // State entry actions:
     if(newState == State.Wait) {
-      StartCoroutine(PauseThenFireTellStateCoroutine());
+      StartCoroutine(WaitThenMoveOrFireStateCoroutine());
+    }
+    else if(newState == State.Move) {
+      StartCoroutine(MoveCoroutine());
     }
     else if(newState == State.FireTell) {
       StartCoroutine(PauseThenFireCoroutine());
@@ -82,9 +89,14 @@ public class Chalice : MonoBehaviour {
     this.state = newState;
   }
 
-  private IEnumerator PauseThenFireTellStateCoroutine() {
+  private IEnumerator WaitThenMoveOrFireStateCoroutine() {
     yield return new WaitForSeconds(3);
-    this.ChangeState(State.FireTell);
+    if(this.InFiringRange()) {
+      this.ChangeState(State.FireTell);
+    }
+    else {
+      this.ChangeState(State.Move);
+    }
   }
 
   private IEnumerator PauseThenFireCoroutine() {
@@ -96,5 +108,21 @@ public class Chalice : MonoBehaviour {
     this.beamEmitterComponent.Fire();
     yield return new WaitUntil(() => !this.beamEmitterComponent.IsFiring);
     this.ChangeState(State.Wait);
+  }
+
+  private IEnumerator MoveCoroutine() {
+    bool done = false;
+    while(!done) {
+      this.transform.position += (GameManager.Player.transform.position - this.transform.position).normalized * this.moveSpeed;
+      yield return new WaitForSeconds(1);
+      if(this.InFiringRange()) {
+        this.ChangeState(State.FireTell);
+        done = true;
+      }
+    }
+  }
+
+  private bool InFiringRange() {
+    return (GameManager.Player.transform.position - this.transform.position).magnitude <= this.firingRange;
   }
 }
