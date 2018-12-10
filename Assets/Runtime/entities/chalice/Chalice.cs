@@ -53,11 +53,8 @@ public class Chalice : MonoBehaviour {
   }
 
   void Update () {
-    if(this.state == State.FireTell) {
-      this.spriteRendererComponent.color = Color.yellow;
-    }
-    else if(this.state == State.Fire) {
-      this.spriteRendererComponent.color = Color.blue;
+    if(this.state == State.Fire) {
+      this.spriteRendererComponent.color = Color.black;
     }
     else {
       this.spriteRendererComponent.color = Color.white;
