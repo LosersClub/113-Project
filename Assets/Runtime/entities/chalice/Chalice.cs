@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -6,12 +7,26 @@ using UnityEngine.Assertions;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Chalice : MonoBehaviour {
 
+  private enum State {Init, Wait, Move, FireTell, Fire};
+
+  // TODO: refactor state machine code into a separate StandaloneStateMachine class.
+  // Note: should use ReadOnlyDictionary instead, but that is only available in .NET 4 (while we
+  // are using .NET 3.5):
+  private static readonly Dictionary<State, HashSet<State>> StateTransitions = new Dictionary<State, HashSet<State>> {
+    {State.Init, new HashSet<State>{State.Wait}},
+    {State.Wait, new HashSet<State>{State.Move, State.FireTell}},
+    {State.Move, new HashSet<State>{State.Wait, State.FireTell}},
+    {State.FireTell, new HashSet<State>{State.Fire}},
+    {State.Fire, new HashSet<State>{State.Wait}}
+  };
+
   [SerializeField]
   private GameObject beamEmitterObject;
 
   private SpriteRenderer spriteRendererComponent;
 
   private BeamEmitter beamEmitterComponent;
+  private State state = State.Init;
 
   void Start () {
     Assert.IsNotNull(this.beamEmitterObject);
@@ -21,14 +36,14 @@ public class Chalice : MonoBehaviour {
     this.beamEmitterComponent = this.beamEmitterObject.GetComponent<BeamEmitter>();
     Assert.IsNotNull(this.beamEmitterComponent);
 
-    StartCoroutine(FireCoroutine());
+    this.ChangeState(State.Wait);
   }
 
   void Update () {
-    if(this.beamEmitterComponent.IsFiring) {
+    if(this.state == State.Fire) {
       this.spriteRendererComponent.color = Color.blue;
     }
-    else {
+    else if(this.state == State.Wait) {
       this.spriteRendererComponent.color = Color.white;
       this.AimAtPlayer();
     }
@@ -41,11 +56,36 @@ public class Chalice : MonoBehaviour {
     this.transform.rotation = Quaternion.LookRotation(Vector3.forward, directionUpwards);
   }
 
-  private IEnumerator FireCoroutine() {
-    while(true) {
-      yield return new WaitForSeconds(3);
-      this.beamEmitterComponent.Fire();
-      yield return new WaitUntil(() => !this.beamEmitterComponent.IsFiring);
+  private void ChangeState(State newState) {
+    if(!Chalice.StateTransitions[this.state].Contains(newState)) {
+      throw new ArgumentException(String.Format("Cannot transition from State {0} to State {1}",
+                                                this.state, newState));
     }
+
+    // State exit actions:
+    // None currently.
+
+    // State entry actions:
+    if(newState == State.Wait) {
+      StartCoroutine(WaitThenFireStateCoroutine());
+    }
+    else if(newState == State.Fire) {
+      StartCoroutine(FireThenWaitStateCoroutine());
+    }
+
+    this.state = newState;
+  }
+
+  private IEnumerator WaitThenFireStateCoroutine() {
+    yield return new WaitForSeconds(3);
+    this.ChangeState(State.FireTell);
+    // TODO: show a fire tell before firing.
+    this.ChangeState(State.Fire);
+  }
+
+  private IEnumerator FireThenWaitStateCoroutine() {
+    this.beamEmitterComponent.Fire();
+    yield return new WaitUntil(() => !this.beamEmitterComponent.IsFiring);
+    this.ChangeState(State.Wait);
   }
 }
