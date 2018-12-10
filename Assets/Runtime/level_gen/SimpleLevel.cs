@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
 public class SimpleLevel : Level {
-
-  [Header("Simple Settings")]
+  [Header("Generation Settings")]
   public int roomCount = 3;
-  public Vector2Int roomSize = new Vector2Int(28, 16);
+  public RoomGenerator generator;
+
 
   public bool manualLastRoom = false;
   [ConditionalHide("manualLastRoom")]
@@ -39,9 +39,9 @@ public class SimpleLevel : Level {
         }
       }
 
-      // TODO: Call Room Generator if MonoRoom doesnt exist
+      //rooms[i] = generator.Generate();
+      rooms[i] = new Room(28, 16); // TODO: pick from Ranges EnemySpawner.RandomFromRange
 
-      rooms[i] = new Room(28, 16);
       rooms[i].AddGround();
       rooms[i].AddPlatform(new Platform(new Vector2(4.5f, 4.5f), 6));
     }
