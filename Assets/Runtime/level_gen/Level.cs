@@ -50,7 +50,11 @@ public abstract class Level : MonoBehaviour  {
 
     this.rooms = this.GenerateRooms();
     this.active = 0;
-    this.LoadActiveRoom();
+    this.RenderRoom(this.ActiveRoom);
+    this.LevelManager.SetWalls(this.ActiveRoom.Width, this.ActiveRoom.Height + 20);
+    this.LevelManager.LeftWall.SetActive(false);
+    this.LevelManager.RightWall.SetActive(true);
+    this.StartCoroutine(this.EnterFirstRoom());
   }
 
   private void LoadActiveRoom() {
@@ -59,6 +63,35 @@ public abstract class Level : MonoBehaviour  {
     this.LevelManager.LeftWall.SetActive(false);
     this.LevelManager.RightWall.SetActive(true);
     this.StartCoroutine(this.EnterRoom());
+  }
+
+  private IEnumerator EnterFirstRoom() {
+    this.Player.transform.position = new Vector3(this.transform.position.x + 2, this.transform.position.y + 2.5f);
+    this.Player.gameObject.SetActive(true);
+    this.Player.DisableInput();
+    yield return this.StartCoroutine(this.LoadingScreen.FadeOut());
+
+    if (!(this.ActiveRoom is MonoRoom) || ((MonoRoom)this.ActiveRoom).UseBlockers) {
+      this.LevelManager.StartBlockers(this.ActiveRoom.Width, this.ActiveRoom.Height);
+    }
+
+    //yield return this.StartCoroutine(this.Player.EnterRoom(this.playerWalkDistance, this.playerPause));
+    Camera.main.GetComponent<CameraFollow>().enabled = true;
+    this.LevelManager.LeftWall.SetActive(true);
+    this.Player.EnableInput();
+    if (!(this.ActiveRoom is MonoRoom) || ((MonoRoom)this.ActiveRoom).UseSpawner) {
+      this.enemySpawner.StartRoom(this.ActiveRoom);
+    }
+    if (this.ActiveRoom is MonoRoom) {
+      ((MonoRoom)this.ActiveRoom).StartRoom();
+      if (!((MonoRoom)this.ActiveRoom).UseBlockers) {
+        this.StartCoroutine(this.ExitRoom());
+      }
+    }
+
+    if (!(this.ActiveRoom is MonoRoom) || ((MonoRoom)this.ActiveRoom).UseBlockers) {
+      this.LevelManager.StartDamagers(this.ActiveRoom.Width, this.ActiveRoom.Height);
+    }
   }
 
   private IEnumerator EnterRoom() {

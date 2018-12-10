@@ -84,6 +84,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4427632783238692}
   - component: {fileID: 114789494476769628}
+  - component: {fileID: 114931738704787102}
   m_Layer: 0
   m_Name: Room0
   m_TagString: Untagged
@@ -1112,3 +1113,17 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: ManualRoom+RoomEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
+--- !u!114 &114931738704787102
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1190844311350230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54571579da1f4c8488c2a2c855c3534e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alter: {fileID: 1626100750991672, guid: 8123fb3737fe8d74d999e5154e7c1a89, type: 2}
+  templeWall: {fileID: 1332591642044968, guid: 691773a66c01789459ffdc147718e645, type: 2}
+  tutorial: {fileID: 1478933060492242, guid: 5d1c468a0bd8aaa419e6631cb5bd8435, type: 2}
