@@ -56,10 +56,10 @@ MonoBehaviour:
   enemySpawner:
     difficultyRange:
       min: 1
-      max: 30
+      max: 21
     activeDifficultyRange:
       min: 3
-      max: 12
+      max: 14
     enemies:
     - pool:
         prefab: {fileID: 1443489206913764, guid: 0cd33a7e0e6739f42a7e673c2c995d88,
@@ -106,6 +106,8 @@ MonoBehaviour:
   pauseDuration: 0
   playerPause: 0.25
   playerWalkDistance: 4
+  background: {fileID: 0}
+  track: {fileID: 8300000, guid: 2ea60f0d2783d7a4ab9839b4386e8fca, type: 3}
   active: 0
   roomCount: 10
   generator:

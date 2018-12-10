@@ -417,7 +417,7 @@ MonoBehaviour:
   enemySpawner:
     difficultyRange:
       min: 1
-      max: 20
+      max: 12
     activeDifficultyRange:
       min: 3
       max: 10
@@ -456,6 +456,7 @@ MonoBehaviour:
   playerPause: 0.25
   playerWalkDistance: 4
   background: {fileID: 0}
+  track: {fileID: 8300000, guid: 3e9630035b3ec394cbbe0be9e181f8c5, type: 3}
   active: 0
   roomCount: 8
   generator:

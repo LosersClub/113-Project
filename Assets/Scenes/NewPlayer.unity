@@ -201,6 +201,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114646648023790248, guid: c0930f38186e9f546942fb7f3123e1ec,
         type: 2}
+      propertyPath: background
+      value: 
+      objectReference: {fileID: 498411889}
+    - target: {fileID: 114646648023790248, guid: c0930f38186e9f546942fb7f3123e1ec,
+        type: 2}
       propertyPath: lastRoom
       value: 
       objectReference: {fileID: 1886518515}
@@ -219,16 +224,6 @@ Prefab:
       propertyPath: customRooms.Array.data[9].room
       value: 
       objectReference: {fileID: 1886518515}
-    - target: {fileID: 114646648023790248, guid: c0930f38186e9f546942fb7f3123e1ec,
-        type: 2}
-      propertyPath: background
-      value: 
-      objectReference: {fileID: 498411889}
-    - target: {fileID: 114646648023790248, guid: c0930f38186e9f546942fb7f3123e1ec,
-        type: 2}
-      propertyPath: track
-      value: 
-      objectReference: {fileID: 8300000, guid: 2ea60f0d2783d7a4ab9839b4386e8fca, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0930f38186e9f546942fb7f3123e1ec, type: 2}
   m_IsPrefabAsset: 0
@@ -281,16 +276,6 @@ Prefab:
       propertyPath: lastRoom
       value: 
       objectReference: {fileID: 1886518515}
-    - target: {fileID: 114237577160140542, guid: 20b669d59d80f8a48aed50461381dbb4,
-        type: 2}
-      propertyPath: track
-      value: 
-      objectReference: {fileID: 8300000, guid: 3e9630035b3ec394cbbe0be9e181f8c5, type: 3}
-    - target: {fileID: 114237577160140542, guid: 20b669d59d80f8a48aed50461381dbb4,
-        type: 2}
-      propertyPath: enemySpawner.difficultyRange.max
-      value: 12
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20b669d59d80f8a48aed50461381dbb4, type: 2}
   m_IsPrefabAsset: 0
