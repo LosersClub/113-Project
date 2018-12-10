@@ -334,7 +334,7 @@ public class Player : MonoBehaviour {
   }
 
   public bool CheckForMelee() {
-    if (this.meleeHeld && this.canMelee && !this.damageTaker.Invulnerable) {
+    if (this.meleeHeld && this.canMelee) {
       this.canMelee = false;
       this.animator.SetTrigger(this.meleeParam);
       this.animator.SetFloat(this.alternatorParam, this.alternator = (this.alternator + 1) % 2);
@@ -344,7 +344,7 @@ public class Player : MonoBehaviour {
   }
 
   public void CheckForRanged() {
-    if (this.shootHeld && this.canShoot && !this.damageTaker.Invulnerable && this.currentAmount >= 1f) {
+    if (this.shootHeld && this.canShoot && this.currentAmount >= 1f) {
       this.canShoot = false;
       this.currentAmount -= 1f;
       this.ui.ReduceAmmo();

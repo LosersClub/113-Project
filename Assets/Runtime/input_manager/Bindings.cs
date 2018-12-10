@@ -39,7 +39,11 @@ public class Bindings {
       new ControllerButton(Button.B));
     InputManager.AddButtonAction("Controller Melee", GameManager.Player.Melee,
       new ControllerButton(Button.X));
-    InputManager.AddButtonAction("Controller Shoot", GameManager.Player.Shoot,
-      new ControllerButton(Button.Right_Bumper));
+
+    InputManager.AddAnalog1DAction("Controller Shoot", (x) => {
+      if (x > 0) {
+        GameManager.Player.Shoot();
+      }
+    }, new ControllerAnalog1D(Side.Right));
   }
 }
