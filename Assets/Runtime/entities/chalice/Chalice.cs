@@ -16,7 +16,7 @@ public class Chalice : MonoBehaviour {
   private static readonly Dictionary<State, HashSet<State>> StateTransitions = new Dictionary<State, HashSet<State>> {
     {State.Init, new HashSet<State>{State.MoveWait}},
     {State.MoveWait, new HashSet<State>{State.Moving, State.FireTell}},
-    {State.Moving, new HashSet<State>{State.MoveWait}},
+    {State.Moving, new HashSet<State>{State.MoveWait, State.FireTell}},
     {State.FireTell, new HashSet<State>{State.Fire}},
     {State.Fire, new HashSet<State>{State.MoveWait}}
   };
@@ -27,8 +27,7 @@ public class Chalice : MonoBehaviour {
   private float firingRange = 4f;
   [SerializeField]
   private float moveSpeed = 0.2f;
-  // During a MovingState, attempts to move the following distance. May move
-  // less if stopped by a barrier:
+  // When in MovingState, attempts to move the following distance. May move less if stopped by a barrier:
   [SerializeField]
   private float moveDistance = 1f;
 
@@ -88,7 +87,7 @@ public class Chalice : MonoBehaviour {
       StartCoroutine(MoveWaitCoroutine());
     }
     else if(newState == State.Moving) {
-      StartCoroutine(MoveThenStopCoroutine());
+      StartCoroutine(MovingCoroutine());
     }
     else if(newState == State.FireTell) {
       StartCoroutine(AimThenFireCoroutine());
@@ -124,10 +123,15 @@ public class Chalice : MonoBehaviour {
     }
   }
 
-  private IEnumerator MoveThenStopCoroutine() {
-    // Wait, as Movement is performed in update:
+  private IEnumerator MovingCoroutine() {
+    // Wait while Movement is performed in update:
     yield return new WaitForSeconds(this.moveDistance / this.moveSpeed);
-    this.ChangeState(State.MoveWait);
+    if(this.InFiringRange()) {
+      this.ChangeState(State.FireTell);
+    }
+    else {
+      this.ChangeState(State.MoveWait);
+    }
   }
 
   private bool InFiringRange() {
