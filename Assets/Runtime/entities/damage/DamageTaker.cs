@@ -9,6 +9,8 @@ public class DamageTaker : MonoBehaviour {
   protected float invulnerabilityDuration = 1f;
   [SerializeField]
   protected bool disableOnDeath = false;
+  [SerializeField]
+  protected bool resetOnEnable = true;
 
   public HealEvent OnGainHealth;
   public DamageEvent OnTakeDamage;
@@ -23,8 +25,14 @@ public class DamageTaker : MonoBehaviour {
   public Vector2 DamageDirection { get { return this.damageDirection; } }
   public float InvulnerabilityDuration { get { return this.invulnerabilityDuration; } }
 
-  protected virtual void OnEnable() {
+  private void Awake() {
     this.currentHealth = this.maxHealth;
+  }
+
+  protected virtual void OnEnable() {
+    if (this.resetOnEnable) {
+      this.currentHealth = this.maxHealth;
+    }
     this.invulnerable = false;
   }
 

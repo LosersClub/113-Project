@@ -438,6 +438,7 @@ MonoBehaviour:
   maxHealth: 10
   invulnerabilityDuration: 1
   disableOnDeath: 0
+  resetOnEnable: 0
   OnGainHealth:
     m_PersistentCalls:
       m_Calls: []
