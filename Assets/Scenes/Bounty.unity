@@ -342,6 +342,7 @@ MonoBehaviour:
   playerPause: 0.25
   playerWalkDistance: 4
   background: {fileID: 1881702651}
+  track: {fileID: 8300000, guid: 2ea60f0d2783d7a4ab9839b4386e8fca, type: 3}
   active: 0
   roomCount: 1
   generator:

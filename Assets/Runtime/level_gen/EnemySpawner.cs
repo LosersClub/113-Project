@@ -43,28 +43,28 @@ public class EnemySpawner {
     this.roomDifficulty = 0;
     int difficulty = this.difficultyRange.Random();
     Queue<EnemySpawn> spawns = new Queue<EnemySpawn>();
+
+    room.Chunks.Sort((a, b) => a.start.y - b.start.y);
+
     while (difficulty > 0) {
       Enemy e = enemies[Random.Range(0, this.enemies.Length)];
       Vector2 location = Vector2.zero;
       if (Random.value <= 0.85f) {
         Chunk spawnChunk = room.Chunks[Random.Range(0, room.Chunks.Count)];
+        location = new Vector2(Random.Range(spawnChunk.start.x, spawnChunk.end.x + 1),
+          spawnChunk.start.y + Mathf.Abs(e.pool.prefab.GetComponent<SpriteRenderer>().bounds.extents.y) + 0.5f);
         foreach (Chunk c in room.Chunks) {
           if (c.Equals(spawnChunk)) {
             continue;
           }
 
-          if ((c.start.x >= spawnChunk.start.x && c.start.x <= spawnChunk.end.x) ||
-               (c.end.x <= spawnChunk.end.x && c.end.x >= spawnChunk.start.x)) {
-            Debug.Log("Happened");
-            if ((c.end.y >= spawnChunk.start.y && c.end.y - spawnChunk.start.y <= 1) ||
-                (spawnChunk.start.y >= c.end.y && c.start.y >= spawnChunk.start.y)) {
+          if (c.end.y <= spawnChunk.start.y + 2 && c.start.y >= spawnChunk.start.y) {
+            if (location.x >= c.start.x && location.x <= c.end.x) {
+              location.y = c.start.y + location.y - spawnChunk.start.y;
               spawnChunk = c;
-              break;
             }
           }
         }
-        location = new Vector2(Random.Range(spawnChunk.start.x, spawnChunk.end.x + 1),
-            spawnChunk.start.y + Mathf.Abs(e.pool.prefab.GetComponent<SpriteRenderer>().bounds.extents.y) + 0.5f);
 
       } else if (room.Platforms.Count > 0) {
         Platform spawnPlatform = room.Platforms[Random.Range(0, room.Platforms.Count)];
