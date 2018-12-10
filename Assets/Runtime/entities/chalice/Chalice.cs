@@ -48,7 +48,6 @@ public class Chalice : MonoBehaviour {
   void Update () {
     if(this.state == State.Move) {
       this.spriteRendererComponent.color = Color.white;
-      this.AimAtPlayer();
     }
     else if(this.state == State.FireTell) {
       this.spriteRendererComponent.color = Color.yellow;
@@ -79,7 +78,7 @@ public class Chalice : MonoBehaviour {
       StartCoroutine(MoveCoroutine());
     }
     else if(newState == State.FireTell) {
-      StartCoroutine(PauseThenFireCoroutine());
+      StartCoroutine(AimThenFireCoroutine());
     }
     else if(newState == State.Fire) {
       StartCoroutine(FireThenMoveStateCoroutine());
@@ -88,7 +87,8 @@ public class Chalice : MonoBehaviour {
     this.state = newState;
   }
 
-  private IEnumerator PauseThenFireCoroutine() {
+  private IEnumerator AimThenFireCoroutine() {
+    this.AimAtPlayer();
     yield return new WaitForSeconds(1);
     this.ChangeState(State.Fire);
   }
