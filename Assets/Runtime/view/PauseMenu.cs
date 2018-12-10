@@ -7,12 +7,23 @@ public class PauseMenu : MonoBehaviour {
     public static bool GameIsPaused = false; 
 	public GameObject pauseMenuPanel;
 
+  private bool pauseHeld = false;
+  private bool togglePause = true;
+
+  public void PauseInput() {
+    this.pauseHeld = true;
+  }
+
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (GameIsPaused) Resume();
-            else Pause(); 
-        }
+    if (this.togglePause && this.pauseHeld) {
+      if (GameIsPaused) Resume();
+      else Pause();
+      this.togglePause = false;
+    }
+    if (!this.pauseHeld) {
+      this.togglePause = true;
+    }
+    this.pauseHeld = false;
 	}
 
     public void Resume()

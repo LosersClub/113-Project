@@ -3,6 +3,13 @@ using XInputWrapper;
 
 public class Bindings {
   public static void Initialize() {
+    InputManager.AddButtonAction("Pause",
+      GameObject.Find("UICanvas").GetComponent<PauseMenu>().PauseInput,
+      new KeyboardButton(KeyCode.Escape));
+    InputManager.AddButtonAction("Controller Pause",
+      GameObject.Find("UICanvas").GetComponent<PauseMenu>().PauseInput,
+      new ControllerButton(Button.Start));
+
 
     InputManager.AddButtonAction("Right", () => GameManager.Player.Move(1.0f, 0.0f),
       new KeyboardButton(KeyCode.D));
