@@ -69,7 +69,7 @@ public class LevelManager : MonoBehaviour {
       // TODO, no more levels idk what to do?
       return;
     }
-
+    this.Active.background.SetActive(false);
     Destroy(this.Active.gameObject);
     this.StartLevel();
   }
@@ -79,6 +79,7 @@ public class LevelManager : MonoBehaviour {
     this.Active.transform.SetParent(this.levelManager.transform);
     this.Active.transform.localPosition = Vector3.zero;
     this.Active.gameObject.SetActive(true);
+    this.Active.background.SetActive(true);
     this.Active.Enable();
   }
 

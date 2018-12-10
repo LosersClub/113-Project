@@ -52,8 +52,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 34, y: 24}
-  spawnEnemies: 0
-  useBlockers: 0
+  spawnEnemies: 1
+  useBlockers: 1
   baseGround: 1
   chunks:
   - start: {x: 6, y: 2}
