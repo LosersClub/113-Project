@@ -206,7 +206,8 @@ MonoBehaviour:
   slashPosition: {x: 1.16, y: 2.28}
   slash: {fileID: 198650330286923812}
   scythePosition: {x: -2.15, y: 3.4}
-  scythe: {fileID: 0}
+  scythePrefab: {fileID: 1184859082843418, guid: 3a586a29d2b24ad40b16c48031f68fc2,
+    type: 2}
   spike: {fileID: 1593351935222650, guid: 9436a8cf1d5805443a56d6bfafa779a9, type: 2}
   spikeSpacing: 4.5
   burrowSpeed: 20
