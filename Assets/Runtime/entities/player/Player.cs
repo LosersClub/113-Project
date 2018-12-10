@@ -91,7 +91,7 @@ public class Player : MonoBehaviour {
   public class VFXSystems {
     public ParticleSystem slashHorizontal;
     public Vector2 horizontalSlashPosition;
-    public ParticleSystem slashVertical;
+    public Vector2 verticalSlashPosition;
     public ParticleSystem dashTrail;
     public Vector2 dashTrailPosition;
     public ParticleSystem transformSmoke;
@@ -253,9 +253,11 @@ public class Player : MonoBehaviour {
 
   public Action SetMeleeDirection() {
     if (this.movement.y > this.meleeDirectionZone) {
+      this.VerticalSlash(true);
       return () => this.meleeAttack.VerticalHit(true);
     }
     if (this.movement.y < -this.meleeDirectionZone) {
+      this.VerticalSlash(false);
       return () => this.meleeAttack.VerticalHit(false);
     }
 
@@ -270,9 +272,22 @@ public class Player : MonoBehaviour {
   private void HorizontalSlash(bool right) {
     var sheet = this.vfx.slashHorizontal.textureSheetAnimation;
     sheet.startFrame = alternator;
+    var main = this.vfx.slashHorizontal.main;
+    main.startRotation = 0;
     this.vfx.slashHorizontal.transform.localScale = new Vector3(right ? 1 : -1, 1, 1);
     this.vfx.slashHorizontal.transform.localPosition = new Vector2(
       (right ? 1 : -1) * this.vfx.horizontalSlashPosition.x, this.vfx.horizontalSlashPosition.y);
+    this.vfx.slashHorizontal.Play();
+  }
+
+  private void VerticalSlash(bool up) {
+    var sheet = this.vfx.slashHorizontal.textureSheetAnimation;
+    sheet.startFrame = alternator;
+    var main = this.vfx.slashHorizontal.main;
+    main.startRotation = (up ? -1 : 1) * 90f * Mathf.Deg2Rad;
+    this.vfx.slashHorizontal.transform.localScale = new Vector3(1, 1, 1);
+    this.vfx.slashHorizontal.transform.localPosition = new Vector2(
+      this.vfx.verticalSlashPosition.x, (up ? 1 : -1) * this.vfx.verticalSlashPosition.y);
     this.vfx.slashHorizontal.Play();
   }
 

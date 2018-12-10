@@ -200,7 +200,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1324011129139602}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.58, y: 14.7, z: 0}
+  m_LocalPosition: {x: -5, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4722119800863316}
@@ -371,7 +371,7 @@ MonoBehaviour:
   vfx:
     slashHorizontal: {fileID: 198769462093739248}
     horizontalSlashPosition: {x: 1.1, y: 0.07}
-    slashVertical: {fileID: 0}
+    verticalSlashPosition: {x: 0, y: 1.5}
     dashTrail: {fileID: 198598187078283386}
     dashTrailPosition: {x: -0.4, y: -0.05}
     transformSmoke: {fileID: 198653590055748024}
