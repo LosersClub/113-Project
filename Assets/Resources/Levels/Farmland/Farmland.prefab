@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1282097207414302}
+  m_IsPrefabAsset: 1
+--- !u!1 &1282097207414302
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4400864405261112}
+  - component: {fileID: 114646648023790248}
+  m_Layer: 0
+  m_Name: Farmland
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &4400864405261112
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1282097207414302}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114646648023790248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1282097207414302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a685f8663538fe438569afbf7c66257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomSeed: 1
+  seed: 42
+  enemySpawner:
+    difficultyRange:
+      min: 1
+      max: 30
+    activeDifficultyRange:
+      min: 3
+      max: 12
+    enemies:
+    - pool:
+        prefab: {fileID: 1443489206913764, guid: 0cd33a7e0e6739f42a7e673c2c995d88,
+          type: 2}
+        capacity: 5
+      silhouette: {fileID: 21300000, guid: cb750d6148767c54baf527d15560db90, type: 3}
+      difficulty: 1
+    - pool:
+        prefab: {fileID: 1262980004849132, guid: d5bfc0d64d4c96649b5016aa84f5135a,
+          type: 2}
+        capacity: 5
+      silhouette: {fileID: 21300000, guid: ff40b27aea24ed04398f658a55759457, type: 3}
+      difficulty: 3
+    - pool:
+        prefab: {fileID: 1007549336081736, guid: 7f234d7e0cdef604bb378f87bdbfc8b2,
+          type: 2}
+        capacity: 5
+      silhouette: {fileID: 21300000, guid: ec9cf47e39c3def4781311d3987b4af3, type: 3}
+      difficulty: 2
+    - pool:
+        prefab: {fileID: 1477329908656438, guid: 66a88fb68148922458a39efa2707d30d,
+          type: 2}
+        capacity: 5
+      silhouette: {fileID: 21300000, guid: ff807325a308fdf4cbe87c12ef09e994, type: 3}
+      difficulty: 2
+    - pool:
+        prefab: {fileID: 1477329908656438, guid: a70c12ada9f0e774d9fccfcf8a447e6a,
+          type: 2}
+        capacity: 5
+      silhouette: {fileID: 21300000, guid: ff807325a308fdf4cbe87c12ef09e994, type: 3}
+      difficulty: 1
+    - pool:
+        prefab: {fileID: 1615813376150664, guid: 8dfc8fec18eb4944aa100fff30bb10b6,
+          type: 2}
+        capacity: 5
+      silhouette: {fileID: 21300000, guid: 70b192c914f222c489fabf482dcc018b, type: 3}
+      difficulty: 1
+    difficultyCheckRate: 15
+    portalCapacity: 10
+    silhouettePrefab: {fileID: 1926774527543080, guid: ca52ef2ad09cdbd44b202006b1ba67c6,
+      type: 2}
+    portalPrefab: {fileID: 1523706710370702, guid: 204af6322e6cd0b49bb58ebaf896f364,
+      type: 2}
+  pauseDuration: 0
+  playerPause: 0.25
+  playerWalkDistance: 4
+  active: 0
+  roomCount: 10
+  generator:
+    probs:
+      symmetric: 1
+      groundBumps: 0.8
+      groundHeight: 0.5
+      groundWidth: 0.8
+    widthRange:
+      min: 28
+      max: 28
+    heighRange:
+      min: 16
+      max: 50
+    maxBumps: 5
+    minGroundWidth: 5
+    maxGroundHeight: 4
+    groundHeight: 2
+    islandClearance: 4
+  manualLastRoom: 0
+  lastRoom: {fileID: 0}
+  customRooms:
+  - index: 0
+    room: {fileID: 114421628471718452, guid: d7e4613fa5b38304cb9e7da62d75efe5, type: 2}
+  - index: 1
+    room: {fileID: 114719918121968084, guid: 7f6c6bf2a97251e4880256d5274c1a96, type: 2}
+  - index: 2
+    room: {fileID: 0}
+  - index: 3
+    room: {fileID: 114563400097144494, guid: a6435598a8e83f540aa68d511f39c987, type: 2}
+  - index: 4
+    room: {fileID: 114814769255546292, guid: 32c8031d220fb19478b284639e9478d7, type: 2}
+  - index: 5
+    room: {fileID: 0}
+  - index: 6
+    room: {fileID: 0}
+  - index: 7
+    room: {fileID: 114913806439568560, guid: f4653d2ee3b457b4b86feca54954fd16, type: 2}
+  - index: 8
+    room: {fileID: 114739885447572150, guid: 6f47dd4714e1dea40b983f811b0a5eeb, type: 2}
+  - index: 9
+    room: {fileID: 0}
+  ground:
+    prefab: {fileID: 1538152550686690, guid: 060676c8186e8ef47990b0c444c52fb5, type: 2}
+    capacity: 50
+  groundFiller:
+    prefab: {fileID: 1266794246450458, guid: e6c38fbc1b5c34e45baf49131b78ee24, type: 2}
+    capacity: 150
+  leftPlatform:
+    prefab: {fileID: 1655218542391020, guid: d92a614f54666934da67cebaec59572c, type: 2}
+    capacity: 10
+  mainPlatform:
+    prefab: {fileID: 1359852226439054, guid: 038eff4ee00170742a3ed5420880baba, type: 2}
+    capacity: 50
+  rightPlaform:
+    prefab: {fileID: 1302302482667630, guid: ff464b69eb8d923498823b3adbe69c30, type: 2}
+    capacity: 10
