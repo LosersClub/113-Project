@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 30
+  maxHealth: 50
   invulnerabilityDuration: 0.5
   disableOnDeath: 1
   OnGainHealth:
@@ -217,6 +217,8 @@ MonoBehaviour:
   seedsCooldown: 3
   burrowProb: 0.5
   seedsProb: 0.5
+  deathPrefab: {fileID: 1304228120411586, guid: aaa12d534d03de24395c55a1bf4ecf78,
+    type: 2}
   hitbox: {fileID: 0}
 --- !u!114 &114602896145630172
 MonoBehaviour:

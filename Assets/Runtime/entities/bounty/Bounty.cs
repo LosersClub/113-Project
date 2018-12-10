@@ -34,6 +34,8 @@ public class Bounty : MonoBehaviour {
   public float burrowProb = 0.50f;
   public float seedsProb = 0.25f;
 
+  public GameObject deathPrefab;
+
   [HideInInspector]
   public BoxCollider2D hitbox;
   
@@ -72,9 +74,11 @@ public class Bounty : MonoBehaviour {
     this.player = GameManager.Player;
 
     this.spikeManager = new GameObject("Spike Manager");
+    this.spikeManager.transform.SetParent(GameManager.LevelManager.Active.transform);
     this.spikeManager.transform.position = Vector3.zero;
 
     this.scythe = Instantiate(this.scythePrefab);
+    this.scythe.transform.SetParent(GameManager.LevelManager.Active.transform);
     this.scythe.SetActive(false);
 
     for (int i = 0; i < 35/this.spikeSpacing; i++) {
@@ -83,9 +87,23 @@ public class Bounty : MonoBehaviour {
       newSpike.transform.position = new Vector2(2.5f + i * this.spikeSpacing, 1.5f);
       newSpike.SetActive(false);
     }
+
+    this.GetComponent<DamageTaker>().OnDie.AddListener(this.OnDeath);
   }
 
-  // TODO: Coroutine to active when player is within range
+  private void OnDeath(DamageDealer dealer, DamageTaker taker) {
+    this.sprite.enabled = false;
+    this.GetComponent<FlashOnHit>().enabled = false;
+    this.gameObject.SetActive(false);
+    GameObject death = Instantiate(this.deathPrefab);
+    death.transform.position = this.transform.position;
+    GameManager.LevelManager.StartCoroutine(this.Death(death));
+  }
+
+  private IEnumerator Death(GameObject death) {
+    yield return GameManager.LevelManager.StartCoroutine(death.GetComponent<Dissolve>().DoDissolve(10f));
+    Destroy(death);
+  }
 
   private void Update() {
     if (!inGround) {
