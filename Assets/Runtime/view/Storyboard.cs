@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class Storyboard : MonoBehaviour {
-  public float duration = 5f;
+  public float[] durations = { 5f, 5f, 5f, 5f, 5f };
   public Image[] panels;
   public AudioClip track;
 
@@ -16,14 +16,22 @@ public class Storyboard : MonoBehaviour {
   }
 
   private IEnumerator NextPanel() {
-    for (int i = 0; i < panels.Length; i++) {
+    int i;
+    float timer;
+    for (i = 0; i < panels.Length; i++) {
       this.panels[i].enabled = true;
-      float timer = this.duration;
+      timer = this.durations[i];
       while (timer > 0) {
         timer -= Time.deltaTime;
         yield return null;
       }
       panels[i].enabled = false;
+    }
+    timer = this.durations[this.durations.Length - 1];
+    while (timer > 0)
+    {
+      timer -= Time.deltaTime;
+      yield return null;
     }
     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
   }

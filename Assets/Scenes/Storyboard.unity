@@ -716,7 +716,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da7d8d345d52fb45ba73dcb0535b8b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 5
+  durations:
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 3.5
   panels:
   - {fileID: 108632011}
   - {fileID: 655677367}

@@ -13,6 +13,19 @@ public class StartMenu : MonoBehaviour {
     manager.PlayMusic(track, fadeDuration: 5);
   }
 
+  private void Update()
+  {
+   bool A = Input.GetButtonDown("AButton");
+    if (A)
+    {
+      PlayGame();
+    }
+    bool B = Input.GetButtonDown("BButton");
+    if (B) {
+      QuitGame();
+    }
+  }
+
   public void PlayGame()
     {
     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
