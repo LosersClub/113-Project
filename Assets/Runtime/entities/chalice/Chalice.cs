@@ -8,17 +8,16 @@ using UnityEngine.Assertions;
 [RequireComponent(typeof(MovementController))]
 public class Chalice : MonoBehaviour {
 
-  private enum State {Init, Wait, Move, FireTell, Fire};
+  private enum State {Init, Move, FireTell, Fire};
 
   // TODO: refactor state machine code into a separate StandaloneStateMachine class.
   // Note: should use ReadOnlyDictionary instead, but that is only available in .NET 4 (while we
   // are using .NET 3.5):
   private static readonly Dictionary<State, HashSet<State>> StateTransitions = new Dictionary<State, HashSet<State>> {
-    {State.Init, new HashSet<State>{State.Wait}},
-    {State.Wait, new HashSet<State>{State.Move, State.FireTell}},
-    {State.Move, new HashSet<State>{State.Wait, State.FireTell}},
+    {State.Init, new HashSet<State>{State.Move}},
+    {State.Move, new HashSet<State>{State.FireTell}},
     {State.FireTell, new HashSet<State>{State.Fire}},
-    {State.Fire, new HashSet<State>{State.Wait}}
+    {State.Fire, new HashSet<State>{State.Move}}
   };
 
   [SerializeField]
@@ -43,11 +42,11 @@ public class Chalice : MonoBehaviour {
     this.beamEmitterComponent = this.beamEmitterObject.GetComponent<BeamEmitter>();
     Assert.IsNotNull(this.beamEmitterComponent);
 
-    this.ChangeState(State.Wait);
+    this.ChangeState(State.Move);
   }
 
   void Update () {
-    if(this.state == State.Wait || this.state == State.Move) {
+    if(this.state == State.Move) {
       this.spriteRendererComponent.color = Color.white;
       this.AimAtPlayer();
     }
@@ -76,30 +75,17 @@ public class Chalice : MonoBehaviour {
     // None currently.
 
     // State entry actions:
-    if(newState == State.Wait) {
-      StartCoroutine(WaitThenMoveOrFireStateCoroutine());
-    }
-    else if(newState == State.Move) {
+    if(newState == State.Move) {
       StartCoroutine(MoveCoroutine());
     }
     else if(newState == State.FireTell) {
       StartCoroutine(PauseThenFireCoroutine());
     }
     else if(newState == State.Fire) {
-      StartCoroutine(FireThenWaitStateCoroutine());
+      StartCoroutine(FireThenMoveStateCoroutine());
     }
 
     this.state = newState;
-  }
-
-  private IEnumerator WaitThenMoveOrFireStateCoroutine() {
-    yield return new WaitForSeconds(3);
-    if(this.InFiringRange()) {
-      this.ChangeState(State.FireTell);
-    }
-    else {
-      this.ChangeState(State.Move);
-    }
   }
 
   private IEnumerator PauseThenFireCoroutine() {
@@ -107,10 +93,10 @@ public class Chalice : MonoBehaviour {
     this.ChangeState(State.Fire);
   }
 
-  private IEnumerator FireThenWaitStateCoroutine() {
+  private IEnumerator FireThenMoveStateCoroutine() {
     this.beamEmitterComponent.Fire();
     yield return new WaitUntil(() => !this.beamEmitterComponent.IsFiring);
-    this.ChangeState(State.Wait);
+    this.ChangeState(State.Move);
   }
 
   private IEnumerator MoveCoroutine() {
