@@ -8,6 +8,7 @@ public class GameManager : SingletonMonoBehavior<GameManager> {
   [SerializeField]
   private Player player;
   private CameraShake cameraShake;
+  private AudioManager audioManager;
 
   // protected constructor to enforce use of singleton instance:
   protected GameManager() {}
@@ -19,6 +20,7 @@ public class GameManager : SingletonMonoBehavior<GameManager> {
       Bindings.Initialize();
     }
     this.cameraShake = this.GetComponent<CameraShake>();
+    this.audioManager = this.GetComponent<AudioManager>();
   }
 
   private void Update() {

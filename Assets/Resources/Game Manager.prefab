@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4213681774314298}
   - component: {fileID: 114153993286441110}
   - component: {fileID: 114586526983692032}
+  - component: {fileID: 114945764251583844}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -64,3 +65,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07212fe326240e643bc660b46731edaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114945764251583844
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1559519611898216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2f2b18bda6cde54281bb2a176269cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlaying: 0
+  menuTrack: {fileID: 8300000, guid: 3c349a2f56a380f4d92019c3b1ee3013, type: 3}
+  templeTrack: {fileID: 8300000, guid: 3e9630035b3ec394cbbe0be9e181f8c5, type: 3}
+  farmlandTrack: {fileID: 8300000, guid: 2ea60f0d2783d7a4ab9839b4386e8fca, type: 3}
+  fadeDuration: 5
+  startDelay: 0
+  maxVolume: 1
+  fade: 1

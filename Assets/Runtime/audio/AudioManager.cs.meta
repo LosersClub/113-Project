@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f2f2b18bda6cde54281bb2a176269cc3
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - menuTrack: {fileID: 8300000, guid: 3c349a2f56a380f4d92019c3b1ee3013, type: 3}
+  - templeTrack: {fileID: 8300000, guid: 3e9630035b3ec394cbbe0be9e181f8c5, type: 3}
+  - farmlandTrack: {fileID: 8300000, guid: 2ea60f0d2783d7a4ab9839b4386e8fca, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
