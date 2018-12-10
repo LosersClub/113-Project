@@ -21,7 +21,7 @@ public class Bounty : MonoBehaviour {
   public Vector2 slashPosition;
   public ParticleSystem slash;
   public Vector2 scythePosition;
-  public GameObject scythe;
+  public GameObject scythePrefab;
   public GameObject spike;
   public float spikeSpacing = 4.5f;
 
@@ -34,6 +34,7 @@ public class Bounty : MonoBehaviour {
   public float burrowProb = 0.50f;
   public float seedsProb = 0.25f;
 
+  [HideInInspector]
   public BoxCollider2D hitbox;
   
   private MovementController movement;
@@ -42,8 +43,9 @@ public class Bounty : MonoBehaviour {
   private SpriteRenderer sprite;
   private Player player;
   private GameObject spikeManager;
+  private GameObject scythe;
 
-  private bool active = true; // TODO: false
+  private bool active = false;
   private bool inGround = false;
   private int curBurrowCooldown = 0;
   private int curSeedsCooldown = 0;
@@ -71,6 +73,9 @@ public class Bounty : MonoBehaviour {
 
     this.spikeManager = new GameObject("Spike Manager");
     this.spikeManager.transform.position = Vector3.zero;
+
+    this.scythe = Instantiate(this.scythePrefab);
+    this.scythe.SetActive(false);
 
     for (int i = 0; i < 35/this.spikeSpacing; i++) {
       GameObject newSpike = Instantiate(this.spike);
@@ -210,6 +215,9 @@ public class Bounty : MonoBehaviour {
 
   private IEnumerator NextAction() {
     while (!active) {
+      if (this.transform.position.x - this.player.transform.position.x <= 8f) {
+        this.active = true;
+      }
       yield return null;
     }
     yield return new WaitForSeconds(0.5f);

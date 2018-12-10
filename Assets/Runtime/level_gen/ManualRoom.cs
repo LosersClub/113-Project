@@ -21,6 +21,7 @@ public class ManualRoom : MonoBehaviour {
   }
 
   public Room Get() {
+    this.gameObject.SetActive(true);
     Room room = new MonoRoom(this, size.x, size.y);
     if (this.baseGround) {
       room.AddGround();

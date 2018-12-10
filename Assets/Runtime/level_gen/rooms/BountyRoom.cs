@@ -7,23 +7,20 @@ public class BountyRoom : MonoBehaviour {
 
   private ManualRoom room;
   private bool done = false;
+  private GameObject bountyInstance;
 
   private void Awake() {
     this.room = this.GetComponent<ManualRoom>();
     this.room.events.generate.AddListener(this.Generate);
-    this.room.events.generate.AddListener(this.StartRoom);
   }
 
   private void Generate(Room room) {
-
+    this.bountyInstance = Instantiate(bounty);
+    this.bountyInstance.transform.position = new Vector2(room.Width - 5, 2f);
+    this.bountyInstance.SetActive(true);
   }
 
-  private void StartRoom(Room room) {
-    this.StartCoroutine(this.RightWall());
-  }
-
-  private IEnumerator RightWall() {
-    yield return new WaitForSeconds(2f);
+  private void Update() {
     GameManager.LevelManager.RightWall.SetActive(true);
   }
 
