@@ -102,8 +102,8 @@ public class Chalice : MonoBehaviour {
 
   private IEnumerator AimThenFireCoroutine() {
     this.AimAtPlayer();
-    Debug.Log(this.animatorComponent.GetCurrentAnimatorStateInfo(0).IsName("Default"));
     this.animatorComponent.SetTrigger("Fire Tell");
+    // Need to wait for Fire Tell, since transition does not happen instantly:
     yield return new WaitUntil(() => this.animatorComponent.GetCurrentAnimatorStateInfo(0).IsName("Fire Tell"));
     yield return new WaitUntil(() => this.animatorComponent.GetCurrentAnimatorStateInfo(0).IsName("Default"));
     this.ChangeState(State.Fire);
