@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114243188050786274}
   - component: {fileID: 114036807930343372}
   - component: {fileID: 114693453455313180}
+  - component: {fileID: 114333795857390250}
   - component: {fileID: 114557549837785508}
   m_Layer: 12
   m_Name: Chalice
@@ -146,6 +147,28 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: DamageEvent, LosersClub.113, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &114333795857390250
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1057642611051618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdbfb268b6c1ad84abab3a78b83e0346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Velocity: {x: 0, y: 0}
+  RayData:
+    horizontalRays: 8
+    verticalRays: 4
+    rayInset: 0.02
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 256
+  platformMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &114404711367931892
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -169,6 +192,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beamEmitterObject: {fileID: 1821265816652694}
+  firingRange: 4
+  moveDistance: 1
 --- !u!114 &114693453455313180
 MonoBehaviour:
   m_ObjectHideFlags: 1

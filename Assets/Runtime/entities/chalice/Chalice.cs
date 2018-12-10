@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(MovementController))]
 public class Chalice : MonoBehaviour {
 
   private enum State {Init, Wait, Move, FireTell, Fire};
@@ -25,9 +26,10 @@ public class Chalice : MonoBehaviour {
   [SerializeField]
   private float firingRange = 4f;
   [SerializeField]
-  private float moveSpeed = 1f;
+  private float moveDistance = 1f;
 
   private SpriteRenderer spriteRendererComponent;
+  private MovementController movementController;
 
   private BeamEmitter beamEmitterComponent;
   private State state = State.Init;
@@ -36,6 +38,7 @@ public class Chalice : MonoBehaviour {
     Assert.IsNotNull(this.beamEmitterObject);
 
     this.spriteRendererComponent = this.GetComponent<SpriteRenderer>();
+    this.movementController = this.GetComponent<MovementController>();
 
     this.beamEmitterComponent = this.beamEmitterObject.GetComponent<BeamEmitter>();
     Assert.IsNotNull(this.beamEmitterComponent);
@@ -113,7 +116,7 @@ public class Chalice : MonoBehaviour {
   private IEnumerator MoveCoroutine() {
     bool done = false;
     while(!done) {
-      this.transform.position += (GameManager.Player.transform.position - this.transform.position).normalized * this.moveSpeed;
+      this.movementController.Move((GameManager.Player.transform.position - this.transform.position).normalized * this.moveDistance);
       yield return new WaitForSeconds(1);
       if(this.InFiringRange()) {
         this.ChangeState(State.FireTell);
