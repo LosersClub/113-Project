@@ -21,13 +21,16 @@ public class AudioManager : MonoBehaviour {
   private float fadeDur;
   private float maxVol;
 
-  private void Awake() {
-    this.audioSource = gameObject.AddComponent<AudioSource>();
+  public void PlayMusic(AudioClip track, float delay=-1, float maxVolume=-1, float fadeDuration=-1) {
+    if (gameObject.GetComponent<AudioSource>() == null)
+    {
+      this.audioSource = gameObject.AddComponent<AudioSource>();
+    } else
+    {
+      this.audioSource = gameObject.GetComponent<AudioSource>();
+    }
     this.audioSource.loop = true;
     this.fadeDuration = this.fadeDuration > 0 ? this.fadeDuration : 1;
-  }
-
-  public void PlayMusic(AudioClip track, float delay=-1, float maxVolume=-1, float fadeDuration=-1) {
     this.maxVol = maxVolume >= 0 ? maxVolume : this.maxVolume;
     this.fadeDur = fadeDuration >= 0 ? fadeDuration : this.fadeDuration;
     this.audioSource.clip = track;
@@ -40,14 +43,20 @@ public class AudioManager : MonoBehaviour {
     }
   }
 
-  public void StopMusic(float fadeDuration = -1) {
+  public void StopMusic(bool stopImmediately = false, float fadeDuration = -1) {
     this.fadeDur = fadeDuration >= 0 ? fadeDuration : this.fadeDuration;
     if (!this.audioSource.isPlaying) {
       return;
     }
     if (fade) {
+      if (stopImmediately)
+      {
+        this.audioSource.Stop();
+      }
       this.StartCoroutine(this.FadeOutMusic());
-    } else {
+
+    }
+    else {
       this.audioSource.Stop();
     }
   }

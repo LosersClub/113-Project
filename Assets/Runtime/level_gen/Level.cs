@@ -15,6 +15,7 @@ public abstract class Level : MonoBehaviour  {
   public float playerPause = 0.25f;
   public float playerWalkDistance = 4f;
   public GameObject background;
+  public AudioClip track;
 
   #region Properties
   public Player Player { get; private set; }

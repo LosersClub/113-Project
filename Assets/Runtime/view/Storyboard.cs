@@ -6,9 +6,12 @@ using UnityEngine.SceneManagement;
 public class Storyboard : MonoBehaviour {
   public float duration = 5f;
   public Image[] panels;
+  public AudioClip track;
 
 
   public void OnEnable() {
+    AudioManager manager = gameObject.GetComponent<AudioManager>();
+    manager.PlayMusic(track);
     this.StartCoroutine(this.NextPanel());
   }
 
