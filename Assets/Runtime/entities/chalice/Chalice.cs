@@ -40,12 +40,15 @@ public class Chalice : MonoBehaviour {
   }
 
   void Update () {
-    if(this.state == State.Fire) {
-      this.spriteRendererComponent.color = Color.blue;
-    }
-    else if(this.state == State.Wait) {
+    if(this.state == State.Wait) {
       this.spriteRendererComponent.color = Color.white;
       this.AimAtPlayer();
+    }
+    else if(this.state == State.FireTell) {
+      this.spriteRendererComponent.color = Color.yellow;
+    }
+    else if(this.state == State.Fire) {
+      this.spriteRendererComponent.color = Color.blue;
     }
   }
 
@@ -67,7 +70,10 @@ public class Chalice : MonoBehaviour {
 
     // State entry actions:
     if(newState == State.Wait) {
-      StartCoroutine(WaitThenFireStateCoroutine());
+      StartCoroutine(PauseThenFireTellStateCoroutine());
+    }
+    else if(newState == State.FireTell) {
+      StartCoroutine(PauseThenFireCoroutine());
     }
     else if(newState == State.Fire) {
       StartCoroutine(FireThenWaitStateCoroutine());
@@ -76,10 +82,13 @@ public class Chalice : MonoBehaviour {
     this.state = newState;
   }
 
-  private IEnumerator WaitThenFireStateCoroutine() {
+  private IEnumerator PauseThenFireTellStateCoroutine() {
     yield return new WaitForSeconds(3);
     this.ChangeState(State.FireTell);
-    // TODO: show a fire tell before firing.
+  }
+
+  private IEnumerator PauseThenFireCoroutine() {
+    yield return new WaitForSeconds(1);
     this.ChangeState(State.Fire);
   }
 
