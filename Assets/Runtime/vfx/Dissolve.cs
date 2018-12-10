@@ -21,4 +21,8 @@ public class Dissolve : MonoBehaviour {
     }
     this.material.SetFloat(dissolveId, 1f);
   }
+
+  public void Set(float value) {
+    this.material.SetFloat(dissolveId, value);
+  }
 }

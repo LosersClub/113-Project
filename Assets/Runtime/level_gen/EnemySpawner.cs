@@ -136,7 +136,16 @@ public class EnemySpawner {
     EnemyTracker tracker = taker.GetComponent<EnemyTracker>();
     this.roomDifficulty -= tracker.difficulty;
     this.enemyCount--;
+    GenericItem death = this.silhouettes.Pop(tracker.transform.position);
+    death.instance.GetComponent<SpriteRenderer>().sprite = tracker.GetComponent<SpriteRenderer>().sprite;
+    this.level.StartCoroutine(DoDeath(death));
     tracker.Return();
+  }
+
+  private IEnumerator DoDeath(GenericItem death) {
+    yield return this.level.StartCoroutine(death.instance.GetComponent<Dissolve>().DoDissolve(3f));
+    death.Return();
+    death.instance.GetComponent<Dissolve>().Set(0f);
   }
 
   public struct EnemySpawn {
