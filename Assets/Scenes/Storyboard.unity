@@ -722,7 +722,7 @@ MonoBehaviour:
   - 4
   - 4
   - 4
-  - 3
+  - 3.2
   panels:
   - {fileID: 108632011}
   - {fileID: 655677367}
