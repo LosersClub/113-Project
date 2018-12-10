@@ -199,6 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfedfe9eab88b0245b30c6a66144f963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireSpeed: 20
 --- !u!114 &114557549837785508
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -337,7 +338,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -1713,7 +1714,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2240,7 +2241,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    inWorldSpace: 0
+    inWorldSpace: 1
   InheritVelocityModule:
     enabled: 0
     m_Mode: 0

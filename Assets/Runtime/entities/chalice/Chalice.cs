@@ -38,6 +38,7 @@ public class Chalice : MonoBehaviour {
   private BeamEmitter beamEmitterComponent;
   private State state = State.Init;
   private Vector2 moveDirection = Vector2.zero; // will be reassigned before movement
+  private Vector2 fireDirection = Vector2.zero; // will be reassigned before fire
 
   void Start () {
     Assert.IsNotNull(this.beamEmitterObject);
@@ -70,6 +71,7 @@ public class Chalice : MonoBehaviour {
     direction.Normalize();
     Vector3 directionUpwards = new Vector3(direction.x, direction.y, 0);
     this.transform.rotation = Quaternion.LookRotation(Vector3.forward, directionUpwards);
+    this.fireDirection = direction;
   }
 
   private void ChangeState(State newState) {
@@ -108,8 +110,9 @@ public class Chalice : MonoBehaviour {
   }
 
   private IEnumerator FireThenMoveStateCoroutine() {
-    this.beamEmitterComponent.Fire();
+    this.beamEmitterComponent.Fire(this.fireDirection);
     yield return new WaitUntil(() => !this.beamEmitterComponent.IsFiring);
+    yield return new WaitForSeconds(0.1f);
     this.ChangeState(State.MoveWait);
   }
 
