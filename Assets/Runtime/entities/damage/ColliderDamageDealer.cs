@@ -14,6 +14,11 @@ public class ColliderDamageDealer : DamageDealer {
     get { return this.lastHit; }
   }
 
+  public void SetCollider(Collider2D collider) {
+    this.damageCollider = collider;
+    this.contactFilter.layerMask = this.hittableLayers;
+  }
+
   private void Awake() {
     if (this.UseBaseCollider) {
       this.damageCollider = this.GetComponent<Collider2D>();

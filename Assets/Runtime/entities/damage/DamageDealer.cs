@@ -8,8 +8,7 @@ public abstract class DamageDealer : MonoBehaviour {
   protected bool disableDamageAfterHit;
   [SerializeField]
   protected bool ignoreInvulnerability;
-  [SerializeField]
-  protected LayerMask hittableLayers;
+  public LayerMask hittableLayers;
 
   public DamageEvent OnDamageHit;
   public NonDamageEvent OnNoDamageHit;

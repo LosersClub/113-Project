@@ -64,10 +64,15 @@ public abstract class Level : MonoBehaviour  {
     yield return this.StartCoroutine(this.LoadingScreen.FadeOut());
     this.Player.transform.position = new Vector3(this.transform.position.x - 2, this.transform.position.y + 2.5f);
     this.Player.gameObject.SetActive(true);
+
+    if (!(this.ActiveRoom is MonoRoom) || ((MonoRoom)this.ActiveRoom).UseBlockers) {
+      this.LevelManager.StartBlockers(this.ActiveRoom.Width, this.ActiveRoom.Height);
+    }
+
     yield return this.StartCoroutine(this.Player.EnterRoom(this.playerWalkDistance, this.playerPause));
     this.LevelManager.LeftWall.SetActive(true);
     if (!(this.ActiveRoom is MonoRoom) || ((MonoRoom)this.ActiveRoom).UseSpawner) {
-      this.enemySpawner.StartRoom(this.ActiveRoom); // TODO: Do not call if this is a manual room
+      this.enemySpawner.StartRoom(this.ActiveRoom);
     }
     if (this.ActiveRoom is MonoRoom) {
       ((MonoRoom)this.ActiveRoom).StartRoom();
@@ -75,11 +80,14 @@ public abstract class Level : MonoBehaviour  {
         this.StartCoroutine(this.ExitRoom());
       }
     }
-    // TODO: Level Blockers Coroutine (start player enter at same time?)
+
+    if (!(this.ActiveRoom is MonoRoom) || ((MonoRoom)this.ActiveRoom).UseBlockers) {
+      this.LevelManager.StartDamagers(this.ActiveRoom.Width, this.ActiveRoom.Height);
+    }
   }
 
   public IEnumerator ExitRoom() {
-    // TODO: Make blockers put lasers down and leave
+    this.LevelManager.StopBlockers();
     this.LevelManager.RightWall.SetActive(false);
     while (this.Player.transform.position.x < this.transform.position.x + this.ActiveRoom.Width) {
       yield return null;
