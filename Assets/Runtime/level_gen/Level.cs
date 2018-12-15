@@ -68,7 +68,8 @@ public abstract class Level : MonoBehaviour  {
 
   private IEnumerator EnterFirstRoom() {
     this.Player.transform.position = new Vector3(this.transform.position.x + 2, this.transform.position.y + 2.5f);
-    this.Player.gameObject.SetActive(true);
+    //this.Player.gameObject.SetActive(true);
+    this.Player.SafeEnable();
     this.Player.DisableInput();
     yield return this.StartCoroutine(this.LoadingScreen.FadeOut());
 
@@ -98,7 +99,8 @@ public abstract class Level : MonoBehaviour  {
   private IEnumerator EnterRoom() {
     yield return this.StartCoroutine(this.LoadingScreen.FadeOut());
     this.Player.transform.position = new Vector3(this.transform.position.x - 2, this.transform.position.y + 2.5f);
-    this.Player.gameObject.SetActive(true);
+    //this.Player.gameObject.SetActive(true);
+    this.Player.SafeEnable();
 
     if (!(this.ActiveRoom is MonoRoom) || ((MonoRoom)this.ActiveRoom).UseBlockers) {
       this.LevelManager.StartBlockers(this.ActiveRoom.Width, this.ActiveRoom.Height);
@@ -106,7 +108,6 @@ public abstract class Level : MonoBehaviour  {
 
     yield return this.StartCoroutine(this.Player.EnterRoom(this.playerWalkDistance, this.playerPause));
     Camera.main.GetComponent<CameraFollow>().enabled = true;
-    this.LevelManager.LeftWall.SetActive(true);
     if (!(this.ActiveRoom is MonoRoom) || ((MonoRoom)this.ActiveRoom).UseSpawner) {
       this.enemySpawner.StartRoom(this.ActiveRoom);
     }
@@ -120,6 +121,8 @@ public abstract class Level : MonoBehaviour  {
     if (!(this.ActiveRoom is MonoRoom) || ((MonoRoom)this.ActiveRoom).UseBlockers) {
       this.LevelManager.StartDamagers(this.ActiveRoom.Width, this.ActiveRoom.Height);
     }
+
+    this.LevelManager.LeftWall.SetActive(true);
   }
 
   public IEnumerator ExitRoom() {
@@ -128,7 +131,8 @@ public abstract class Level : MonoBehaviour  {
     while (this.Player.transform.position.x < this.transform.position.x + this.ActiveRoom.Width) {
       yield return null;
     }
-    this.Player.gameObject.SetActive(false);
+    this.Player.SafeDisable();
+    //this.Player.gameObject.SetActive(false);
     yield return this.StartCoroutine(this.LoadingScreen.FadeIn());
     Camera.main.transform.position = new Vector3(13.5f, 7.5f, -10f);
     Camera.main.GetComponent<CameraFollow>().enabled = false;

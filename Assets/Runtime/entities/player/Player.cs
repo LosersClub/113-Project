@@ -175,7 +175,8 @@ public class Player : MonoBehaviour {
     this.SetEyeColor(this.eyeColors.original);
   }
 
-  private void OnEnable() {
+  public void SafeEnable() {
+    this.EnableInput();
     this.jumpTimer = 0f;
     this.movement = Vector2.zero;
     this.jumping = false;
@@ -188,6 +189,10 @@ public class Player : MonoBehaviour {
     this.canShoot = true;
     this.shouldPlayLandParticles = false;
     this.controller.Velocity = Vector2.zero;
+  }
+
+  public void SafeDisable() {
+    this.DisableInput();
   }
 
   private void Update() {
@@ -217,7 +222,8 @@ public class Player : MonoBehaviour {
     this.DisableInput();
     this.sprite.enabled = false;
     this.GetComponent<FlashOnHit>().enabled = false;
-    this.gameObject.SetActive(false);
+    this.SafeDisable();
+    //this.gameObject.SetActive(false);
     GameObject death = Instantiate(this.vfx.deathPrefab);
     death.transform.position = this.transform.position;
     GameManager.LevelManager.StartCoroutine(this.Death(death));
